@@ -8,25 +8,47 @@ function generateCode() {
     return code;
 }
 
-// Function to handle the click event for the "Generate Game Code" button
-function handleGenerateCodeClick() {
-    // Generate the code
-    var generatedCode = generateCode();
+// Function to handle the initialization of the host game page
+function initializeHostGamePage() {
 
-    // Display the generated code beneath the button
+    // Try grabbing the game code from local storage
+    // TODO: Store code in database, not local storage
+    var generatedCode = localStorage.getItem("gameCode");
+
+    // If the game code is not stored, generate a new one
+    if (!generatedCode) {
+        generatedCode = generateCode();
+        // Store the generated code in localStorage
+        localStorage.setItem("gameCode", generatedCode);
+    } else {
+
+    }
+
+    // Display the generated code
     var generatedCodeElement = document.getElementById("generatedCode");
     generatedCodeElement.textContent = "Game Code: " + generatedCode;
+
+    // Enable the "Start Game" button
+    var startGameButton = document.getElementById("startGameButton");
+    startGameButton.disabled = false;
 }
 
 // Function to initialize event listeners
 function initializeEventListeners() {
-    // Add click event listener to the "Generate Game Code" button
-    var genCodeButton = document.getElementById("genCodeButton");
-    genCodeButton.addEventListener("click", handleGenerateCodeClick);
+    // Add event listener to the "Start Game" button
+    var startGameButton = document.getElementById("startGameButton");
+    startGameButton.addEventListener("click", handleStartGameClick);
+}
+
+// Function to handle the click event for the "Start Game" button
+function handleStartGameClick() {
+    // Add functionality to start the game
+    // This function will be implemented later
 }
 
 // Function to initialize the application
 function initializeApp() {
+    initializeHostGamePage();
     initializeEventListeners();
 }
 

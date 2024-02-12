@@ -17,3 +17,7 @@ body, html {
     border-color: #6c757d; /* Gray color */
     cursor: not-allowed;
 }
+
+.mt-3 {
+    margin-top: 1.5rem; /* Adjust this value as needed */
+}
