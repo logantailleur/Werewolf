@@ -24,11 +24,19 @@
 
     <div class="container-fluid h-100 d-flex flex-column justify-content-center align-items-center">
         
+        <!-- Name Entry -->
+        <div class="text-center mb-4">
+            <input id="nameInput" type="text" class="form-control" placeholder="Enter Name" maxlength="12" oninput="checkInput()">
+            <div id="generatedCode" class="mt-2 font-weight-bold text-very-large"></div>
+        </div>
+
+        <!-- Game Code Entry -->
         <div class="text-center mb-4">
             <input id="gameCodeInput" type="text" class="form-control" placeholder="Enter Game Code" maxlength="5" oninput="checkInput()">
             <div id="generatedCode" class="mt-2 font-weight-bold text-very-large"></div>
         </div>
         
+        <!-- Join Game Button -->
         <div class="text-center">
             <button id="joinGameButton" class="btn-lg btn-primary mb-2 disabled-button" disabled>Join Game</button>
         </div>
