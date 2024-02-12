@@ -1,0 +1,19 @@
+
+body, html {
+    height: 100%;
+    margin: 0;
+}
+
+.container-fluid {
+    height: 100%;
+}
+
+.text-very-large {
+    font-size: 36px; 
+}
+
+#joinGameButton.disabled-button {
+    background-color: #6c757d; /* Gray color */
+    border-color: #6c757d; /* Gray color */
+    cursor: not-allowed;
+}
