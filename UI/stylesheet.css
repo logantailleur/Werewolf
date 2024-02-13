@@ -18,6 +18,12 @@ body, html {
     cursor: not-allowed;
 }
 
+#startGameButton.disabled-button {
+    background-color: #6c757d; /* Gray color */
+    border-color: #6c757d; /* Gray color */
+    cursor: not-allowed;
+}
+
 .mt-3 {
     margin-top: 1.5rem; /* Adjust this value as needed */
 }

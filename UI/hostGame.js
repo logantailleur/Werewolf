@@ -10,7 +10,6 @@ function generateCode() {
 
 // Function to handle the initialization of the host game page
 function initializeHostGamePage() {
-
     // Try grabbing the game code from local storage
     // TODO: Store code in database, not local storage
     var generatedCode = localStorage.getItem("gameCode");
@@ -20,17 +19,17 @@ function initializeHostGamePage() {
         generatedCode = generateCode();
         // Store the generated code in localStorage
         localStorage.setItem("gameCode", generatedCode);
-    } else {
-
-    }
+    } 
 
     // Display the generated code
     var generatedCodeElement = document.getElementById("generatedCode");
     generatedCodeElement.textContent = "Game Code: " + generatedCode;
 
-    // Enable the "Start Game" button
+    // Enable the "Start Game" button if 5 or more players join the game
     var startGameButton = document.getElementById("startGameButton");
-    startGameButton.disabled = false;
+    startGameButton.disabled = true;
+    startGameButton.classList.add("disabled-button");
+   
 }
 
 // Function to initialize event listeners
