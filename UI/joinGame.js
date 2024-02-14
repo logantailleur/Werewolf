@@ -17,23 +17,22 @@ function checkInput() {
 // Function to handle the click event for the "Join Game" button
 function handleJoinGameClick() {
     var validGameCode = "11111"
+
     // Retrieve the name entered by the user
     var nameInput = document.getElementById("nameInput").value;
 
     // Store the name in local storage
     localStorage.setItem("playerName", nameInput);
 
-    // Replace the inputs and button with the message if correct game code entered
-    if (gameCodeInput.value === validGameCode){
-        var container = document.querySelector(".container-fluid");
-        container.innerHTML = `<div class="text-center">
-                                    <div class="mt-2">Hang tight, <strong>${nameInput}</strong>. The host will be starting the game soon...</div>
-                                </div>`;
+    // Check if the entered game code is correct
+    if (gameCodeInput.value === validGameCode) {
+        // Navigate to the waiting room page
+        window.location.href = "waiting_room.html";
     } else {
+        // Display an error message
         var errorMessage = document.getElementById("joinGameError");
-        errorMessage.innerHTML = `Sorry, there is no game with code <strong>${gameCodeInput.value}</strong>. Please try again.`
+        errorMessage.innerHTML = `Sorry, there is no game with code <strong>${gameCodeInput.value}</strong>. Please try again.`;
     }
-
 }
 
 // Function to initialize event listeners
