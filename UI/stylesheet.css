@@ -27,3 +27,10 @@ body, html {
 .mt-3 {
     margin-top: 1.5rem; /* Adjust this value as needed */
 }
+
+.role-assign-image {
+    width: 200px; /* Adjust width as needed */
+    height: 200px; /* Adjust height as needed */
+    background-color: lightgray; /* Gray color */
+    margin-top: 20px; /* Adjust margin as needed */
+}
