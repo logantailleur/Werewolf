@@ -31,6 +31,6 @@ body, html {
 .role-assign-image {
     width: 200px; /* Adjust width as needed */
     height: 200px; /* Adjust height as needed */
-    background-color: lightgray; /* Gray color */
-    margin-top: 20px; /* Adjust margin as needed */
+    margin: 0 auto;
+    /* margin-top: 20px; Adjust margin as needed */
 }
