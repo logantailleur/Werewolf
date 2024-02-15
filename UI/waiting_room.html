@@ -29,14 +29,26 @@
             Waiting for host to start the game....
         </div>
         
-        <!-- Placeholder Button to move onto Role Assignment.  -->
+        <!-- Placeholder Button to move onto Role Assignment. This page will automatically move onto the next page when the host starts the game. -->
         <div class="text-center">
-            <button href="role_assign.html" id="dummyWaitButton" class="btn-lg btn-primary mb-2 disabled-button" disabled>(move on to role assignment)</button>
+            <button id="dummyWaitButton" class="btn-lg btn-primary mb-2">(move on to role assignment)</button>
         </div>
 
     </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Get reference to the button element
+            var dummyWaitButton = document.getElementById("dummyWaitButton");
+            
+            // Add click event listener to the button
+            dummyWaitButton.addEventListener("click", function() {
+                // Redirect to the role assign page
+                window.location.href = "role_assign.html";
+            });
+        });
+    </script>
     
-    <script src="joinGame.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
