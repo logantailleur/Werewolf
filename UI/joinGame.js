@@ -1,27 +1,25 @@
-// Function to check if the input in the text boxes are valid
+//Validate name and lobby_code.
 function checkInput() {
     var gameCodeInput = document.getElementById("gameCodeInput");
     var nameInput = document.getElementById("nameInput")
     var joinGameButton = document.getElementById("joinGameButton");
     
-    // Enable the button if the input length is 5, disable it otherwise
+    //Enable/Disable join_game button based on validity.
     if (gameCodeInput.value.length === 5 && nameInput.value.length >= 1) {
         joinGameButton.disabled = false;
-        joinGameButton.classList.remove("disabled-button"); // Remove the disabled styling
+        joinGameButton.classList.remove("disabled-button"); //Remove disabled styling.
     } else {
         joinGameButton.disabled = true;
-        joinGameButton.classList.add("disabled-button"); // Add the disabled styling
+        joinGameButton.classList.add("disabled-button"); //Add disabled styling.
     }
 }
 
-// Function to handle the click event for the "Join Game" button
 function handleJoinGameClick() {
+    //TODO: Replace with DB call to see if lobby_code exists.
     var validGameCode = "11111"
 
-    // Retrieve the name entered by the user
+    //Get entered name, store in localStorage.
     var nameInput = document.getElementById("nameInput").value;
-
-    // Store the name in local storage
     localStorage.setItem("playerName", nameInput);
 
     // Check if the entered game code is correct
@@ -35,9 +33,8 @@ function handleJoinGameClick() {
     }
 }
 
-// Function to initialize event listeners
 function initializeEventListeners() {
-    // Add click event listener to the "Join Game" button
+    //Click EventListener for join_game button.
     var joinGameButton = document.getElementById("joinGameButton");
     joinGameButton.addEventListener("click", handleJoinGameClick);
 }
@@ -47,7 +44,7 @@ function initializeApp() {
     initializeEventListeners();
 }
 
-// Call the initializeApp function when the DOM content is loaded
+//Call initializeApp() when DOM is loaded.
 document.addEventListener("DOMContentLoaded", function() {
     initializeApp();
 });
