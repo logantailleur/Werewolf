@@ -1,11 +1,11 @@
 //Validate name and lobby_code.
 function checkInput() {
-    var gameCodeInput = document.getElementById("gameCodeInput");
-    var nameInput = document.getElementById("nameInput")
+    var nameInput = document.getElementById("nameInput").value;
+    var codeInput = document.getElementById("codeInput").value;
     var joinGameButton = document.getElementById("joinGameButton");
     
     //Enable/Disable join_game button based on validity.
-    if (gameCodeInput.value.length === 5 && nameInput.value.length >= 1) {
+    if (codeInput.length === 5 && nameInput.length >= 1) {
         joinGameButton.disabled = false;
         joinGameButton.classList.remove("disabled-button"); //Remove disabled styling.
     } else {
@@ -14,37 +14,38 @@ function checkInput() {
     }
 }
 
-function handleJoinGameClick() {
-    //TODO: Replace with DB call to see if lobby_code exists.
-    var validGameCode = "11111"
-
+async function joinGame() {
     //Get entered name, store in localStorage.
     var nameInput = document.getElementById("nameInput").value;
-    localStorage.setItem("playerName", nameInput);
+    localStorage.setItem("name", nameInput);
 
-    // Check if the entered game code is correct
-    if (gameCodeInput.value === validGameCode) {
-        // Navigate to the waiting room page
-        window.location.href = "waiting_room.html";
-    } else {
-        // Display an error message
-        var errorMessage = document.getElementById("joinGameError");
-        errorMessage.innerHTML = `Sorry, there is no game with code <strong>${gameCodeInput.value}</strong>. Please try again.`;
+    //Get entered lobby, store in localStorage.
+    var codeInput = document.getElementById("codeInput").value;
+    localStorage.setItem("lobby", codeInput);
+
+    //Checks that lobby exists in DB.
+    var exists = false;
+    const response0 = await fetch(`/api/getlobby/${codeInput}`);
+    const body0 = await response0.json();
+    if (body0.lobby != null) {
+        exists = true;
     }
-}
 
-function initializeEventListeners() {
-    //Click EventListener for join_game button.
-    var joinGameButton = document.getElementById("joinGameButton");
-    joinGameButton.addEventListener("click", handleJoinGameClick);
-}
+    if (!exists) {
+        var errorMessage = document.getElementById("joinGameError");
+        errorMessage.innerHTML = `Sorry, there is no game with code <strong>${codeInput}</strong>. Please try again.`;
+        return;
+    }
 
-// Function to initialize the application
-function initializeApp() {
-    initializeEventListeners();
-}
+    var added = true;
+    //TODO: DB call: add name to lobby.
 
-//Call initializeApp() when DOM is loaded.
-document.addEventListener("DOMContentLoaded", function() {
-    initializeApp();
-});
+    if (!added) {
+        var errorMessage = document.getElementById("joinGameError");
+        errorMessage.innerHTML = `Sorry, lobby <strong>${codeInput}</strong> is full. Please try again.`;
+        return;
+    }
+
+    // Navigate to the waiting room page
+    window.location.href = "waiting_room.html";
+}
