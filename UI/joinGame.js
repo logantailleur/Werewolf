@@ -1,51 +1,47 @@
-//Validate name and lobby_code.
-function checkInput() {
-    var nameInput = document.getElementById("nameInput").value;
-    var codeInput = document.getElementById("codeInput").value;
-    var joinGameButton = document.getElementById("joinGameButton");
-    
-    //Enable/Disable join_game button based on validity.
-    if (codeInput.length === 5 && nameInput.length >= 1) {
-        joinGameButton.disabled = false;
-        joinGameButton.classList.remove("disabled-button"); //Remove disabled styling.
-    } else {
-        joinGameButton.disabled = true;
-        joinGameButton.classList.add("disabled-button"); //Add disabled styling.
-    }
+import {joinGame} from './services/FetchAPI.js';
+
+//Initialize app when DOM content is loaded.
+document.addEventListener("DOMContentLoaded", function() {
+    initializeApp();
+});
+
+function initializeApp() {
+    initializeEventListeners();
 }
 
-async function joinGame() {
+function initializeEventListeners() {
+	//Click listener for join game button.
+    var joinGameBtn = document.getElementById("joinGameBtn");
+    joinGameBtn.addEventListener("click", handleJoinGameClick);
+}
+
+async function handleJoinGameClick() {
+    var userName = document.getElementById("userName").value;
+    var lobbyCode = document.getElementById("lobbyCode").value;
+
+    //Validate userName and lobbyCode.
+    if (lobbyCode.length !== 5 || userName.length < 1) {
+        var errorMessage = document.getElementById("startGameError");
+        errorMessage.innerHTML = `Sorry, username and/or game code are invalid. Please try again.`;
+        return;
+    }
+
     //Get entered name, store in localStorage.
-    var nameInput = document.getElementById("nameInput").value;
-    localStorage.setItem("name", nameInput);
+    localStorage.setItem("userName", userName);
 
-    //Get entered lobby, store in localStorage.
-    var codeInput = document.getElementById("codeInput").value;
-    localStorage.setItem("lobby", codeInput);
+    var response = joinGame(lobbyCode, userName);
+    if (response.success) {
+        //Get entered lobby, store in localStorage.
+        localStorage.setItem("lobbyCode", lobbyCode);
 
-    //Checks that lobby exists in DB.
-    var exists = false;
-    const response0 = await fetch(`/api/getlobby/${codeInput}`);
-    const body0 = await response0.json();
-    if (body0.lobby != null) {
-        exists = true;
-    }
+        //Get returned player ID, store in localStorage.
+        localStorage.setItem("playerId", response.playerId);
 
-    if (!exists) {
-        var errorMessage = document.getElementById("joinGameError");
-        errorMessage.innerHTML = `Sorry, there is no game with code <strong>${codeInput}</strong>. Please try again.`;
+        //Redirect to waiting_room page.
+        window.location.href = "waiting_room.html";
+    } else {
+        var errorMessage = document.getElementById("startGameError");
+        errorMessage.innerHTML = `Sorry, game <strong>${lobbyCode}</strong> doesn't exist or is full. Please try again.`;
         return;
     }
-
-    var added = true;
-    //TODO: DB call: add name to lobby.
-
-    if (!added) {
-        var errorMessage = document.getElementById("joinGameError");
-        errorMessage.innerHTML = `Sorry, lobby <strong>${codeInput}</strong> is full. Please try again.`;
-        return;
-    }
-
-    // Navigate to the waiting room page
-    window.location.href = "waiting_room.html";
 }

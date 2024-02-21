@@ -1,56 +1,45 @@
-//Generate random 5-character code.
-function createCode() {
-    var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-    var code = '';
-    for (var i = 0; i < 5; i++) {
-        code += characters.charAt(Math.floor(Math.random() * characters.length));
-    }
-    return code;
-}
+import {createGame, startGame} from './services/FetchAPI.js';
 
-async function createLobby(code) {
-    const response0 = await fetch(`/api/getlobby/${code}`);
-    const body0 = await response0.json();
-    if (body0.lobby != null) {
-        return false;
-    }
+//Initialize app when DOM content is loaded.
+document.addEventListener("DOMContentLoaded", function() {
+    initializeApp();
+});
 
-    const response = await fetch(`/api/createlobby`, {
-        method: 'post',
-        body: JSON.stringify({ game_code: code }),
-        headers: {
-          'Content-type': 'application/json; charset=UTF-8',
-        },
-    });
-    const body = await response.json();
-    
-    if (response?.status === 200) {
-        localStorage.setItem("lobby", code);
-        return true;
-    } else {
-        return false;
-    }
+function initializeApp() {
+    initializeHostGamePage();
+    initializeEventListeners();
 }
 
 function initializeHostGamePage() {
-    var valid = false;
-    while (!valid) {
-        //Create lobby's code.
-        var code = createCode();
-        //Adds lobby to database (returns false if it already exists).
-        valid = createLobby(code);
-    }
+    //Create lobby in DB.
+    var lobbyCode = createGame();
+
+    //Store lobby's code in local storage.
+    localStorage.setItem("lobbyCode", lobbyCode);
 
     //Display lobby's code.
     var generatedCodeElement = document.getElementById("lobbyCode");
-    generatedCodeElement.textContent = "Lobby Code: " + code;
+    generatedCodeElement.textContent = "Lobby Code: " + lobbyCode;
 }
 
-async function startGame() {
-    //TODO: Call DB to verify 5 people are in lobby, start game if yes.
+function initializeEventListeners() {
+	//Click listener for start game button.
+    var startGameBtn = document.getElementById("startGameBtn");
+    startGameBtn.addEventListener("click", handleStartGameClick);
 }
 
-//Call initializeApp() when DOM is loaded.
-document.addEventListener("DOMContentLoaded", function() {
-    initializeHostGamePage();
-});
+function handleStartGameClick() {
+    //Get lobby's code from local storage.
+    var lobbyCode = localStorage.getItem("lobbyCode");
+
+    //Start game if 5 people are in lobby.
+    var response = startGame(lobbyCode);
+    if (response.success) {
+        //Redirect to role_assign page.
+        window.location.href = "role_assign.html";
+    } else {
+        var errorMessage = document.getElementById("startGameError");
+        errorMessage.innerHTML = `Sorry, game <strong>${lobbyCode}</strong> could not be started. Please try again.`;
+        return;
+    }
+}

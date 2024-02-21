@@ -34,8 +34,8 @@ export function createGame() {
         });
 }
 
-export function startGame(gameCode) {
-    return fetch(`http://${address}:4000/api/game/start/${gameCode}`, {
+export function startGame(lobbyCode) {
+    return fetch(`http://${address}:4000/api/game/start/${lobbyCode}`, {
         method: 'POST',
     })
         .then((response) => {
@@ -52,13 +52,13 @@ export function startGame(gameCode) {
         });
 }
 
-export function joinGame(gameCode, playerData) {
-    return fetch(`http://${address}:4000/api/game/join/${gameCode}`, {
+export function joinGame(lobbyCode, userName) {
+    return fetch(`http://${address}:4000/api/game/join/${lobbyCode}`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify(playerData),
+        body: JSON.stringify(userName),
     })
     .then((response) => {
         if (!response.ok) {
@@ -74,8 +74,8 @@ export function joinGame(gameCode, playerData) {
     });
 }
 
-export function viewRole(gameCode, playerId) {
-    return fetch(`http://${address}:4000/api/game/player/role/${gameCode}/${playerId}`)
+export function viewRole(lobbyCode, playerId) {
+    return fetch(`http://${address}:4000/api/game/player/role/${lobbyCode}/${playerId}`)
     .then((response) => {
         if (!response.ok) {
             throw new Error('Network response was not ok');
