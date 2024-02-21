@@ -3,12 +3,11 @@ import { fetchTest } from './services/FetchAPI.js';
 // Function to handle the click event for hosting a game
 function handleHostGameClick() {
 	// Redirect to the host_game.html page
-
 	window.location.href = 'host_game.html';
 }
 
 function handleJoinGameClick() {
-	// Redirect to the host_game.html page
+	// Redirect to the join_game.html page
 	window.location.href = 'join_game.html';
 }
 
