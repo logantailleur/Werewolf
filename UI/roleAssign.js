@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", function() {
     var roleAnnouncement = document.getElementById("roleAnnouncement");
     var roleSummary = document.getElementById("roleSummary");
     var roleImage = document.querySelector(".role-assign-image img");
+    var nextButton = document.getElementById("nextBtn")
     
     // Set the src attribute to the desired image path
     roleImage.src = "ImageAssets/wolficon.png";
@@ -33,5 +34,11 @@ document.addEventListener("DOMContentLoaded", function() {
         // Change the role abilities
         viewRoleAbilities.textContent = "This role's abilities";
         
+    });
+
+    nextButton.addEventListener("click", function() {
+
+        window.location.href = 'village_view.html';
+
     });
 });

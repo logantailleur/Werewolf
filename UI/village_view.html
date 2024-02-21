@@ -22,20 +22,43 @@
         </a>
     </nav>
 
-    <!-- Role Assignment UI -->
-    <div class="container-fluid h-100 d-flex flex-column justify-content-center align-items-center">
+    <!-- Village View UI -->
+    <div class="container-fluid h-100 d-flex flex-column position-relative">
 
-        <!-- Role Announcement -->
-        <div id="roleAnnouncement" class="text-very-large font-weight-bold">
+        <!-- Top Row Buttons -->
+        <div class="row justify-content-between mt-3">
+            <div class="col-auto">
+                <!-- Button: Leave Game -->
+                <button id="leaveGameBtn" class="btn btn-danger">Leave Game</button>
+            </div>
+            <div class="col-auto">
+                <!-- Button: View Role -->
+                <button id="viewRoleBtn" class="btn btn-primary" data-toggle="modal" data-target="#roleModal">View My Role</button>
+            </div>
         </div>
 
-        <!-- Filler Box for Image -->
-        <div class="role-assign-image">
-            <img alt="Role Assignment Image" class="img-fluid">
+        <!-- My Role Card -->
+        <div class="row justify-content-center mb-5">
+            <div class="card">
+                <div class="card-body text-center">
+                    <img src="ImageAssets/playericon.jpg" class="role-img" alt="Role Icon">
+                    <p class="card-text">My Name</p>
+                </div>
+            </div>
         </div>
 
-        <!-- Button: View Role -->
-        <button id="viewRoleBtn" class="btn btn-primary mt-3" data-toggle="modal" data-target="#roleModal">View Role</button>
+        <!-- Other villager role cards -->
+        <div id="otherRoleCards" class="row justify-content-center mt-3">
+            <!-- Placeholder for dynamically generated role cards -->
+        </div>
+
+        <!-- Top Row Buttons -->
+        <div class="row justify-content-center mt-3">
+            <div class="col-auto">
+                <!-- Button: View Role -->
+                <button id="nightFallBtn" class="btn btn-primary" >Ready for Nightfall</button>
+            </div>
+        </div>
 
         <!-- View Role Modal -->
         <div class="modal fade" id="roleModal" tabindex="-1" role="dialog" aria-labelledby="roleModalLabel" aria-hidden="true">
@@ -62,16 +85,9 @@
             </div>
         </div>
 
-        <!-- Text Description of the Role -->
-        <div id="roleSummary" class="role-description mt-3">
-        </div>
-
-        <!-- Button: Next -->
-        <button id="nextBtn" class="btn btn-primary mt-3">Next</button>
-
     </div>
 
-    <script src="roleAssign.js"></script>
+    <script src="village_view.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
