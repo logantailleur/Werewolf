@@ -1,3 +1,5 @@
+import { roleCardHTML } from "./roleCard.js";
+
 document.addEventListener("DOMContentLoaded", function() {
     // Get references to document portions
     var viewRoleButton = document.getElementById("viewRoleBtn");
@@ -24,33 +26,37 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 // Function to generate and display role cards
-function generateRoleCards(numRoles) {
+function generateRoleCards() {
     // Clear previous role cards
     document.getElementById("otherRoleCards").innerHTML = "";
 
     // Generate and append role cards
-    for (let i = 0; i < numRoles; i++) {
+    // TODO: Fetch number of roles and add dynamic content
+    let nOtherPlayers = 6;
+    for (let i = 0; i < nOtherPlayers; i++) {
         // Create a new role card element
-        let roleCard = document.createElement("div");
-        roleCard.classList.add("col-3", "mb-3"); // Adjust the width and margin as needed
-        roleCard.innerHTML = `
-            <div class="card">
-                <div class="card-body text-center">
-                    <img src="ImageAssets/playericon.jpg" class="role-img" alt="Role Icon">
-                    <p class="card-text">Player Name</p>
-                </div>
-            </div>
-        `;
+        let roleCardElement = document.createElement("div");
+        roleCardElement.classList.add("col-3", "mb-3"); // Adjust the width and margin as needed
+        roleCardElement.innerHTML = roleCardHTML;
+
+        let playerName = roleCardElement.querySelector(".player-name")
+        playerName.textContent = "Player " + (i + 2);
 
         // Append the role card to the container
-        document.getElementById("otherRoleCards").appendChild(roleCard);
+        document.getElementById("otherRoleCards").appendChild(roleCardElement);
     }
 }
 
 // Function to initialize the application
 function initializeApp() {
     // Generate initial role cards (e.g., 10)
-    generateRoleCards(6); // Adjust the number of roles as needed
+    generateRoleCards(); // Adjust the number of roles as needed
+
+    // Load my role card
+    let myRoleCard = document.getElementById("myRoleCard");
+    myRoleCard.innerHTML = roleCardHTML;
+    let myName = myRoleCard.querySelector(".player-name");
+    myName.textContent = "My Name"
 }
 
 // Call the initializeApp function when the DOM content is loaded
