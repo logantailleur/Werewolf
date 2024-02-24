@@ -34,3 +34,8 @@ body, html {
     margin: 0 auto;
     /* margin-top: 20px; Adjust margin as needed */
 }
+
+.role-img {
+    width: 100px; /* Adjust the width as needed */
+    height: auto; /* Maintain aspect ratio */
+}

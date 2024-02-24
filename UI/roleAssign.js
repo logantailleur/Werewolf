@@ -66,3 +66,4 @@ function handleViewRoleClick() {
         viewRoleAbilities.textContent = "You're a little weak, but there is strength in numbers";
     }
 }
+
