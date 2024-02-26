@@ -15,6 +15,7 @@ function initializeRoleAssignPage() {
     var roleAnnouncement = document.getElementById("roleAnnouncement");
     var roleSummary = document.getElementById("roleSummary");
     var roleImage = document.querySelector(".role-assign-image img");
+    var nextButton = document.getElementById("nextBtn")
 
     // Change the role announcement
     roleAnnouncement.textContent = "You are a [role]!"
@@ -48,6 +49,14 @@ function handleViewRoleClick() {
     // Change the objective
     viewRoleObjective.textContent = "This role's objectives.";
 
-    // Change the role abilities
-    viewRoleAbilities.textContent = "This role's abilities";
-}
+        // Change the role abilities
+        viewRoleAbilities.textContent = "This role's abilities";
+        
+    });
+
+    nextButton.addEventListener("click", function() {
+
+        window.location.href = 'village_view.html';
+
+    });
+});
