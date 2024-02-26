@@ -1,44 +1,69 @@
-document.addEventListener("DOMContentLoaded", function() {
-    // Get references to document portions
-    var viewRoleButton = document.getElementById("viewRoleBtn");
-    var roleAnnouncement = document.getElementById("roleAnnouncement");
-    var roleSummary = document.getElementById("roleSummary");
-    var roleImage = document.querySelector(".role-assign-image img");
-    var nextButton = document.getElementById("nextBtn")
-    
-    // Set the src attribute to the desired image path
-    roleImage.src = "ImageAssets/wolficon.png";
+import { viewRole } from './services/FetchAPI.js';
 
-    // Change the role announcement
-    roleAnnouncement.textContent = "You are a [role]!"
-
-    // Change the role summary
-    roleSummary.textContent = "Summary of role"
-
-    // Add click event listener to the View Role button
-    viewRoleButton.addEventListener("click", function() {
-        // Set the src attribute to the desired image path inside the modal
-        var modalRoleImage = document.querySelector("#roleModal .role-assign-image img");
-        modalRoleImage.src = "ImageAssets/wolficon.png";
-        // Get a reference to the modal title and body elements
-        var viewRoleTitle = document.getElementById("viewRoleTitle");
-        var viewRoleObjective = document.getElementById("viewRoleObjective");
-        var viewRoleAbilities = document.getElementById("viewRoleAbilities");
-
-        // Change the modal title
-        viewRoleTitle.textContent = "Role Title";
-
-        // Change the objective
-        viewRoleObjective.textContent = "This role's objectives.";
-
-        // Change the role abilities
-        viewRoleAbilities.textContent = "This role's abilities";
-        
-    });
-
-    nextButton.addEventListener("click", function() {
-
-        window.location.href = 'village_view.html';
-
-    });
+//Initialize app when DOM content is loaded.
+document.addEventListener('DOMContentLoaded', function () {
+	initializeApp();
 });
+
+function initializeApp() {
+	initializeRoleAssignPage();
+	initializeEventListeners();
+}
+
+async function initializeRoleAssignPage() {
+	const response = await viewRole(
+		localStorage.getItem('lobbyCode'),
+		localStorage.getItem('playerId')
+	);
+	// Get references to document portions
+	var roleAnnouncement = document.getElementById('roleAnnouncement');
+	var roleSummary = document.getElementById('roleSummary');
+	var roleImage = document.querySelector('.role-assign-image img');
+
+	console.log(response);
+	localStorage.setItem('role', response.role);
+
+	if (response.role == 'werewolf') {
+		roleAnnouncement.textContent = 'You are a werewolf!';
+		roleSummary.textContent = "Stay hidden, don't get caught!";
+		roleImage.src = 'ImageAssets/wolficon.png';
+	} else {
+		roleAnnouncement.textContent = 'You are a villager!';
+		roleSummary.textContent = 'Try to find the werewolves!';
+		roleImage.src = 'ImageAssets/villagericon.png';
+	}
+}
+
+function initializeEventListeners() {
+	//Click listener for view role button.
+	var viewRoleBtn = document.getElementById('viewRoleBtn');
+	viewRoleBtn.addEventListener('click', handleViewRoleClick);
+}
+
+function handleViewRoleClick() {
+	// Set the src attribute to the desired image path inside the modal
+	var modalRoleImage = document.querySelector(
+		'#roleModal .role-assign-image img'
+	);
+
+    var role = localStorage.getItem("role");
+
+
+	// Get a reference to the modal title and body elements
+	var viewRoleTitle = document.getElementById('viewRoleTitle');
+	var viewRoleObjective = document.getElementById('viewRoleObjective');
+	var viewRoleAbilities = document.getElementById('viewRoleAbilities');
+
+    if (role == "werewolf") {
+        modalRoleImage.src = 'ImageAssets/wolficon.png';
+        viewRoleTitle.textContent = 'Werewolf';
+        viewRoleObjective.textContent = "Kill off the entire village and don't get caught";
+        viewRoleAbilities.textContent = "You can kill one other player each night";
+    } else {
+        modalRoleImage.src = 'ImageAssets/villagericon.png';
+        viewRoleTitle.textContent = 'Villager';
+        viewRoleObjective.textContent = "Find the identity of the werewolves";
+        viewRoleAbilities.textContent = "You're a little weak, but there is strength in numbers";
+    }
+}
+
