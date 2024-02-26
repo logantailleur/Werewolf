@@ -21,7 +21,7 @@ async function handleJoinGameClick() {
 
     //Validate userName and lobbyCode.
     if (lobbyCode.length !== 5 || userName.length < 1) {
-        var errorMessage = document.getElementById("startGameError");
+        var errorMessage = document.getElementById("joinGameError");
         errorMessage.innerHTML = `Sorry, username and/or game code are invalid. Please try again.`;
         return;
     }
@@ -29,7 +29,7 @@ async function handleJoinGameClick() {
     //Get entered name, store in localStorage.
     localStorage.setItem("userName", userName);
 
-    var response = joinGame(lobbyCode, userName);
+    var response = await joinGame(lobbyCode, userName);
     if (response.success) {
         //Get entered lobby, store in localStorage.
         localStorage.setItem("lobbyCode", lobbyCode);

@@ -10,9 +10,10 @@ function initializeApp() {
     initializeEventListeners();
 }
 
-function initializeHostGamePage() {
+async function initializeHostGamePage() {
     //Create lobby in DB.
-    var lobbyCode = createGame();
+    var lobbyCode = await createGame();
+    console.log(lobbyCode);
 
     //Store lobby's code in local storage.
     localStorage.setItem("lobbyCode", lobbyCode);
@@ -28,12 +29,12 @@ function initializeEventListeners() {
     startGameBtn.addEventListener("click", handleStartGameClick);
 }
 
-function handleStartGameClick() {
+async function handleStartGameClick() {
     //Get lobby's code from local storage.
     var lobbyCode = localStorage.getItem("lobbyCode");
 
-    //Start game if 5 people are in lobby.
-    var response = startGame(lobbyCode);
+    //Start game if 6 people are in lobby.
+    var response = await startGame(lobbyCode);
     if (response.success) {
         //Redirect to role_assign page.
         window.location.href = "role_assign.html";

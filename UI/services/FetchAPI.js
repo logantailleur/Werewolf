@@ -1,4 +1,4 @@
-const address = 'localhost';
+const address = '35.86.76.23';
 
 export function fetchTest() {
     return fetch(`http://${address}:4000/api/test`)
@@ -10,6 +10,7 @@ export function fetchTest() {
         })
         .then((data) => {
             console.log(data);
+            return data;
         })
         .catch((error) => {
             console.error('There was a problem with the fetch operation:', error);
@@ -28,6 +29,7 @@ export function createGame() {
         })
         .then((data) => {
             console.log('Game created:', data);
+            return data;
         })
         .catch((error) => {
             console.error('There was a problem creating the game:', error);
@@ -46,6 +48,7 @@ export function startGame(lobbyCode) {
         })
         .then((data) => {
             console.log('Game started:', data);
+            return data;
         })
         .catch((error) => {
             console.error('There was a problem starting the game:', error);
@@ -68,6 +71,7 @@ export function joinGame(lobbyCode, userName) {
     })
     .then((data) => {
         console.log('Player joined game:', data);
+        return data;
     })
     .catch((error) => {
         console.error('There was a problem joining the game:', error);
@@ -84,6 +88,7 @@ export function viewRole(lobbyCode, playerId) {
     })
     .then((data) => {
         console.log('Player role:', data.role);
+        return data;
     })
     .catch((error) => {
         console.error('There was a problem fetching player role:', error);
