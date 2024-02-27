@@ -46,17 +46,15 @@ function addGame(db, gameCode, datetimeCreated) {
 }
 
 function startGame(db, gameCode) {
-    let gameAvailable = "SELECT started" + 
-                        "FROM game" + 
+    let gameAvailable = "SELECT started " + 
+                        "FROM game " + 
                         "WHERE game_code = ?";
     db.get(gameAvailable, [gameCode], (err, row) => {
         if (err) {
-            if (err) {
-                return {success: false, message: "Failed to check if game has started:" + err.message};
-            }
-            if (row.started != 'n') {
-                return {success: false, message: "Game has already started."}
-            }
+            return {success: false, message: "Failed to check if game has started:" + err.message};
+        }
+        if (row.started != 'n') {
+            return {success: false, message: "Game has already started."}
         }
     });
     let sql = "UPDATE GAME" + 
@@ -72,8 +70,8 @@ function startGame(db, gameCode) {
 }
 
 function joinGame(db, gameCode, playerID, playerName) {
-    let gameOpenQuery = "SELECT started, num_players" + 
-                        "FROM game" +
+    let gameOpenQuery = "SELECT started, num_players " + 
+                        "FROM game " +
                         "WHERE game_code = ?";
     db.get(gameOpenQuery, [gameCode], (err, row) => {
         if (err) {
@@ -85,23 +83,38 @@ function joinGame(db, gameCode, playerID, playerName) {
         if (row.num_players >= PLAYER_LIMIT) {
             return {success: false, message: "Game is full."}
         }
-        let playerInsert = "INSERT INTO player (game_code, player_id, player_name)" + 
-                            "VALUES (?, ?, ?)";
+        const playerInsert = "INSERT INTO player (game_code, player_id, player_name) VALUES (?, ?, ?)";
         db.run(playerInsert, [gameCode, playerID, playerName], function(err) {
             if (err) {
-                return {success: false, message: "Failed to add player:" + err.message};
+                db.run("ROLLBACK");
+                return {success: false, message: "Failed to add new player: " + err.message};
             }
         });
-        //TODO: this should be atomic; either both work or neitheer work.
-        let gameUpdate = "UPDATE game" + 
-                            "SET num_players = num_players + 1" + 
-                            "WHERE game_code = ?";
+        const gameUpdate = "UPDATE game SET num_players = num_players + 1 WHERE game_code = ?";
         db.run(gameUpdate, [gameCode], function(err) {
             if (err) {
-                return {success: false, message: "Failed to update player count:" + err.message};
+                db.run("ROLLBACK");
+                return {success: false, message: "Failed to update player count: " + err.message};
             }
+            db.run("COMMIT");
         });
         return {success: true, message: "Successfully added player."};
+    });
+}
+
+function getRole(db, gameCode, playerID) {
+    let roleQuery = "SELECT role FROM player " + 
+                    "WHERE game_code = ? AND player_id = ?";
+    db.get(roleQuery, [gameCode, playerID], (err, row) => {
+        if (err) {
+            return {success: false, role: null, message: "Failed to get role: " + err.message};
+        }
+        if (row) {
+            return {success: true, role: row.role, message: "Succesfully retrieved player role."};
+        }
+        else {
+            return {success: false, role: null, message: "Incorrect game code or player id."}
+        }
     });
 }
 
@@ -153,4 +166,4 @@ function printDB(db) {
 }
 
 // Export the database object
-module.exports = {db, addGame, startGame, joinGame, closeDb, wipeDb, printDB};
+module.exports = {db, addGame, startGame, joinGame, getRole, closeDb, wipeDb, printDB};
