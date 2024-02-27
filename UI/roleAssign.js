@@ -15,6 +15,7 @@ async function initializeRoleAssignPage() {
 		localStorage.getItem('lobbyCode'),
 		localStorage.getItem('playerId')
 	);
+
 	// Get references to document portions
 	var roleAnnouncement = document.getElementById('roleAnnouncement');
 	var roleSummary = document.getElementById('roleSummary');
@@ -47,7 +48,6 @@ function handleViewRoleClick() {
 	);
 
     var role = localStorage.getItem("role");
-
 
 	// Get a reference to the modal title and body elements
 	var viewRoleTitle = document.getElementById('viewRoleTitle');
