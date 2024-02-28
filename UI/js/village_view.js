@@ -1,4 +1,5 @@
 import { roleCardHTML } from "./roleCard.js";
+import { roleModalHTML } from "./roleModal.js";
 
 //Initialize app when DOM content is loaded.
 document.addEventListener("DOMContentLoaded", function() {
@@ -14,6 +15,10 @@ function initializeApp() {
     myRoleCard.innerHTML = roleCardHTML;
     let myName = myRoleCard.querySelector(".player-name");
     myName.textContent = "My Name"
+
+    //Load role modal
+    let roleModal = document.getElementById("roleModal");
+    roleModal.innerHTML = roleModalHTML;
 }
 
 //Generate initial role cards (e.g., 10).
