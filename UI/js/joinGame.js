@@ -1,4 +1,4 @@
-import {joinGame} from './services/FetchAPI.js';
+import {joinGame} from '../services/FetchAPI.js';
 
 //Initialize app when DOM content is loaded.
 document.addEventListener("DOMContentLoaded", function() {
