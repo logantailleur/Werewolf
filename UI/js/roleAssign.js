@@ -1,4 +1,5 @@
 import { viewRole } from '../services/FetchAPI.js';
+import { roleModalHTML } from "./roleModal.js";
 
 //Initialize app when DOM content is loaded.
 document.addEventListener('DOMContentLoaded', function () {
@@ -8,6 +9,10 @@ document.addEventListener('DOMContentLoaded', function () {
 function initializeApp() {
 	initializeRoleAssignPage();
 	initializeEventListeners();
+
+	//Load role modal
+	let roleModal = document.getElementById("roleModal");
+	roleModal.innerHTML = roleModalHTML;
 }
 
 async function initializeRoleAssignPage() {
