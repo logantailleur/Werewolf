@@ -34,7 +34,7 @@ function generateRoleCards() {
         //Create new role card element.
         let roleCardElement = document.createElement("div");
         //Adjust width and margin as needed.
-        roleCardElement.classList.add("col-3", "mb-3");
+        roleCardElement.classList.add("col-lg-3", "col-md-4", "col-sm-6", "mb-3");
         roleCardElement.innerHTML = roleCardHTML;
 
         let playerName = roleCardElement.querySelector(".player-name")
