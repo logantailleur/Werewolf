@@ -27,7 +27,7 @@ function initializeEventListeners() {
 async function handleStartGameClick() {
 	//Get lobby's code from local storage.
 	var lobbyCode = localStorage.getItem('lobbyCode');
-	var joinReponse = await joinGame(lobbyCode, 'Host');
+	var joinResponse = await joinGame(lobbyCode, 'Host');
 	localStorage.setItem('playerId', joinResponse.playerId);
 	//Start game if 6 people are in lobby.
 	var response = await startGame(lobbyCode);
