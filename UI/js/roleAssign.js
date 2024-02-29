@@ -20,6 +20,7 @@ async function initializeRoleAssignPage() {
 		localStorage.getItem('lobbyCode'),
 		localStorage.getItem('playerId')
 	);
+	console.log(response);
 
 	// Get references to document portions
 	var roleAnnouncement = document.getElementById('roleAnnouncement');
