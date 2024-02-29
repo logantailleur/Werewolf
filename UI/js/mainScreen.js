@@ -1,3 +1,5 @@
+import { createGame } from '../services/FetchAPI.js';
+
 //Initialize app when DOM content is loaded.
 document.addEventListener('DOMContentLoaded', function () {
 	initializeApp();
@@ -17,8 +19,10 @@ function initializeEventListeners() {
 	joinGameBtn.addEventListener('click', handleJoinGameClick);
 }
 
-function handleHostGameClick() {
+async function handleHostGameClick() {
 	//Redirect to host_game page.
+	var lobbyCode = await createGame();
+	localStorage.setItem('lobbyCode', lobbyCode.gameCode);
 	window.location.href = 'host_game.html';
 }
 

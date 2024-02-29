@@ -1,4 +1,5 @@
-const address = '35.86.76.23';
+// const address = '35.86.76.23';
+const address = 'localhost';
 
 export function fetchTest() {
     return fetch(`http://${address}:4000/api/test`)
@@ -56,12 +57,11 @@ export function startGame(lobbyCode) {
 }
 
 export function joinGame(lobbyCode, userName) {
-    return fetch(`http://${address}:4000/api/game/join/${lobbyCode}`, {
+    return fetch(`http://${address}:4000/api/game/join/${lobbyCode}/${userName}`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify(userName),
     })
     .then((response) => {
         if (!response.ok) {
