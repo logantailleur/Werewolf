@@ -138,7 +138,11 @@ function joinGame(gameCode, playerID, playerName) {
 		db.get(gameOpenQuery, [gameCode], (err, row) => {
 			if (err) {
 				reject({ success: false, message: err.message });
-			} else if (row && row.started !== 'n') {
+			} 
+            else if (!row) {
+                reject({success: false, message: "Invalid game code."});
+            }
+            else if (row && row.started !== 'n') {
 				// Game has already started
 				resolve({ success: false, message: 'Game has already started.' });
 			} else if (row && row.num_players >= PLAYER_LIMIT) {
