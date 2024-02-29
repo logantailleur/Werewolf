@@ -79,8 +79,14 @@ async function startGame(gameCode) {
                         try {
                             // Get all players in the game
                             let players = await getAllPlayers(gameCode);
+                            console.log("before assignment");
+                            console.log(players);
                             // Assign roles to players
                             await assignRoles(gameCode, players);
+
+                            players = await getAllPlayers(gameCode);
+                            console.log("after assignment")
+                            console.log(players);
                             // Game started successfully
                             resolve({ success: true, message: 'Successfully started game.' });
                         } catch (error) {

@@ -1,5 +1,5 @@
-// const address = '35.86.76.23';
-const address = 'localhost';
+const address = '54.203.49.42';
+// const address = 'localhost';
 
 export function fetchTest() {
     return fetch(`http://${address}:4000/api/test`)
