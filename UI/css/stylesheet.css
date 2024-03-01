@@ -39,3 +39,7 @@ body, html {
     width: 100px; /* Adjust the width as needed */
     height: auto; /* Maintain aspect ratio */
 }
+
+.role-card.selected .card-body{
+    background-color: red;
+}
