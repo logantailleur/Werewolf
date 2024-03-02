@@ -95,6 +95,22 @@ export function viewRole(lobbyCode, playerId) {
     });
 }
 
+export function players(lobbyCode) {
+    return fetch(`http://${address}:4000/api/game/players/${lobbyCode}`)
+    .then((response) => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then((data) => {
+        console.log('Players:', data.players);
+        return data;
+    })
+    .catch((error) => {
+        console.error('There was a problem fetching players:', error);
+    });
+}
 
 /*
     To use the fetch functions to make api requests follow this format 

@@ -10,7 +10,7 @@ function initializeApp() {
 	initializeRoleAssignPage();
 	initializeEventListeners();
 
-	//Load role modal
+	//Load role modal.
 	let roleModal = document.getElementById("roleModal");
 	roleModal.innerHTML = roleModalHTML;
 }
@@ -45,6 +45,10 @@ function initializeEventListeners() {
 	//Click listener for view role button.
 	var viewRoleBtn = document.getElementById('viewRoleBtn');
 	viewRoleBtn.addEventListener('click', handleViewRoleClick);
+	
+	//Click listener for enter village button.
+	var villageBtn = document.getElementById('villageBtn');
+	villageBtn.addEventListener('click', handleVillageClick);
 }
 
 function handleViewRoleClick() {
@@ -73,3 +77,6 @@ function handleViewRoleClick() {
     }
 }
 
+function handleVillageClick() {
+	window.location.href = 'village_view.html';
+}
