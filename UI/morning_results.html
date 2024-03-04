@@ -37,8 +37,17 @@
         <div id="resultSummary" class="role-description mt-3">
         </div>
 
-        <!-- Button: Next -->
-        <button id="nextBtn" class="btn btn-primary mt-3">Next</button>
+        <!-- Dummy Button to go to voting screen -->
+        <button id="nextBtn" class="btn btn-primary mt-3">Next
+        </button>
+        <script>
+            // Add an event listener to the button
+            document.getElementById("nextBtn").addEventListener("click", function() {
+                // Navigate to the "voting_screen.html" page
+                window.location.href = "voting_screen.html";
+            });
+        </script>
+        
     </div>
 
     <script src="js/morningResults.js" type="module"></script>
