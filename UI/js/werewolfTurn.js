@@ -88,7 +88,9 @@ function initializeEventListeners() {
 
     var choosePlayerBtn = document.getElementById("choosePlayerBtn");
     choosePlayerBtn.addEventListener("click", handleChoosePlayerBtnClick);
+
 }
+
 
 function handleChoosePlayerBtnClick() {
     var selectedCardId = document.querySelector('.role-card.selected').id;
