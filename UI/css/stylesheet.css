@@ -1,0 +1,45 @@
+
+body, html {
+    height: 100%;
+    margin: 0;
+}
+
+.container-fluid {
+    height: 100%;
+}
+
+.text-very-large {
+    font-size: 36px; 
+}
+
+#joinGameButton.disabled-button {
+    background-color: #6c757d; /* Gray color */
+    border-color: #6c757d; /* Gray color */
+    cursor: not-allowed;
+}
+
+#startGameButton.disabled-button {
+    background-color: #6c757d; /* Gray color */
+    border-color: #6c757d; /* Gray color */
+    cursor: not-allowed;
+}
+
+.mt-3 {
+    margin-top: 1.5rem; /* Adjust this value as needed */
+}
+
+.role-assign-image {
+    width: 200px; /* Adjust width as needed */
+    height: 200px; /* Adjust height as needed */
+    margin: 0 auto;
+    /* margin-top: 20px; Adjust margin as needed */
+}
+
+.role-img {
+    width: 100px; /* Adjust the width as needed */
+    height: auto; /* Maintain aspect ratio */
+}
+
+.role-card.selected .card-body{
+    background-color: red;
+}
