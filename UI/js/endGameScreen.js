@@ -30,34 +30,26 @@ async function initializeRoleAssignPage() {
 	// console.log(response);
 	// localStorage.setItem('role', 'werewolf');
 
-    var victimName = "[Victim Name]";
-    var victimRole = "[Victim Role]";
-    var victimImage = 'ImageAssets/villagericon.png';
+    var werewolfImage = 'ImageAssets/wolficon.png';
+    var villagerImage = 'ImageAssets/villagericon.png'
+    var werewolfWin = false;
 
-    resultAnnouncement.textContent = victimName + ' was killed! They were a ' + victimRole + '!';
-    roleImage.src = victimImage;
-    resultSummary.textContent = "";
+    if (werewolfWin){
+        resultAnnouncement.textContent = "The werewolves won!";
+        roleImage.src = werewolfImage;
+        resultSummary.textContent = "There's no more hope for the village :(";
+    } else {
+        resultAnnouncement.textContent = "The villagers won!";
+        roleImage.src = villagerImage;
+        resultSummary.textContent = "The villagers successfully rooted out and killed all the werewolves!";
+    }
+    
 }
 
 function initializeEventListeners() {
 	//Click listener for view role button.
-	// var viewRoleBtn = document.getElementById('viewRoleBtn');
-	// viewRoleBtn.addEventListener('click', handleViewRoleClick);
-
-	var moveOnBtn = document.getElementById("moveOnBtn");
-    moveOnBtn.addEventListener('click', handleMoveOnBtnClick)
-}
-
-function handleMoveOnBtnClick() {
-    var endGame = true;
-	// change to endGame 
-
-    if (endGame) {
-        window.location.href = 'end_game_screen.html';
-    } else {
-        window.location.href = 'village_view.html';
-    }
-
+	var viewRoleBtn = document.getElementById('viewRoleBtn');
+	viewRoleBtn.addEventListener('click', handleViewRoleClick);
 }
 
 function handleViewRoleClick() {
@@ -85,3 +77,4 @@ function handleViewRoleClick() {
         viewRoleAbilities.textContent = "You're a little weak, but there is strength in numbers";
     }
 }
+
