@@ -48,3 +48,7 @@ body, html {
     opacity: 0.5; /* Reduce opacity for an undetectable effect */
     /* Add other styling for making the card visually distinct when the player is dead */
 }
+
+.disabled {
+    pointer-events: none;
+}

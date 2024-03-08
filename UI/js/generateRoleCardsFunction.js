@@ -20,6 +20,7 @@ export function generateRoleCards() {
         // If dead, make the card non-selectable
         if (isPlayerDead){
             roleCardElement.classList.add("dead");
+            roleCardElement.classList.add("disabled");
         }
 
         roleCardElement.innerHTML = roleCardHTML;
