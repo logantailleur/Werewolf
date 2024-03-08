@@ -59,6 +59,27 @@
             </div>
         </div>
 
+        <!-- Dummy button to move onto vote results screen -->
+        <div class="row justify-content-center mt-3">
+            <div class="col-auto">
+                <!-- Button: View Role -->
+                <button id="moveOnBtn" class="btn btn-primary" >[Move on]</button>
+            </div>
+        </div>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                // Get reference to the button element
+                var dummyWaitButton = document.getElementById("moveOnBtn");
+                
+                // Add click event listener to the button
+                dummyWaitButton.addEventListener("click", function() {
+                    // Redirect to the role assign page
+                    window.location.href = "vote_results.html";
+                });
+            });
+        </script>
+
         <!-- View Role Modal -->
         <div class="modal fade" id="roleModal" tabindex="-1" role="dialog" aria-labelledby="roleModalLabel" aria-hidden="true">
         </div>

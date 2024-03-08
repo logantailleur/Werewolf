@@ -54,6 +54,18 @@
                 <button id="nightFallBtn" class="btn btn-primary" >Ready for Nightfall</button>
             </div>
         </div>
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                // Get reference to the button element
+                var dummyWaitButton = document.getElementById("nightFallBtn");
+                
+                // Add click event listener to the button
+                dummyWaitButton.addEventListener("click", function() {
+                    // Redirect to the role assign page
+                    window.location.href = "werewolf_turn.html";
+                });
+            });
+        </script>  
 
         <!-- View Role Modal -->
         <div class="modal fade" id="roleModal" tabindex="-1" role="dialog" aria-labelledby="roleModalLabel" aria-hidden="true">

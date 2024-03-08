@@ -20,18 +20,18 @@ function initializeApp() {
     let roleModal = document.getElementById("roleModal");
     roleModal.innerHTML = roleModalHTML;
 
-    // Determine if I, the player, am a werewolf
-    let isWerewolf = true;
+    // Determine if I, the player, am a doctor
+    let isDoctor = true;
     
     let actionDescription = document.getElementById("actionDescription");
 
-    if (isWerewolf) {
-        actionDescription.innerHTML = "<p>Choose your prey 😈</p>";
+    if (isDoctor) {
+        actionDescription.innerHTML = "<p>Choose someone to save from the werewolves 💊</p>";
     } else {
         // If I am not a werewolf, replace the other villager role cards and the bottom button with text
         document.getElementById("otherRoleCards").style.display = "none";
         document.getElementById("choosePlayerBtn").style.display = "none";
-        actionDescription.innerHTML = "<p>You are asleep. The werewolves are choosing their prey...</p>";
+        actionDescription.innerHTML = "<p>You are asleep. The doctor is choosing someone to save from the werewolves...</p>";
     }
 }
 
@@ -88,9 +88,7 @@ function initializeEventListeners() {
 
     var choosePlayerBtn = document.getElementById("choosePlayerBtn");
     choosePlayerBtn.addEventListener("click", handleChoosePlayerBtnClick);
-
 }
-
 
 function handleChoosePlayerBtnClick() {
     var selectedCardId = document.querySelector('.role-card.selected').id;

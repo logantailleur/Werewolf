@@ -32,18 +32,11 @@ async function initializeRoleAssignPage() {
 
     var victimName = "[Victim Name]";
     var victimRole = "[Victim Role]";
-    var doctorSave = true;
-    var victimImage = 'ImageAssets/villagericon.png'
+    var victimImage = 'ImageAssets/villagericon.png';
 
-    if (doctorSave){
-        resultAnnouncement.textContent = victimName + ' was almost killed!';
-        resultSummary.textContent = "The doctor was able to save them! 🙌";
-        roleImage.src = victimImage;
-    } else {
-        resultAnnouncement.textContent = victimName + ' was killed! They were a ' + victimRole + '!';
-        roleImage.src = victimImage;
-        resultSummary.textContent = "There was nothing anyone could do to save them 😭";
-    }
+    resultAnnouncement.textContent = victimName + ' was killed! They were a ' + victimRole + '!';
+    roleImage.src = victimImage;
+    resultSummary.textContent = "";
 }
 
 function initializeEventListeners() {

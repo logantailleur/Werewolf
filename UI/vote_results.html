@@ -37,20 +37,24 @@
         <div id="resultSummary" class="role-description mt-3">
         </div>
 
-        <!-- Dummy Button to go to voting screen -->
-        <button id="nextBtn" class="btn btn-primary mt-3">Next
-        </button>
+        <!-- Button: Next -->
+        <button id="nextBtn" class="btn btn-primary mt-3">Next</button>
         <script>
-            // Add an event listener to the button
-            document.getElementById("nextBtn").addEventListener("click", function() {
-                // Navigate to the "voting_screen.html" page
-                window.location.href = "voting_screen.html";
+            document.addEventListener("DOMContentLoaded", function() {
+                // Get reference to the button element
+                var dummyWaitButton = document.getElementById("nextBtn");
+                
+                // Add click event listener to the button
+                dummyWaitButton.addEventListener("click", function() {
+                    // Redirect to the role assign page
+                    window.location.href = "village_view.html";
+                });
             });
         </script>
         
     </div>
 
-    <script src="js/morningResults.js" type="module"></script>
+    <script src="js/voteResults.js" type="module"></script>
     <script src="services/FetchAPI.js" type="module"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
