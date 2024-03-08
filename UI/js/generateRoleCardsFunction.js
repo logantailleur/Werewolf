@@ -7,7 +7,7 @@ export function generateRoleCards() {
 
     //Generate and append role cards.
     //TODO: Fetch number of roles and add dynamic content.
-    let nOtherPlayers = 6;
+    let nOtherPlayers = 10;
     for (let i = 0; i < nOtherPlayers; i++) {
         //Create new role card element.
         let roleCardElement = document.createElement("div");
@@ -44,5 +44,5 @@ export function generateRoleCards() {
 function isDead() {
     // TODO: Do this based on their status in the database
     const randNum = Math.random();
-    return randNum < 0.5;
+    return randNum < 0.2;
 }
