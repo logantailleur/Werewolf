@@ -45,7 +45,7 @@ function initializeEventListeners() {
 	// viewRoleBtn.addEventListener('click', handleViewRoleClick);
 
 	var moveOnBtn = document.getElementById("moveOnBtn");
-    moveOnBtn.addEventListener('click', handleMoveOnBtnClick)
+    moveOnBtn.addEventListener('click', handleMoveOnBtnClick);
 }
 
 function handleMoveOnBtnClick() {

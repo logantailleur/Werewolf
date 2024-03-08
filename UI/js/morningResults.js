@@ -50,6 +50,21 @@ function initializeEventListeners() {
 	//Click listener for view role button.
 	var viewRoleBtn = document.getElementById('viewRoleBtn');
 	viewRoleBtn.addEventListener('click', handleViewRoleClick);
+
+	var moveOnBtn = document.getElementById("nextBtn");
+    moveOnBtn.addEventListener('click', handleMoveOnBtnClick)
+}
+
+function handleMoveOnBtnClick() {
+    var endGame = false;
+	// change to endGame 
+
+    if (endGame) {
+        window.location.href = 'end_game_screen.html';
+    } else {
+        window.location.href = 'voting_screen.html';
+    }
+
 }
 
 function handleViewRoleClick() {

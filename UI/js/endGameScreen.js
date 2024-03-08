@@ -32,7 +32,7 @@ async function initializeRoleAssignPage() {
 
     var werewolfImage = 'ImageAssets/wolficon.png';
     var villagerImage = 'ImageAssets/villagericon.png'
-    var werewolfWin = false;
+    var werewolfWin = true;
 
     if (werewolfWin){
         resultAnnouncement.textContent = "The werewolves won!";
