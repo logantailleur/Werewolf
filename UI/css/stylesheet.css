@@ -43,3 +43,8 @@ body, html {
 .role-card.selected .card-body{
     background-color: red;
 }
+
+.dead {
+    opacity: 0.5; /* Reduce opacity for an undetectable effect */
+    /* Add other styling for making the card visually distinct when the player is dead */
+}
