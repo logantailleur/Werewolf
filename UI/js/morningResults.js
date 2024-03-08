@@ -47,9 +47,7 @@ async function initializeRoleAssignPage() {
 }
 
 function initializeEventListeners() {
-	//Click listener for view role button.
-	var viewRoleBtn = document.getElementById('viewRoleBtn');
-	viewRoleBtn.addEventListener('click', handleViewRoleClick);
+
 }
 
 function handleViewRoleClick() {
