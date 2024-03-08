@@ -14,16 +14,19 @@ export function generateRoleCards() {
         //Adjust width and margin as needed.
         roleCardElement.classList.add("col-lg-3", "col-md-4", "col-sm-6", "mb-3", "role-card");
 
+        roleCardElement.innerHTML = roleCardHTML;
+
         // Determine if the player is dead or alive
         const isPlayerDead = isDead();
-
+        let playerStatusText = roleCardElement.querySelector(".player-status");
         // If dead, make the card non-selectable
         if (isPlayerDead){
             roleCardElement.classList.add("dead");
             roleCardElement.classList.add("disabled");
+            playerStatusText.textContent = "Dead";
+        } else {
+            playerStatusText.textContent = "Alive";
         }
-
-        roleCardElement.innerHTML = roleCardHTML;
 
         // Generate ID for the card. 
         // TODO: replace with actual player ID
