@@ -1,5 +1,6 @@
 import { roleCardHTML } from "./roleCard.js";
 import { roleModalHTML } from "./roleModal.js";
+import { generateRoleCards } from "./generateRoleCardsFunction.js";
 
 //Initialize app when DOM content is loaded.
 document.addEventListener("DOMContentLoaded", function() {
@@ -19,30 +20,6 @@ function initializeApp() {
     //Load role modal
     let roleModal = document.getElementById("roleModal");
     roleModal.innerHTML = roleModalHTML;
-}
-
-//Generate initial role cards (e.g., 10).
-//TODO: Adjust the number of roles as needed.
-function generateRoleCards() {
-    //Clear previous role cards.
-    document.getElementById("otherRoleCards").innerHTML = "";
-
-    //Generate and append role cards.
-    //TODO: Fetch number of roles and add dynamic content.
-    let nOtherPlayers = 6;
-    for (let i = 0; i < nOtherPlayers; i++) {
-        //Create new role card element.
-        let roleCardElement = document.createElement("div");
-        //Adjust width and margin as needed.
-        roleCardElement.classList.add("col-lg-3", "col-md-4", "col-sm-6", "mb-3");
-        roleCardElement.innerHTML = roleCardHTML;
-
-        let playerName = roleCardElement.querySelector(".player-name")
-        playerName.textContent = "Player " + (i + 2);
-
-        //Append role card to container.
-        document.getElementById("otherRoleCards").appendChild(roleCardElement);
-    }
 }
 
 function initializeEventListeners() {
