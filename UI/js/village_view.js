@@ -1,5 +1,6 @@
 import { roleCardHTML } from "./roleCard.js";
 import { roleModalHTML } from "./roleModal.js";
+import { generateRoleCards } from "./generateRoleCardsFunction.js";
 
 //Initialize app when DOM content is loaded.
 document.addEventListener("DOMContentLoaded", function() {
