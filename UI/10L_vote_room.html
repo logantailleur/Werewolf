@@ -12,46 +12,23 @@
 <body>
     <!-- Navigation Bar -->
     <nav class="navbar navbar-light bg-light">
-        <a class="navbar-brand" href="main_screen.html">
+        <a class="navbar-brand" href="1_main_screen.html">
             <img src="ImageAssets/wolficon.png" width="30" height="30" class="d-inline-block align-top" alt="">
             Werewolf
         </a>
     </nav>
 
-    <!-- Role Assignment UI -->
     <div class="container-fluid h-100 d-flex flex-column justify-content-center align-items-center">
-        <!-- Role Announcement -->
-        <div id="resultAnnouncement" class="text-very-large font-weight-bold">
-        </div>
-
-        <!-- Filler Box for Image -->
-        <div class="role-assign-image">
-            <img alt="Role Assignment Image" class="img-fluid">
-        </div>
-
-        <!-- View Role Modal -->
-        <div class="modal fade" id="roleModal" tabindex="-1" role="dialog" aria-labelledby="roleModalLabel" aria-hidden="true">
-        </div>
-
-        <!-- Text Description of the Role -->
-        <div id="resultSummary" class="role-description mt-3">
-        </div>
-
-        <!-- Dummy Button to go to voting screen -->
-        <button id="nextBtn" class="btn btn-primary mt-3">Next
-        </button>
-        <script>
-            // Add an event listener to the button
-            document.getElementById("nextBtn").addEventListener("click", function() {
-                // Navigate to the "voting_screen.html" page
-                window.location.href = "voting_screen.html";
-            });
-        </script>
+        <!-- Wait Message -->
+        <div id = "waitingRoomText" class="text-center mb-4">Wait for Host</div>
         
+        <!-- Continue Button -->
+        <div class="text-center">
+            <button id="continueButton" class="btn-lg btn-primary mb-2">Continue when Ready</button>
+        </div>
     </div>
 
-    <script src="js/morningResults.js" type="module"></script>
-    <script src="services/FetchAPI.js" type="module"></script>
+    <script src="js/10LvoteRoom.js" type="module"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>

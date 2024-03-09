@@ -12,14 +12,14 @@
 <body>
     <!-- Navigation Bar -->
     <nav class="navbar navbar-light bg-light">
-        <a class="navbar-brand" href="main_screen.html">
+        <a class="navbar-brand" href="1_main_screen.html">
             <img src="ImageAssets/wolficon.png" width="30" height="30" class="d-inline-block align-top" alt="">
             Werewolf
         </a>
     </nav>
 
-    <!-- Village View UI -->
-    <div class="container-fluid h-100 d-flex flex-column position-relative">
+    <!-- Result View UI -->
+    <div class="container-fluid h-100 d-flex flex-column justify-content-center align-items-center">
         <!-- Top Row Buttons -->
         <div class="row justify-content-between mt-3">
             <div class="col-auto">
@@ -33,60 +33,31 @@
             </div>
         </div>
 
-        <!-- My Role Card -->
-        <div id="myRoleCard" class="row justify-content-center mb-5">
+        <!-- Result Announcement -->
+        <div id="resultAnnouncement" class="row justify-content-center mb-5">
         </div>
 
-        <div id="actionDescription" class="row justify-content-center mb-5">
-            
+        <!-- Result Summary -->
+        <div id="resultSummary" class="row justify-content-center mb-5">
         </div>
 
-        <!-- Other villager role cards -->
-        <div id="otherRoleCards" class="row justify-content-center mt-3">
-            <!-- Placeholder for dynamically generated role cards -->
-            <div class="container" style="max-width: 1000px; margin: auto;">
-                <div class="row" id="roleCardContainer">
-                    <!-- Dynamically generated role cards will be appended here -->
-                </div>
-            </div>
+        <!-- Filler Box for Image -->
+        <div id="resultImage" class="result-image">
+            <img alt="Result Image" class="img-fluid">
         </div>
 
-        <!-- Bottom Button -->
-        <div class="row justify-content-center mt-3">
-            <div class="col-auto">
-                <!-- Button: View Role -->
-                <button id="choosePlayerBtn" class="btn btn-primary" >Choose Player</button>
-            </div>
+        <!-- Night Button -->
+        <div class="text-center">
+            <button id="nightBtn" class="btn-lg btn-primary mb-2">Ready for Night</button>
         </div>
-
-        <!-- Dummy button to move onto seer turn -->
-        <div class="row justify-content-center mt-3">
-            <div class="col-auto">
-                <!-- Button: View Role -->
-                <button id="moveOnBtn" class="btn btn-primary" >[Move on]</button>
-            </div>
-        </div>
-
-        <script>
-            document.addEventListener("DOMContentLoaded", function() {
-                // Get reference to the button element
-                var dummyWaitButton = document.getElementById("moveOnBtn");
-                
-                // Add click event listener to the button
-                dummyWaitButton.addEventListener("click", function() {
-                    // Redirect to the role assign page
-                    window.location.href = "seer_turn.html";
-                });
-            });
-        </script>
 
         <!-- View Role Modal -->
         <div class="modal fade" id="roleModal" tabindex="-1" role="dialog" aria-labelledby="roleModalLabel" aria-hidden="true">
         </div>
-
     </div>
 
-    <script src="js/werewolfTurn.js" type="module"></script>
+    <script src="js/11LvoteResults.js" type="module"></script>
+    <script src="services/FetchAPI.js" type="module"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>

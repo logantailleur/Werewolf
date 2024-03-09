@@ -20,21 +20,20 @@ async function initializeRoleAssignPage() {
 		localStorage.getItem('lobbyCode'),
 		localStorage.getItem('playerId')
 	);
-	console.log(response);
+	var role = response.role;
+
+	localStorage.setItem('role', role);
 
 	// Get references to document portions
 	var roleAnnouncement = document.getElementById('roleAnnouncement');
 	var roleSummary = document.getElementById('roleSummary');
 	var roleImage = document.querySelector('.role-assign-image img');
 
-	console.log(response);
-	localStorage.setItem('role', response.role);
-
-	if (response.role == 'werewolf') {
+	if (role == 'werewolf') {
 		roleAnnouncement.textContent = 'You are a werewolf!';
 		roleSummary.textContent = "Stay hidden, don't get caught!";
 		roleImage.src = 'ImageAssets/wolficon.png';
-	} else {
+	} else if (role == 'villager') { //TODO: Add "villager" roles to non-werewolves.
 		roleAnnouncement.textContent = 'You are a villager!';
 		roleSummary.textContent = 'Try to find the werewolves!';
 		roleImage.src = 'ImageAssets/villagericon.png';
@@ -47,8 +46,8 @@ function initializeEventListeners() {
 	viewRoleBtn.addEventListener('click', handleViewRoleClick);
 	
 	//Click listener for enter village button.
-	var villageBtn = document.getElementById('villageBtn');
-	villageBtn.addEventListener('click', handleVillageClick);
+	var nightBtn = document.getElementById('nightBtn');
+	nightBtn.addEventListener('click', handleNightClick);
 }
 
 function handleViewRoleClick() {
@@ -69,7 +68,7 @@ function handleViewRoleClick() {
         viewRoleTitle.textContent = 'Werewolf';
         viewRoleObjective.textContent = "Kill off the entire village and don't get caught";
         viewRoleAbilities.textContent = "You can kill one other player each night";
-    } else {
+    } else if (role == "villager") {
         modalRoleImage.src = 'ImageAssets/villagericon.png';
         viewRoleTitle.textContent = 'Villager';
         viewRoleObjective.textContent = "Find the identity of the werewolves";
@@ -77,6 +76,6 @@ function handleViewRoleClick() {
     }
 }
 
-function handleVillageClick() {
-	window.location.href = 'village_view.html';
+function handleNightClick() {
+	window.location.href = '5L_night_room.html';
 }

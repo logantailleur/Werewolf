@@ -12,13 +12,13 @@
 <body>
     <!-- Navigation Bar -->
     <nav class="navbar navbar-light bg-light">
-        <a class="navbar-brand" href="main_screen.html">
+        <a class="navbar-brand" href="1_main_screen.html">
             <img src="ImageAssets/wolficon.png" width="30" height="30" class="d-inline-block align-top" alt="">
             Werewolf
         </a>
     </nav>
 
-    <!-- Village View UI -->
+    <!-- Victim View UI -->
     <div class="container-fluid h-100 d-flex flex-column position-relative">
         <!-- Top Row Buttons -->
         <div class="row justify-content-between mt-3">
@@ -37,11 +37,11 @@
         <div id="myRoleCard" class="row justify-content-center mb-5">
         </div>
 
+        <!-- Action Description -->
         <div id="actionDescription" class="row justify-content-center mb-5">
-            
         </div>
 
-        <!-- Other villager role cards -->
+        <!-- Villager role cards -->
         <div id="otherRoleCards" class="row justify-content-center mt-3">
             <!-- Placeholder for dynamically generated role cards -->
             <div class="container" style="max-width: 1000px; margin: auto;">
@@ -51,42 +51,12 @@
             </div>
         </div>
 
-        <!-- Bottom Button -->
-        <div class="row justify-content-center mt-3">
-            <div class="col-auto">
-                <!-- Button: View Role -->
-                <button id="choosePlayerBtn" class="btn btn-primary" >Choose Player</button>
-            </div>
-        </div>
-
-        <!-- Dummy button to move onto vote results screen -->
-        <div class="row justify-content-center mt-3">
-            <div class="col-auto">
-                <!-- Button: View Role -->
-                <button id="moveOnBtn" class="btn btn-primary" >[Move on]</button>
-            </div>
-        </div>
-
-        <script>
-            document.addEventListener("DOMContentLoaded", function() {
-                // Get reference to the button element
-                var dummyWaitButton = document.getElementById("moveOnBtn");
-                
-                // Add click event listener to the button
-                dummyWaitButton.addEventListener("click", function() {
-                    // Redirect to the role assign page
-                    window.location.href = "vote_results.html";
-                });
-            });
-        </script>
-
         <!-- View Role Modal -->
         <div class="modal fade" id="roleModal" tabindex="-1" role="dialog" aria-labelledby="roleModalLabel" aria-hidden="true">
         </div>
-
     </div>
 
-    <script src="js/votingScreen.js" type="module"></script>
+    <script src="js/6LwerewolfNight.js" type="module"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>

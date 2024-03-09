@@ -112,6 +112,18 @@ export function players(lobbyCode) {
     });
 }
 
+export function gameStarted(lobbyCode) {}
+
+export function nightStarted(lobbyCode) {}
+
+export function killPlayer(lobbyCode, playerId) {}
+
+export function dayStarted(lobbyCode) {}
+
+export function votePlayer(lobbyCode, playerId) {}
+
+export function voteFinished(lobbyCode) {}
+
 /*
     To use the fetch functions to make api requests follow this format 
 

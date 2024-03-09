@@ -29,16 +29,16 @@ async function handleJoinGameClick() {
     //Get entered name, store in localStorage.
     localStorage.setItem("userName", userName);
 
-    var response = await joinGame(lobbyCode, userName);
-    if (response.success) {
+    var joinResponse = await joinGame(lobbyCode, userName);
+    if (joinResponse.success) {
+        //Get returned player ID, store in localStorage.
+        localStorage.setItem("playerId", joinResponse.playerId);
+
         //Get entered lobby, store in localStorage.
         localStorage.setItem("lobbyCode", lobbyCode);
 
-        //Get returned player ID, store in localStorage.
-        localStorage.setItem("playerId", response.playerId);
-
         //Redirect to waiting_room page.
-        window.location.href = "waiting_room.html";
+        window.location.href = "3_waiting_room.html";
     } else {
         var errorMessage = document.getElementById("startGameError");
         errorMessage.innerHTML = `Sorry, game <strong>${lobbyCode}</strong> doesn't exist or is full. Please try again.`;
