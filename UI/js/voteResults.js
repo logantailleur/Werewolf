@@ -57,7 +57,6 @@ function handleMoveOnBtnClick() {
     } else {
         window.location.href = 'village_view.html';
     }
-
 }
 
 function handleViewRoleClick() {
