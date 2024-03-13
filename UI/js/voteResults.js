@@ -40,7 +40,23 @@ async function initializeRoleAssignPage() {
 }
 
 function initializeEventListeners() {
+	//Click listener for view role button.
+	// var viewRoleBtn = document.getElementById('viewRoleBtn');
+	// viewRoleBtn.addEventListener('click', handleViewRoleClick);
 
+	var moveOnBtn = document.getElementById("moveOnBtn");
+    moveOnBtn.addEventListener('click', handleMoveOnBtnClick);
+}
+
+function handleMoveOnBtnClick() {
+    var endGame = true;
+	// change to endGame 
+
+    if (endGame) {
+        window.location.href = 'end_game_screen.html';
+    } else {
+        window.location.href = 'village_view.html';
+    }
 }
 
 function handleViewRoleClick() {
@@ -68,4 +84,3 @@ function handleViewRoleClick() {
         viewRoleAbilities.textContent = "You're a little weak, but there is strength in numbers";
     }
 }
-

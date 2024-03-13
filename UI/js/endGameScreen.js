@@ -30,41 +30,26 @@ async function initializeRoleAssignPage() {
 	// console.log(response);
 	// localStorage.setItem('role', 'werewolf');
 
-    var victimName = "[Victim Name]";
-    var victimRole = "[Victim Role]";
-    var doctorSave = true;
-    var victimImage = 'ImageAssets/villagericon.png'
+    var werewolfImage = 'ImageAssets/wolficon.png';
+    var villagerImage = 'ImageAssets/villagericon.png'
+    var werewolfWin = true;
 
-    if (doctorSave){
-        resultAnnouncement.textContent = victimName + ' was almost killed!';
-        resultSummary.textContent = "The doctor was able to save them! 🙌";
-        roleImage.src = victimImage;
+    if (werewolfWin){
+        resultAnnouncement.textContent = "The werewolves won!";
+        roleImage.src = werewolfImage;
+        resultSummary.textContent = "There's no more hope for the village :(";
     } else {
-        resultAnnouncement.textContent = victimName + ' was killed! They were a ' + victimRole + '!';
-        roleImage.src = victimImage;
-        resultSummary.textContent = "There was nothing anyone could do to save them 😭";
+        resultAnnouncement.textContent = "The villagers won!";
+        roleImage.src = villagerImage;
+        resultSummary.textContent = "The villagers successfully rooted out and killed all the werewolves!";
     }
+    
 }
 
 function initializeEventListeners() {
 	//Click listener for view role button.
 	var viewRoleBtn = document.getElementById('viewRoleBtn');
 	viewRoleBtn.addEventListener('click', handleViewRoleClick);
-
-	var moveOnBtn = document.getElementById("nextBtn");
-    moveOnBtn.addEventListener('click', handleMoveOnBtnClick)
-}
-
-function handleMoveOnBtnClick() {
-    var endGame = false;
-	// change to endGame 
-
-    if (endGame) {
-        window.location.href = 'end_game_screen.html';
-    } else {
-        window.location.href = 'voting_screen.html';
-    }
-
 }
 
 function handleViewRoleClick() {
