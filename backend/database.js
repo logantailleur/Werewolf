@@ -9,6 +9,8 @@ function initializeDatabaseTables(db) {
 				'datetime_created DATETIME NOT NULL,' +
 				"started CHAR(1) DEFAULT 'n' NOT NULL," +
 				'num_players SMALLINT DEFAULT 0 NOT NULL,' +
+				'game_state SMALLINT DEFAULT 1 NOT NULL' +
+				'last_kill CHAR(5)' +
 				"CHECK (started in ('n', 'y'))" +
 				');'
 		);
@@ -19,6 +21,9 @@ function initializeDatabaseTables(db) {
 				'player_id CHAR(5),' +
 				'player_name VARCHAR(25),' +
 				'role VARCHAR(10),' +
+				'player_state SMALLINT DEFAULT 2' +
+				'voted_player char(5) DEFAULT NULL' +
+				"is_alive CHAR(1) DEFAULT 'y' NOT NULL" +
 				'PRIMARY KEY (game_code, player_id),' +
 				'FOREIGN KEY (game_code) REFERENCES game(game_code)' +
 				');'
@@ -290,6 +295,145 @@ function shuffleArray(array) {
 	}
 	console.log(array);
 	return array;
+}
+
+async function getAllPlayerRoles(gameCode) {
+	return new Promise((resolve, reject) => {
+		let sql = 'SELECT player_id, player_name, role, is_alive FROM player WHERE game_code = ?';
+		db.all(sql, [gameCode], (err, rows) => {
+			if (err) {
+				reject(err);
+			} else {
+				let players = rows.map(row => ({
+					player_id: row.player_id,
+					player_name: row.player_name,
+					role: row.role,
+					is_alive: row.is_alive
+			}));
+				resolve(players);
+			}
+		});
+	});
+}
+
+function canHostContinue(gameCode, neededPlayerState) {
+	//Given game code and what state we expect the players to be in, returns true if host can update, false otherwise.
+	//Only considers live players.
+	return new Promise((resolve, reject) => {
+        let sql = 'SELECT * FROM player WHERE game_code = ? AND is_alive = \'y\' AND player_state != ?';
+        db.get(sql, [gameCode, neededPlayerState], (err, row) => {
+            if (err) {
+                resolve({ success: false, canContinue: false, error: err });
+            } else if (row) {
+                resolve({ success: true, canContinue: false });
+            } else {
+                resolve({ success: true, canContinue: true });
+            }
+        });
+    });
+}
+
+async function hostSleepsDB(gameCode) {
+	//All live players must be in state 3 to continue
+	return new Promise((resolve, reject) => {
+		canHostContinue(gameCode, 3)
+		.then(results => {
+			if (results.success) {
+				if(results.canContinue) {
+					sql = 'UPDATE game SET game_state = 4 WHERE game_code = ?';
+					db.run(sql, [gameCode], (err) => {
+						if(err) {
+							results = {success: false, canContinue: false};
+						}
+						else {
+							results = {success: true, canContinue: true};
+						}
+						resolve(results);
+					})
+				}
+				else{
+					resolve(results);
+				}
+			}
+			else {
+				reject(results.error);
+			}
+		})
+		.catch(error => {
+			reject(error);
+		})
+		// let sql = 'SELECT * FROM player WHERE game_code = ? AND is_alive = \'y\' AND player_state != 3';
+		// db.get(sql, [gameCode], (err, row) => {
+		// 	if (err) {
+		// 		reject(err);
+		// 	} else {
+		// 		//If there are any live players not in state 3, there will be at least one row
+		// 		if(row) {
+		// 			results = {success: true, canContinue: false};
+		// 			resolve(results);
+		// 		}
+		// 		else {
+		// 			sql = 'UPDATE game SET game_state = 4 WHERE game_code = ?';
+		// 			db.run(sql, [gameCode], (err) => {
+		// 				if(err) {
+		// 					results = {success: false, canContinue: false};
+		// 				}
+		// 				else {
+		// 					results = {success: true, canContinue: true};
+		// 				}
+		// 				resolve(results);
+		// 			})
+		// 		}
+		// 	}
+		// });
+	});
+}
+
+async function hostWakesDB(gameCode) {
+    return new Promise((resolve, reject) => {
+        canHostContinue(gameCode, 5)
+            .then(results => {
+                if (results.success) {
+                    if (results.canContinue) {
+                        let id = null;
+                        let sql = 'SELECT player_id FROM player WHERE role = \'werewolf\' AND game_code = ?';
+                        db.get(sql, [gameCode], (err, row) => {
+                            if (err) {
+                                reject(err);
+                                return; // Return to prevent further execution
+                            }
+                            if (row) {
+                                id = row.player_id;
+                                sql = 'UPDATE game SET last_kill = ? WHERE game_code = ?';
+                                db.run(sql, [id, gameCode], (err) => {
+                                    if (err) {
+                                        reject(err);
+                                        return; // Return to prevent further execution
+                                    }
+                                    sql = 'UPDATE player SET is_alive = \'n\' WHERE game_code = ? AND player_id = ?';
+                                    db.run(sql, [gameCode, id], (err) => {
+                                        if (err) {
+                                            reject(err);
+                                            return; // Return to prevent further execution
+                                        }
+                                        resolve(results);
+                                    });
+                                });
+                            } else {
+                                resolve(results); // No werewolf found, resolve with existing results
+                            }
+                        });
+                    } else {
+                        resolve(results); // Game cannot continue, resolve with existing results
+                    }
+                } else {
+                    reject(results.error); // Reject with error from canHostContinue
+                }
+            })
+            .catch(error => {
+                reject(error); // Reject with error from any of the operations
+            });
+    });
 }
 
 // Export the database object
