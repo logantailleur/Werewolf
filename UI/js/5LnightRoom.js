@@ -1,4 +1,4 @@
-import { nightStarted } from '../services/FetchAPI.js';
+import { playerSleeps } from '../services/FetchAPI.js';
 
 document.addEventListener("DOMContentLoaded", function() {
     initializeApp();
@@ -15,8 +15,9 @@ function initializeEventListeners() {
 
 async function handleContinueClick() {
     var lobbyCode = localStorage.getItem("lobbyCode");
+    var playerId = localStorage.getItem("playerId");
 
-    var response = await nightStarted(lobbyCode);
+    var response = await playerSleeps(lobbyCode, playerId);
 	if (response.success) {
 		var role = localStorage.getItem("role");
 		
@@ -26,8 +27,8 @@ async function handleContinueClick() {
 			window.location.href = '6L_villager_night.html';
 		}
 	} else {
-		var errorMessage = document.getElementById('voteFinishedError');
-		errorMessage.innerHTML = `Sorry, voting for game <strong>${lobbyCode}</strong> has not finished. Please try again.`;
+		var errorMessage = document.getElementById('playerSleepsError');
+		errorMessage.innerHTML = `Sorry, night for game <strong>${lobbyCode}</strong> has not started. Please try again.`;
 		return;
 	}
 }

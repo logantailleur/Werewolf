@@ -1,4 +1,4 @@
-import { voteFinished } from '../services/FetchAPI.js';
+import { endVoting } from '../services/FetchAPI.js';
 
 document.addEventListener("DOMContentLoaded", function() {
     initializeApp();
@@ -16,12 +16,12 @@ function initializeEventListeners() {
 async function handleContinueClick() {
     var lobbyCode = localStorage.getItem("lobbyCode");
 
-    var response = await voteFinished(lobbyCode);
+    var response = await endVoting(lobbyCode);
 	if (response.success) {
 		window.location.href = '11L_vote_results.html';
 	} else {
-		var errorMessage = document.getElementById('voteFinishedError');
-		errorMessage.innerHTML = `Sorry, voting for game <strong>${lobbyCode}</strong> has not finished. Please try again.`;
+		var errorMessage = document.getElementById('endVotingError');
+		errorMessage.innerHTML = `Sorry, voting for game <strong>${lobbyCode}</strong> has not ended. Please try again.`;
 		return;
 	}
 }

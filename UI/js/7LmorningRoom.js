@@ -1,4 +1,4 @@
-import { dayStarted } from '../services/FetchAPI.js';
+import { playerWakes } from '../services/FetchAPI.js';
 
 document.addEventListener("DOMContentLoaded", function() {
     initializeApp();
@@ -15,8 +15,9 @@ function initializeEventListeners() {
 
 async function handleContinueClick() {
     var lobbyCode = localStorage.getItem("lobbyCode");
+    var playerId = localStorage.getItem("playerId");
 
-    var response = await dayStarted(lobbyCode);
+    var response = await playerWakes(lobbyCode, playerId);
 	if (response.success) {
 		window.location.href = '8L_morning_results.html';
 	} else {

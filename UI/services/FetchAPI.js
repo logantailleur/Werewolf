@@ -81,6 +81,9 @@ export function joinGame(lobbyCode, userName) {
 		});
 }
 
+//TODO: fill this out:
+export function gameStarted(lobbyCode) {}
+
 export function viewRole(lobbyCode, playerId) {
 	return fetch(
 		`http://${address}:4000/api/game/player/role/${lobbyCode}/${playerId}`
@@ -116,50 +119,9 @@ export function getAllPlayers(lobbyCode) {
 		});
 }
 
+//TODO: build this in:
 export function hostSleeps(lobbyCode) {
 	return fetch(`http://${address}:4000/api/game/host/sleep/${lobbyCode}`, {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json',
-		},
-	})
-		.then((response) => {
-			if (!response.ok) {
-				throw new Error('Network response was not ok');
-			}
-			return response.json();
-		})
-		.then((data) => {
-			return data;
-		})
-		.catch((error) => {
-			console.error(error);
-		});
-}
-
-export function hostWakes(lobbyCode) {
-	return fetch(`http://${address}:4000/api/game/host/wake/${lobbyCode}`, {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json',
-		},
-	})
-		.then((response) => {
-			if (!response.ok) {
-				throw new Error('Network response was not ok');
-			}
-			return response.json();
-		})
-		.then((data) => {
-			return data;
-		})
-		.catch((error) => {
-			console.error(error);
-		});
-}
-
-export function endVoting(lobbyCode) {
-	return fetch(`http://${address}:4000/api/game/host/end-vote/${lobbyCode}`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
@@ -182,30 +144,6 @@ export function endVoting(lobbyCode) {
 export function playerSleeps(lobbyCode, playerId) {
 	return fetch(
 		`http://${address}:4000/api/game/player/sleep/${lobbyCode}/${playerId}`,
-		{
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-		}
-	)
-		.then((response) => {
-			if (!response.ok) {
-				throw new Error('Network response was not ok');
-			}
-			return response.json();
-		})
-		.then((data) => {
-			return data;
-		})
-		.catch((error) => {
-			console.error(error);
-		});
-}
-
-export function playerWakes(lobbyCode, playerId) {
-    return fetch(
-		`http://${address}:4000/api/game/player/wake/${lobbyCode}/${playerId}`,
 		{
 			method: 'POST',
 			headers: {
@@ -251,6 +189,53 @@ export function werewolfKills(lobbyCode, playerId, victimId) {
 		});
 }
 
+//TODO: build this in:
+export function hostWakes(lobbyCode) {
+	return fetch(`http://${address}:4000/api/game/host/wake/${lobbyCode}`, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+		},
+	})
+		.then((response) => {
+			if (!response.ok) {
+				throw new Error('Network response was not ok');
+			}
+			return response.json();
+		})
+		.then((data) => {
+			return data;
+		})
+		.catch((error) => {
+			console.error(error);
+		});
+}
+
+export function playerWakes(lobbyCode, playerId) {
+    return fetch(
+		`http://${address}:4000/api/game/player/wake/${lobbyCode}/${playerId}`,
+		{
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+		}
+	)
+		.then((response) => {
+			if (!response.ok) {
+				throw new Error('Network response was not ok');
+			}
+			return response.json();
+		})
+		.then((data) => {
+			return data;
+		})
+		.catch((error) => {
+			console.error(error);
+		});
+}
+
+//TODO: build this in:
 export function playerReadyToVote(lobbyCode, playerId) {
     return fetch(
 		`http://${address}:4000/api/game/player/begin-voting/${lobbyCode}/${playerId}`,
@@ -298,34 +283,27 @@ export function playerVote(lobbyCode, playerId, voteId) {
 			console.error(error);
 		});
 }
-export function players(lobbyCode) {
-    return fetch(`http://${address}:4000/api/game/players/${lobbyCode}`)
-    .then((response) => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
-    })
-    .then((data) => {
-        console.log('Players:', data.players);
-        return data;
-    })
-    .catch((error) => {
-        console.error('There was a problem fetching players:', error);
-    });
+
+export function endVoting(lobbyCode) {
+	return fetch(`http://${address}:4000/api/game/host/end-vote/${lobbyCode}`, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+		},
+	})
+		.then((response) => {
+			if (!response.ok) {
+				throw new Error('Network response was not ok');
+			}
+			return response.json();
+		})
+		.then((data) => {
+			return data;
+		})
+		.catch((error) => {
+			console.error(error);
+		});
 }
-
-export function gameStarted(lobbyCode) {}
-
-export function nightStarted(lobbyCode) {}
-
-export function killPlayer(lobbyCode, playerId) {}
-
-export function dayStarted(lobbyCode) {}
-
-export function votePlayer(lobbyCode, playerId) {}
-
-export function voteFinished(lobbyCode) {}
 
 /*
     To use the fetch functions to make api requests follow this format 

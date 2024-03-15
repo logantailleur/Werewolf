@@ -1,4 +1,4 @@
-import { votePlayer } from '../services/FetchAPI.js';
+import { playerVote } from '../services/FetchAPI.js';
 import { roleCardHTML } from "./roleCard.js";
 import { roleModalHTML } from "./roleModal.js";
 
@@ -32,7 +32,7 @@ async function generateRoleCards() {
     document.getElementById("otherRoleCards").innerHTML = "";
 
     //Generate and append role cards.
-    const response = await players(
+    const response = await getAllPlayers(
 		localStorage.getItem('lobbyCode')
 	);
 
@@ -102,8 +102,9 @@ function initializeEventListeners() {
         roleCard.addEventListener("click", async function () { //TODO: Separate function?
             console.log("player voted for")
 
-            await votePlayer(
+            await playerVote(
                 localStorage.getItem('lobbyCode'),
+                localStorage.getItem('playerId'),
                 roleCard.id
             );
 
