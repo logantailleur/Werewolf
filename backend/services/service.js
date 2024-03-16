@@ -50,6 +50,7 @@ async function viewRole(gameCode, playerId) {
 		let response = await getRole(gameCode, playerId);
 		response.gameCode = gameCode;
 		response.playerId = playerId;
+		response.canContinue = true;
 		// console.log(response);
 		return response;
 	} catch (error) {
@@ -124,31 +125,43 @@ async function playerSleeps(gameCode, playerId) {
 	//Return all alive players to possibly display to werewolf role
 	return {
 		success: true,
+		canContinue: true,
 		players: [
+			{
+				name: 'Logan',
+				playerId: 1,
+				role: 'werewolf',
+				status: 'alive',
+			},
 			{
 				name: 'Player 2',
 				playerId: 2,
 				role: 'villager',
+				status: 'alive',
 			},
 			{
 				name: 'Player 3',
 				playerId: 3,
 				role: 'villager',
+				status: 'alive',
 			},
 			{
 				name: 'Player 4',
 				playerId: 4,
 				role: 'villager',
+				status: 'alive',
 			},
 			{
 				name: 'Player 5',
 				playerId: 5,
 				role: 'villager',
+				status: 'alive',
 			},
 			{
 				name: 'Player 6',
 				playerId: 6,
 				role: 'villager',
+				status: 'alive',
 			},
 		],
 	};
@@ -159,6 +172,11 @@ async function playerWakes(gameCode, playerId) {
 	return {
 		success: true,
 		canContinue: true,
+		victim: {
+			name: 'Player 5',
+			playerId: 5,
+			role: 'villager',
+		},
 	};
 }
 
@@ -175,14 +193,64 @@ async function playerReadyToVote(gameCode, playerId) {
 	return {
 		success: true,
 		canContinue: true,
-	}
+		players: [
+			{
+				name: 'Logan',
+				playerId: 1,
+				role: 'werewolf',
+				status: 'alive',
+			},
+			{
+				name: 'Player 2',
+				playerId: 2,
+				role: 'villager',
+				status: 'alive',
+			},
+			{
+				name: 'Player 3',
+				playerId: 3,
+				role: 'villager',
+				status: 'alive',
+			},
+			{
+				name: 'Player 4',
+				playerId: 4,
+				role: 'villager',
+				status: 'alive',
+			},
+			{
+				name: 'Player 5',
+				playerId: 5,
+				role: 'villager',
+				status: 'alive',
+			},
+			{
+				name: 'Player 6',
+				playerId: 6,
+				role: 'villager',
+				status: 'alive',
+			},
+		],
+	};
 }
 
 async function playerVote(gameCode, playerId, voteId) {
 	//Sets player readyToVote to false. If all players are !readyToVote, count votes and change gameState to 10
 	return {
 		success: true,
-	}
+	};
+}
+
+async function viewVoteResult(gameCode) {
+	return {
+		player: {  
+			name: 'Player 5',
+			playerId: 5,
+			role: 'villager',
+		},
+		success: true,
+		canContinue: true,
+	};
 }
 
 module.exports = {
@@ -199,4 +267,5 @@ module.exports = {
 	playerReadyToVote,
 	playerVote,
 	playerWakes,
+	viewVoteResult,
 };

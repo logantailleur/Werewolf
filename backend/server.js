@@ -15,6 +15,7 @@ const {
 	playerVote,
 	playerReadyToVote,
 	playerWakes,
+	viewVoteResult,
 } = require('./services/service');
 
 server.use(cors());
@@ -238,6 +239,18 @@ server.post(
 				.status(400)
 				.send('No gameCode of playerId found in database\n');
 		}
-		res.json(resonse);
+		res.json(response);
 	}
 );
+
+server.get('/api/game/player/vote/result/:gameCode', async (req, res) => {
+	const { gameCode } = req.params;
+	if (!gameCode) {
+		return res.status(400).send('Missing gameCode for viewing vote results\n');
+	}
+	const response = await viewVoteResult(gameCode);
+	if (!response.success) {
+		return res.status(400).send('No gameCode found in database\n');
+	}
+	res.json(response);
+});

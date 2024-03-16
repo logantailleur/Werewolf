@@ -1,5 +1,5 @@
-import { viewRole } from '../services/FetchAPI.js';
-import { roleModalHTML } from '../roleModal.js';
+import { roleCardHTML } from './roleCard.js';
+import { roleModalHTML } from './roleModal.js';
 
 //Initialize app when DOM content is loaded.
 document.addEventListener('DOMContentLoaded', function () {
@@ -7,60 +7,47 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 function initializeApp() {
-	initializeRoleAssignPage();
 	initializeEventListeners();
 
-	//Load role modal
+	//Load role card.
+	let myRoleCard = document.getElementById('myRoleCard');
+	myRoleCard.innerHTML = roleCardHTML;
+	let myName = myRoleCard.querySelector('.player-name');
+	myName.textContent = localStorage.getItem('userName');
+	let myRole = myRoleCard.querySelector('.player-role')
+	myRole.textContent = localStorage.getItem('role')
+
+	//Load role modal.
 	let roleModal = document.getElementById('roleModal');
 	roleModal.innerHTML = roleModalHTML;
-}
 
-async function initializeRoleAssignPage() {
-	// const response = await viewRole(
-	// 	localStorage.getItem('lobbyCode'),
-	// 	localStorage.getItem('playerId')
-	// );
-	// console.log(response);
-
-	// Get references to document portions
-	var resultAnnouncement = document.getElementById('resultAnnouncement');
-	var resultSummary = document.getElementById('resultSummary');
-	var roleImage = document.querySelector('.role-assign-image img');
-
-	// console.log(response);
-	// localStorage.setItem('role', 'werewolf');
-
-	var werewolfImage = 'ImageAssets/wolficon.png';
-	var villagerImage = 'ImageAssets/villagericon.png';
-	var werewolfWin = true;
-
-	if (werewolfWin) {
-		resultAnnouncement.textContent = 'The werewolves won!';
-		roleImage.src = werewolfImage;
-		resultSummary.textContent = "There's no more hope for the village :(";
-	} else {
-		resultAnnouncement.textContent = 'The villagers won!';
-		roleImage.src = villagerImage;
-		resultSummary.textContent =
-			'The villagers successfully rooted out and killed all the werewolves!';
-	}
+	let actionDescription = document.getElementById('actionDescription');
+	actionDescription.innerHTML = '<p>Sleep</p>';
 }
 
 function initializeEventListeners() {
+	//Click listener for sleep button.
+	var sleepBtn = document.getElementById('sleepBtn');
+	sleepBtn.addEventListener('click', handleSleepClick);
+
 	//Click listener for view role button.
 	var viewRoleBtn = document.getElementById('viewRoleBtn');
 	viewRoleBtn.addEventListener('click', handleViewRoleClick);
 }
 
+function handleSleepClick() {
+	window.location.href = '3.5p_morning_room_view.html';
+}
+
 function handleViewRoleClick() {
-	// Set the src attribute to the desired image path inside the modal
+	//Set src attribute to desired image path inside modal.
 	var modalRoleImage = document.querySelector(
 		'#roleModal .role-assign-image img'
 	);
 
 	var role = localStorage.getItem('role');
 
-	// Get a reference to the modal title and body elements
+	//Get reference to modal title and body elements.
 	var viewRoleTitle = document.getElementById('viewRoleTitle');
 	var viewRoleObjective = document.getElementById('viewRoleObjective');
 	var viewRoleAbilities = document.getElementById('viewRoleAbilities');
@@ -71,7 +58,7 @@ function handleViewRoleClick() {
 		viewRoleObjective.textContent =
 			"Kill off the entire village and don't get caught";
 		viewRoleAbilities.textContent = 'You can kill one other player each night';
-	} else {
+	} else if (role == 'villager') {
 		modalRoleImage.src = 'ImageAssets/villagericon.png';
 		viewRoleTitle.textContent = 'Villager';
 		viewRoleObjective.textContent = 'Find the identity of the werewolves';

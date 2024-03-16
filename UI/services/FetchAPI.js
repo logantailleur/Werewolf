@@ -81,9 +81,6 @@ export function joinGame(lobbyCode, userName) {
 		});
 }
 
-//TODO: fill this out:
-export function gameStarted(lobbyCode) {}
-
 export function viewRole(lobbyCode, playerId) {
 	return fetch(
 		`http://${address}:4000/api/game/player/role/${lobbyCode}/${playerId}`
@@ -291,6 +288,22 @@ export function endVoting(lobbyCode) {
 			'Content-Type': 'application/json',
 		},
 	})
+		.then((response) => {
+			if (!response.ok) {
+				throw new Error('Network response was not ok');
+			}
+			return response.json();
+		})
+		.then((data) => {
+			return data;
+		})
+		.catch((error) => {
+			console.error(error);
+		});
+}
+
+export function viewResult(lobbyCode) {
+	return fetch(`http://${address}:4000/api/game/player/vote/result/${lobbyCode}`)
 		.then((response) => {
 			if (!response.ok) {
 				throw new Error('Network response was not ok');

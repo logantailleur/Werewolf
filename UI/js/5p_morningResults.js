@@ -1,5 +1,5 @@
-import { viewRole } from '../services/FetchAPI.js';
-import { roleModalHTML } from '../roleModal.js';
+import { playerReadyToVote } from '../services/FetchAPI.js';
+import { roleModalHTML } from './roleModal.js';
 
 //Initialize app when DOM content is loaded.
 document.addEventListener('DOMContentLoaded', function () {
@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 function initializeApp() {
-	initializeRoleAssignPage();
+	initializeResultPage();
 	initializeEventListeners();
 
 	//Load role modal
@@ -15,52 +15,53 @@ function initializeApp() {
 	roleModal.innerHTML = roleModalHTML;
 }
 
-async function initializeRoleAssignPage() {
-	// const response = await viewRole(
-	// 	localStorage.getItem('lobbyCode'),
-	// 	localStorage.getItem('playerId')
-	// );
-	// console.log(response);
-
-	// Get references to document portions
+async function initializeResultPage() {
 	var resultAnnouncement = document.getElementById('resultAnnouncement');
 	var resultSummary = document.getElementById('resultSummary');
-	var roleImage = document.querySelector('.role-assign-image img');
+	var resultImage = document.querySelector('.result-image img');
 
-	// console.log(response);
-	// localStorage.setItem('role', 'werewolf');
+	var victim = JSON.parse(localStorage.getItem('victim'));
+	var victimName = victim.name;
+	var victimRole = victim.role;
+	var victimImage = 'ImageAssets/villagericon.png';
 
-	var werewolfImage = 'ImageAssets/wolficon.png';
-	var villagerImage = 'ImageAssets/villagericon.png';
-	var werewolfWin = true;
-
-	if (werewolfWin) {
-		resultAnnouncement.textContent = 'The werewolves won!';
-		roleImage.src = werewolfImage;
-		resultSummary.textContent = "There's no more hope for the village :(";
-	} else {
-		resultAnnouncement.textContent = 'The villagers won!';
-		roleImage.src = villagerImage;
-		resultSummary.textContent =
-			'The villagers successfully rooted out and killed all the werewolves!';
-	}
+	resultAnnouncement.textContent =
+		victimName + ' was killed! They were a ' + victimRole + '!';
+	resultSummary.textContent =
+		'There was nothing anyone could do to save them 😭';
+	resultImage.src = victimImage;
 }
 
 function initializeEventListeners() {
+	//Click listener for vote button.
+	var voteBtn = document.getElementById('voteBtn');
+	voteBtn.addEventListener('click', handleVoteClick);
+
 	//Click listener for view role button.
 	var viewRoleBtn = document.getElementById('viewRoleBtn');
 	viewRoleBtn.addEventListener('click', handleViewRoleClick);
 }
 
+async function handleVoteClick() {
+	const response = await playerReadyToVote(
+		localStorage.getItem('lobbyCode'),
+		localStorage.getItem('playerId')
+	);
+	if (response.success) {
+		localStorage.setItem('players', JSON.stringify(response.players));
+		window.location.href = '7p_voting_screen_view.html';
+	}
+}
+
 function handleViewRoleClick() {
-	// Set the src attribute to the desired image path inside the modal
+	//Set src attribute to desired image path inside modal.
 	var modalRoleImage = document.querySelector(
 		'#roleModal .role-assign-image img'
 	);
 
 	var role = localStorage.getItem('role');
 
-	// Get a reference to the modal title and body elements
+	//Get reference to modal title and body elements.
 	var viewRoleTitle = document.getElementById('viewRoleTitle');
 	var viewRoleObjective = document.getElementById('viewRoleObjective');
 	var viewRoleAbilities = document.getElementById('viewRoleAbilities');
@@ -71,7 +72,7 @@ function handleViewRoleClick() {
 		viewRoleObjective.textContent =
 			"Kill off the entire village and don't get caught";
 		viewRoleAbilities.textContent = 'You can kill one other player each night';
-	} else {
+	} else if (role == 'villager') {
 		modalRoleImage.src = 'ImageAssets/villagericon.png';
 		viewRoleTitle.textContent = 'Villager';
 		viewRoleObjective.textContent = 'Find the identity of the werewolves';
