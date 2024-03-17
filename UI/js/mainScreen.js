@@ -23,7 +23,7 @@ async function handleHostGameClick() {
 	//Redirect to host_game page.
 	var lobbyCode = await createGame();
 	localStorage.setItem('lobbyCode', lobbyCode.gameCode);
-	window.location.href = '2+3_host_game.html';
+	window.location.href = '1h_host_game_view.html';
 }
 
 function handleJoinGameClick() {

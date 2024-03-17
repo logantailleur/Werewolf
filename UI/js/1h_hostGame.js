@@ -1,4 +1,9 @@
-import { createGame, getAllPlayers, joinGame, startGame } from '../services/FetchAPI.js';
+import {
+	createGame,
+	getAllPlayers,
+	joinGame,
+	startGame,
+} from '../services/FetchAPI.js';
 
 //Initialize app when DOM content is loaded.
 document.addEventListener('DOMContentLoaded', function () {
@@ -29,32 +34,34 @@ function initializeEventListeners() {
 }
 
 async function handleStartGameClick() {
-    // var userName = "Host";
-    var lobbyCode = localStorage.getItem('lobbyCode');
+	// var userName = "Host";
+	var lobbyCode = localStorage.getItem('lobbyCode');
 
-    //Get host name, store in localStorage.
-    // localStorage.setItem("userName", userName);
+	//Get host name, store in localStorage.
+	// localStorage.setItem("userName", userName);
 
 	// var joinResponse = await joinGame(lobbyCode, userName);
-    // if (joinResponse.success) {
-    //     //Get returned player ID, store in localStorage.
-    //     localStorage.setItem("playerId", joinResponse.playerId);
+	// if (joinResponse.success) {
+	//     //Get returned player ID, store in localStorage.
+	//     localStorage.setItem("playerId", joinResponse.playerId);
 
-    //     //Get entered lobby, store in localStorage.
-    //     localStorage.setItem("lobbyCode", lobbyCode);
-    // } else {
-    //     var errorMessage = document.getElementById("startGameError");
-    //     errorMessage.innerHTML = `Sorry, game <strong>${lobbyCode}</strong> doesn't exist or is full. Please try again.`;
-    //     return;
-    // }
-	
+	//     //Get entered lobby, store in localStorage.
+	//     localStorage.setItem("lobbyCode", lobbyCode);
+	// } else {
+	//     var errorMessage = document.getElementById("startGameError");
+	//     errorMessage.innerHTML = `Sorry, game <strong>${lobbyCode}</strong> doesn't exist or is full. Please try again.`;
+	//     return;
+	// }
+
 	//Start game if 6 people are in lobby.
 	var startResponse = await startGame(lobbyCode);
-	if (startResponse.success && startResponse.canStartGame) {
+	console.log(startResponse);
+	if (startResponse.success) {
 		//Redirect to role_assign page.
 		var allPlayers = await getAllPlayers(lobbyCode);
+		console.log(allPlayers);
 		if (allPlayers.success) {
-			localStorage.setItem("players", allPlayers);
+			localStorage.setItem('players', JSON.stringify(allPlayers));
 			window.location.href = '2h_player_grid_view.html';
 		}
 	} else {
