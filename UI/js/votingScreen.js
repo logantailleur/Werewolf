@@ -1,6 +1,7 @@
 import { roleCardHTML } from "./roleCard.js";
 import { roleModalHTML } from "./roleModal.js";
 import { generateRoleCards } from "./generateRoleCardsFunction.js";
+import { handleViewRoleClick } from './viewRoleClickHandler.js';
 
 //Initialize app when DOM content is loaded.
 document.addEventListener("DOMContentLoaded", function() {
@@ -65,24 +66,4 @@ function handleChoosePlayerBtnClick() {
     localStorage.setItem('selectedCardId', selectedCardId);
 
     console.log("Selected Card ID: ", selectedCardId);
-}
-
-function handleViewRoleClick() {
-    //Set src attribute to desired image path inside modal.
-    var modalRoleImage = document.querySelector("#roleModal .role-assign-image img");
-    modalRoleImage.src = "ImageAssets/wolficon.png";
-
-    //Get reference to modal title and body elements.
-    var viewRoleTitle = document.getElementById("viewRoleTitle");
-    var viewRoleObjective = document.getElementById("viewRoleObjective");
-    var viewRoleAbilities = document.getElementById("viewRoleAbilities");
-
-    //Change modal title.
-    viewRoleTitle.textContent = "Role Title";
-
-    //Change objective.
-    viewRoleObjective.textContent = "This role's objectives.";
-
-    //Change role abilities.
-    viewRoleAbilities.textContent = "This role's abilities";
 }
