@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="css/stylesheet.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>Werewolf</title>
+</head>
+
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-light bg-light">
+        <a class="navbar-brand" href="main_screen.html">
+            <img src="ImageAssets/wolficon.png" width="30" height="30" class="d-inline-block align-top" alt="">
+            Werewolf
+        </a>
+    </nav>
+
+    <!-- Top Row Buttons -->
+    <div class="row justify-content-between mt-3">
+        <div class="col-auto">
+            <!-- Button: Leave Game -->
+            <button id="leaveGameBtn" class="btn btn-danger">Leave Game</button>
+        </div>
+
+        <div class="col-auto">
+            <!-- Button: View Role -->
+            <button id="viewRoleBtn" class="btn btn-primary" data-toggle="modal" data-target="#roleModal">View My Role</button>
+        </div>
+    </div>
+
+    <!-- Role Assignment UI -->
+    <div class="container-fluid h-100 d-flex flex-column justify-content-center align-items-center">
+        
+        <!-- Role Announcement -->
+        <div id="resultAnnouncement" class="text-very-large font-weight-bold">
+        </div>
+
+        <!-- Filler Box for Image -->
+        <div class="role-assign-image">
+            <img alt="Role Assignment Image" class="img-fluid">
+        </div>
+
+        <!-- View Role Modal -->
+        <div class="modal fade" id="roleModal" tabindex="-1" role="dialog" aria-labelledby="roleModalLabel" aria-hidden="true">
+        </div>
+
+        <!-- Text Description of the Role -->
+        <div id="resultSummary" class="role-description mt-3">
+        </div>
+
+        <!-- Dummy Button to go to voting screen -->
+        <button id="nextBtn" class="btn btn-primary mt-3">Next
+        </button>
+        
+    </div>
+
+    <script src="js/morningResults.js" type="module"></script>
+    <script src="services/FetchAPI.js" type="module"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+
+</html>
