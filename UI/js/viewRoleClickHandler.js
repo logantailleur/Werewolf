@@ -1,4 +1,4 @@
-function handleViewRoleClick() {
+export function handleViewRoleClick() {
 	// Set the src attribute to the desired image path inside the modal
 	var modalRoleImage = document.querySelector(
 		'#roleModal .role-assign-image img'
