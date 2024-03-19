@@ -5,6 +5,9 @@ export function generateRoleCards() {
     //Clear previous role cards.
     document.getElementById("otherRoleCards").innerHTML = "";
 
+    // TODO: Get player's role. This will determine whose roles they can view, if any.
+    let myRole = "host";
+
     //Generate and append role cards.
     //TODO: Fetch number of roles and add dynamic content.
     let nOtherPlayers = 10;
@@ -29,12 +32,21 @@ export function generateRoleCards() {
         }
 
         // Generate ID for the card. 
-        // TODO: replace with actual player ID
+        // TODO: replace with actual player ID from database
         let cardId = "roleCard" + i;
         roleCardElement.setAttribute("id", cardId);
 
-        let playerName = roleCardElement.querySelector(".player-name")
+        let playerName = roleCardElement.querySelector(".player-name");
+        // TODO: replace with actual player name from database
         playerName.textContent = "Player " + (i + 2);
+
+        let playerRole = roleCardElement.querySelector(".player-role");
+        if (myRole == "host") {
+            // TODO: Get this player's role from database
+            playerRole.textContent = "[PLAYER ROLE]";
+        } else {
+            playerRole.textContent = "???";
+        }
 
         //Append role card to container.
         document.getElementById("otherRoleCards").appendChild(roleCardElement);
