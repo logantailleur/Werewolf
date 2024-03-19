@@ -34,41 +34,10 @@
         </div>
 
         <!-- Other villager role cards -->
-        <div id="otherRoleCards" class="row justify-content-center mt-3">
-            <!-- Placeholder for dynamically generated role cards -->
-            <div class="container" style="max-width: 1000px; margin: auto;">
-                <div class="row" id="roleCardContainer">
-                    <!-- Dynamically generated role cards will be appended here -->
-                </div>
-            </div>
+        <div class="row justify-content-center mt-3">
+            <p>[Script]</p>
         </div>
 
-        <div class="row justify-content-center mt-3">
-            <p>Make sure all players are ready for nightfall before moving on.</p>
-        </div>
-        
-        <!-- Bottom Buttons -->
-        <div class="row justify-content-center mt-3">
-            <div class="col-auto">
-                <!-- Button: Move on to night time -->
-                <button id="nightFallBtn" class="btn btn-primary" >Move Onto Nightfall</button>
-            </div>
-        </div>
-
-        <script>
-            document.addEventListener("DOMContentLoaded", function() {
-                // Get reference to the button element
-                var nightFallBtn = document.getElementById("nightFallBtn");
-                
-                // Add click event listener to the button
-                nightFallBtn.addEventListener("click", function() {
-                    // Redirect to the role assign page
-                    window.location.href = "host_night_view.html";
-                    
-                    // TODO: Send signal to players so their screens move on to werewolf turn
-                });
-            });
-        </script>  
 
         <!-- View Role Modal -->
         <div class="modal fade" id="roleModal" tabindex="-1" role="dialog" aria-labelledby="roleModalLabel" aria-hidden="true">
