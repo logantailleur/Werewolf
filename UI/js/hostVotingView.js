@@ -32,6 +32,9 @@ function initializeApp() {
     let roleModal = document.getElementById("roleModal");
     roleModal.innerHTML = roleModalHTML;
 
+    let scriptTitle = document.getElementById("scriptTitle");
+    scriptTitle.textContent = "Voting Script";
+
     // TODO: Change depending 
     voting_status = VOTING_IN_PROGRESS;
 }

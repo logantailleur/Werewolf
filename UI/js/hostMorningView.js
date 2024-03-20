@@ -35,6 +35,9 @@ function initializeApp() {
     let roleModal = document.getElementById("roleModal");
     roleModal.innerHTML = roleModalHTML;
 
+    let scriptTitle = document.getElementById("scriptTitle");
+    scriptTitle.textContent = "Morning Script";
+
     // TODO: Change depending 
     result = KILLED;
 }

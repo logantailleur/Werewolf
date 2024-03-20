@@ -58,14 +58,20 @@ function updateHostScript() {
     // Append new script lines
     var script = [];
 
+    let turnTitle = document.getElementById("scriptTitle");
+
     if (turn == WEREWOLF_TURN){
         script = werewolfHostInstructions;
+        turnTitle.textContent = "Werewolf Turn Script";
     } else if (turn == SEER_TURN){
         script = seerHostInstructions;
+        turnTitle.textContent = "Seer Turn Script";
     } else if (turn == DOCTOR_TURN){
         script = doctorHostInstructions;
+        turnTitle.textContent = "Doctor Turn Script";
     } else {
         script = hostWelcomeScript;
+        turnTitle.textContent = "Welcome Script";
     }
 
     // Replace script based on who's turn it is
@@ -75,15 +81,15 @@ function updateHostScript() {
         hostScript.appendChild(p);
     });
 
-    const morningBtn = document.getElementById("morningBtn");
+    const nightBtn = document.getElementById("nightBtn");
     if (turn == WELCOME_MESSAGE) {
-        morningBtn.textContent = "Next: Werewolf";
+        nightBtn.textContent = "Next: Werewolf";
     } else if (turn == WEREWOLF_TURN) {
-        morningBtn.textContent = "Next: Seer";
+        nightBtn.textContent = "Next: Seer";
     } else if (turn == SEER_TURN) {
-        morningBtn.textContent = "Next: Doctor";
+        nightBtn.textContent = "Next: Doctor";
     } else if (turn == DOCTOR_TURN) {
-        morningBtn.textContent = "Next: Morning Results";
+        nightBtn.textContent = "Next: Morning Results";
     }
 }
 
@@ -92,16 +98,16 @@ function initializeEventListeners() {
     var viewRoleBtn = document.getElementById("viewRoleBtn");
     viewRoleBtn.addEventListener("click", handleViewRoleClick);
 
-    var morningBtn = document.getElementById("morningBtn");
-    morningBtn.addEventListener("click", function() {
+    var nightBtn = document.getElementById("nightBtn");
+    nightBtn.addEventListener("click", function() {
         // Update turn
-        if (turn == WELCOME_MESSAGE) {
+        if (turn == WELCOME_MESSAGE && roleDone(WELCOME_MESSAGE)) {
             turn = WEREWOLF_TURN;
-        } else if (turn == WEREWOLF_TURN) {
+        } else if (turn == WEREWOLF_TURN && roleDone(WEREWOLF_TURN)) {
             turn = SEER_TURN;
-        } else if (turn == SEER_TURN) {
+        } else if (turn == SEER_TURN && roleDone(SEER_TURN)) {
             turn = DOCTOR_TURN;
-        } else if (turn == DOCTOR_TURN) {
+        } else if (turn == DOCTOR_TURN && roleDone(DOCTOR_TURN)) {
             // Redirect to morning view
             window.location.href = "host_morning_view.html";
             return; // Exit function early
@@ -110,4 +116,15 @@ function initializeEventListeners() {
         // Update host script and button text
         updateHostScript();
     });
+}
+
+function roleDone(role){
+    // TODO: Check to see if the role is finished completing their actions.
+    var isDone = true;
+
+    if (!isDone){
+        var nightBtn = document.getElementById("nightBtn");
+        nightBtn.disabled = disable;
+    }
+    return isDone;
 }
