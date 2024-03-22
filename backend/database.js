@@ -9,8 +9,8 @@ function initializeDatabaseTables(db) {
 				'datetime_created DATETIME NOT NULL,' +
 				"started CHAR(1) DEFAULT 'n' NOT NULL," +
 				'num_players SMALLINT DEFAULT 0 NOT NULL,' +
-				'game_state SMALLINT DEFAULT 1 NOT NULL' +
-				'last_kill CHAR(5)' +
+				'game_state SMALLINT DEFAULT 1 NOT NULL,' +
+				'last_kill CHAR(5),' +
 				"CHECK (started in ('n', 'y'))" +
 				');'
 		);
@@ -21,9 +21,9 @@ function initializeDatabaseTables(db) {
 				'player_id CHAR(5),' +
 				'player_name VARCHAR(25),' +
 				'role VARCHAR(10),' +
-				'player_state SMALLINT DEFAULT 2' +
-				'voted_player char(5) DEFAULT NULL' +
-				"is_alive CHAR(1) DEFAULT 'y' NOT NULL" +
+				'player_state SMALLINT DEFAULT 2,' +
+				'voted_player char(5) DEFAULT NULL,' +
+				"is_alive CHAR(1) DEFAULT 'y' NOT NULL," +
 				'PRIMARY KEY (game_code, player_id),' +
 				'FOREIGN KEY (game_code) REFERENCES game(game_code)' +
 				');'
