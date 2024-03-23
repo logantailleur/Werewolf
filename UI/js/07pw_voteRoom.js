@@ -19,13 +19,13 @@ async function handleContinueClick() {
 	var response = await viewResult(lobbyCode);
 	if (response.success && response.canContinue) {
 		if (response.player.playerId === localStorage.getItem('playerId')) {
-			window.localation.href = '10p_hung_villager_view.html';
+			window.location.href = '09p_hung_villager_view.html';
 		}
 		console.log(response);
 		localStorage.setItem('victim', JSON.stringify(response.player));
 
 		if (response.player.role === 'werewolf') {
-			window.location.href = '10p_win_game_view.html';
+			window.location.href = '10p_villager_win_view.html';
 		} else {
 			window.location.href = '08p_vote_results_view.html';
 		}
