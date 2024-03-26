@@ -22,7 +22,7 @@ async function initializeRoleAssignPage() {
 	var resultImage = document.querySelector('.result-image img');
 
 	var victim = JSON.parse(localStorage.getItem('victim'));
-	var victimName = victim.name;
+	var victimName = victim.playerName;
 	var victimRole = victim.role;
 	var victimImage = 'ImageAssets/villagericon.png';
 

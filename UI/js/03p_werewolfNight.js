@@ -42,7 +42,7 @@ async function generateRoleCards() {
 		//TODO: Add status to database. Add "villager" role to database.
 		if (
 			otherPlayers[i].role !== 'werewolf' &&
-			otherPlayers[i].status === 'alive'
+			otherPlayers[i].isAlive === 'y'
 		) {
 			//Create new role card element.
 			let roleCardElement = document.createElement('div');

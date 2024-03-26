@@ -38,8 +38,7 @@ async function generateRoleCards() {
 	let nOtherPlayers = otherPlayers.length;
 
 	for (let i = 0; i < nOtherPlayers; i++) {
-		//TODO: Add status to database.
-		if (otherPlayers[i].status == 'alive' && otherPlayers[i].name != localStorage.getItem('userName')) {
+		if (otherPlayers[i].isAlive == 'y' && otherPlayers[i].name != localStorage.getItem('userName')) {
 			//Create new role card element.
 			let roleCardElement = document.createElement('div');
 
@@ -119,7 +118,7 @@ function initializeEventListeners() {
 				roleCard.id
 			);
 
-			if (response.success) {
+			if (response.canContinue) {
 				window.location.href = '07pw_vote_room_view.html';
 			}
 		});

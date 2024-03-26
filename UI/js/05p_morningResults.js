@@ -48,7 +48,7 @@ async function handleVoteClick() {
 		localStorage.getItem('lobbyCode'),
 		localStorage.getItem('playerId')
 	);
-	if (response.success) {
+	if (response.canContinue) {
 		localStorage.setItem('players', JSON.stringify(response.players));
 		window.location.href = '07p_voting_screen_view.html';
 	}

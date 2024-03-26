@@ -14,10 +14,6 @@ function initializeApp() {
 }
 
 async function initializeHostGamePage() {
-	// var createResponse = await createGame();
-	// var lobbyCode = createResponse.gameCode;
-
-	// localStorage.setItem('lobbyCode', lobbyCode);
 	var lobbyCode = localStorage.getItem('lobbyCode');
 
 	//Display lobby's code.
@@ -32,24 +28,7 @@ function initializeEventListeners() {
 }
 
 async function handleStartGameClick() {
-	// var userName = "Host";
 	var lobbyCode = localStorage.getItem('lobbyCode');
-
-	//Get host name, store in localStorage.
-	// localStorage.setItem("userName", userName);
-
-	// var joinResponse = await joinGame(lobbyCode, userName);
-	// if (joinResponse.success) {
-	//     //Get returned player ID, store in localStorage.
-	//     localStorage.setItem("playerId", joinResponse.playerId);
-
-	//     //Get entered lobby, store in localStorage.
-	//     localStorage.setItem("lobbyCode", lobbyCode);
-	// } else {
-	//     var errorMessage = document.getElementById("startGameError");
-	//     errorMessage.innerHTML = `Sorry, game <strong>${lobbyCode}</strong> doesn't exist or is full. Please try again.`;
-	//     return;
-	// }
 
 	//Start game if 6 people are in lobby.
 	var startResponse = await startGame(lobbyCode);
@@ -59,7 +38,7 @@ async function handleStartGameClick() {
 		var allPlayers = await getAllPlayers(lobbyCode);
 		console.log(allPlayers);
 		if (allPlayers.success) {
-			localStorage.setItem('players', JSON.stringify(allPlayers));
+			localStorage.setItem('players', JSON.stringify(allPlayers.players));
 			window.location.href = '02h_player_grid_view.html';
 		}
 	} else {
