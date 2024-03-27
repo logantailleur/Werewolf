@@ -15,6 +15,7 @@ const {
 	playerVote,
 	playerReadyToVote,
 	playerWakes,
+	viewVoteResult,
 } = require('./services/service');
 
 server.use(cors());
@@ -102,11 +103,11 @@ server.post('/api/game/host/sleep/:gameCode', async (req, res) => {
 	if (!response.success) {
 		return res.status(400).send('No gameCode found in database\n');
 	}
-	if (!response.canContinue) {
-		return res
-			.status(409)
-			.send('Cannot continue yet, all players must go to sleep first');
-	}
+	// if (!response.canContinue) {
+	// 	return res
+	// 		.status(409)
+	// 		.send('Cannot continue yet, all players must go to sleep first');
+	// }
 	res.json(response);
 });
 
@@ -119,11 +120,11 @@ server.post('/api/game/host/wake/:gameCode', async (req, res) => {
 	if (!response.success) {
 		return res.status(400).send('No gameCode found in database\n');
 	}
-	if (!response.canContinue) {
-		return res
-			.status(409)
-			.send('Cannot continue yet, all players must wake first');
-	}
+	// if (!response.canContinue) {
+	// 	return res
+	// 		.status(409)
+	// 		.send('Cannot continue yet, all players must wake first');
+	// }
 	res.json(response);
 });
 
@@ -138,11 +139,11 @@ server.post('/api/game/host/end-vote/:gameCode', async (req, res) => {
 	if (!response.success) {
 		return res.status(400).send('No gameCode found in database\n');
 	}
-	if (!response.canContinue) {
-		return res
-			.status(409)
-			.send('Cannot continue yet, all players must vote first');
-	}
+	// if (!response.canContinue) {
+	// 	return res
+	// 		.status(409)
+	// 		.send('Cannot continue yet, all players must vote first');
+	// }
 	res.json(response);
 });
 
@@ -211,9 +212,9 @@ server.post(
 				.send('Missing gameCode or playerId to begin voting');
 		}
 		const response = await playerReadyToVote(gameCode, playerId);
-		if (!response.canContinue) {
-			return res.status(400).send('Cannot continue until host has woken up');
-		}
+		// if (!response.canContinue) {
+		// 	return res.status(400).send('Cannot continue until host has woken up');
+		// }
 		if (!response.success) {
 			return res
 				.status(400)
@@ -238,6 +239,18 @@ server.post(
 				.status(400)
 				.send('No gameCode of playerId found in database\n');
 		}
-		res.json(resonse);
+		res.json(response);
 	}
 );
+
+server.get('/api/game/player/vote/result/:gameCode', async (req, res) => {
+	const { gameCode } = req.params;
+	if (!gameCode) {
+		return res.status(400).send('Missing gameCode for viewing vote results\n');
+	}
+	const response = await viewVoteResult(gameCode);
+	if (!response.success) {
+		return res.status(400).send('No gameCode found in database\n');
+	}
+	res.json(response);
+});

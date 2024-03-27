@@ -72,7 +72,8 @@ async function startGame(gameCode) {
 				resolve({ success: false, message: 'Game has already started.' });
 			} else {
 				// Game has not started, proceed with updating and assigning roles
-				let sql = "UPDATE game SET started = 'y', game_state = 9 WHERE game_code = ?";
+				let sql =
+					"UPDATE game SET started = 'y', game_state = 9 WHERE game_code = ?";
 				db.run(sql, [gameCode], async function (err) {
 					if (err) {
 						reject({
@@ -83,16 +84,11 @@ async function startGame(gameCode) {
 						try {
 							// Get all players in the game
 							let players = await getAllPlayers(gameCode);
-							console.log('before assignment');
-							console.log(players);
 							// Assign roles to players
 							await assignRoles(gameCode, players);
 
 							players = await getAllPlayers(gameCode);
-							console.log('after assignment');
-							console.log(players);
 
-							await printDB();
 							// Game started successfully
 							resolve({ success: true, message: 'Successfully started game.' });
 						} catch (error) {
@@ -143,11 +139,9 @@ function joinGame(gameCode, playerID, playerName) {
 		db.get(gameOpenQuery, [gameCode], (err, row) => {
 			if (err) {
 				reject({ success: false, message: err.message });
-			} 
-            else if (!row) {
-                reject({success: false, message: "Invalid game code."});
-            }
-            else if (row && row.started !== 'n') {
+			} else if (!row) {
+				reject({ success: false, message: 'Invalid game code.' });
+			} else if (row && row.started !== 'n') {
 				// Game has already started
 				resolve({ success: false, message: 'Game has already started.' });
 			} else if (row && row.num_players >= PLAYER_LIMIT) {
@@ -293,23 +287,23 @@ function shuffleArray(array) {
 		const j = Math.floor(Math.random() * (i + 1));
 		[array[i], array[j]] = [array[j], array[i]];
 	}
-	console.log(array);
 	return array;
 }
 
 async function getAllPlayerRoles(gameCode) {
 	return new Promise((resolve, reject) => {
-		let sql = 'SELECT player_id, player_name, role, is_alive FROM player WHERE game_code = ?';
+		let sql =
+			'SELECT player_id, player_name, role, is_alive FROM player WHERE game_code = ?';
 		db.all(sql, [gameCode], (err, rows) => {
 			if (err) {
 				reject(err);
 			} else {
-				let players = rows.map(row => ({
-					player_id: row.player_id,
-					player_name: row.player_name,
+				let players = rows.map((row) => ({
+					playerId: row.player_id,
+					name: row.player_name,
 					role: row.role,
-					is_alive: row.is_alive
-			}));
+					isAlive: row.is_alive,
+				}));
 				resolve(players);
 			}
 		});
@@ -320,303 +314,368 @@ function canHostContinue(gameCode, neededPlayerState) {
 	//Given game code and what state we expect the players to be in, returns true if host can update, false otherwise.
 	//Only considers live players.
 	return new Promise((resolve, reject) => {
-        let sql = 'SELECT * FROM player WHERE game_code = ? AND is_alive = \'y\' AND player_state != ?';
-        db.get(sql, [gameCode, neededPlayerState], (err, row) => {
-            if (err) {
-                resolve({ success: false, canContinue: false, error: err });
-            } else if (row) {
-                resolve({ success: true, canContinue: false });
-            } else {
-                resolve({ success: true, canContinue: true });
-            }
-        });
-    });
+		let sql =
+			"SELECT * FROM player WHERE game_code = ? AND is_alive = 'y' AND player_state != ?";
+		db.get(sql, [gameCode, neededPlayerState], (err, row) => {
+			if (err) {
+				resolve({ success: false, canContinue: false, error: err });
+			} else if (row) {
+				resolve({ success: true, canContinue: false });
+			} else {
+				resolve({ success: true, canContinue: true });
+			}
+		});
+	});
 }
 
 async function hostSleepsDB(gameCode) {
 	//All live players must be in state 3 to continue
 	return new Promise((resolve, reject) => {
 		canHostContinue(gameCode, 3)
-		.then(results => {
-			if (results.success) {
-				if(results.canContinue) {
-					sql = 'UPDATE game SET game_state = 4 WHERE game_code = ?';
-					db.run(sql, [gameCode], (err) => {
-						if(err) {
-							results = {success: false, canContinue: false};
-						}
-						else {
-							results = {success: true, canContinue: true};
-						}
+			.then((results) => {
+				if (results.success) {
+					if (results.canContinue) {
+						sql = 'UPDATE game SET game_state = 4 WHERE game_code = ?';
+						db.run(sql, [gameCode], (err) => {
+							if (err) {
+								results = { success: false, canContinue: false };
+							} else {
+								results = { success: true, canContinue: true };
+							}
+							resolve(results);
+						});
+					} else {
 						resolve(results);
-					})
+					}
+				} else {
+					reject(results.error);
 				}
-				else{
-					resolve(results);
-				}
-			}
-			else {
-				reject(results.error);
-			}
-		})
-		.catch(error => {
-			reject(error);
-		})
+			})
+			.catch((error) => {
+				reject(error);
+			});
 	});
 }
 
 async function hostWakesDB(gameCode) {
-    return new Promise((resolve, reject) => {
-        canHostContinue(gameCode, 5)
-            .then(results => {
-                if (results.success) {
-                    if (results.canContinue) {
-                        let id = null;
-                        let sql = 'SELECT player_id FROM player WHERE role = \'werewolf\' AND game_code = ?';
-                        db.get(sql, [gameCode], (err, row) => {
-                            if (err) {
-                                reject(err);
-                                return; // Return to prevent further execution
-                            }
-                            if (row) {
-                                id = row.player_id;
-                                sql = 'UPDATE game SET last_kill = ? WHERE game_code = ?';
-                                db.run(sql, [id, gameCode], (err) => {
-                                    if (err) {
-                                        reject(err);
-                                        return; // Return to prevent further execution
-                                    }
-                                    sql = 'UPDATE player SET is_alive = \'n\' WHERE game_code = ? AND player_id = ?';
-                                    db.run(sql, [gameCode, id], (err) => {
-                                        if (err) {
-                                            reject(err);
-                                            return; // Return to prevent further execution
-                                        }
-										sql = 'UPDATE game SET game_state = 6 WHERE game_code = ?';
-										db.run(sql, [gameCode], (err) => {
-											if(err) {
-												results = {success: false, canContinue: false};
-											}
-											else {
-												results = {success: true, canContinue: true};
-											}
-											resolve(results);
-										})
-                                    });
-                                });
-                            } else {
-								results = {success: true, canContinue: false};
-                                resolve(results); // No werewolf found, resolve with existing results
-                            }
-                        });
-                    } else {
-                        resolve(results); // Game cannot continue, resolve with existing results
-                    }
-                } else {
-                    reject(results.error); // Reject with error from canHostContinue
-                }
-            })
-            .catch(error => {
-                reject(error); // Reject with error from any of the operations
-            });
-    });
-}
-
-async function endVoteDB(gameCode) {
 	return new Promise((resolve, reject) => {
-		canHostContinue(gameCode, 8)
-		.then(results => {
-			if (results.success) {
-				if(results.canContinue) {
-					let sql = 'SELECT voted_player, COUNT(voted_player) AS votes FROM player WHERE game_code = ? GROUP BY voted_player ORDER BY COUNT(voted_player) DESC';
-					db.all(sql, [gameCode], (err, rows) => {
-						if(err) {
-							results = {success: false, canContinue: false};
-							resolve(results);
-						}
-						else {
-							let tally = rows.map(row => ({
-								voted_player: row.voted_player,
-								votes: row.votes
-							}));
-							let killed_player = null;
-							if(tally.length === 1) {
-								//Only one person was voted for
-								killed_player = tally[0].voted_player;
+		canHostContinue(gameCode, 5)
+			.then((results) => {
+				if (results.success) {
+					if (results.canContinue) {
+						let id = null;
+						let sql =
+							"SELECT player_id FROM player WHERE role = 'werewolf' AND game_code = ?";
+						db.get(sql, [gameCode], (err, row) => {
+							if (err) {
+								reject(err);
+								return; // Return to prevent further execution
 							}
-							else if (tally.length === 0) {
-								//Nobody was voted for; this state should not be reached for demo #2
-								killed_player = null;
-							}
-							else {
-								if (tally[0].votes === tally[1].votes) {
-									//If there's a tie between the top two voted players
-									killed_player = null;
-								}
-								else {
-									//If there's no tie
-									killed_player = tally[0].voted_player;
-								}
-							}
-							if(killed_player) {
-								id = killed_player;
+							if (row) {
+								id = row.player_id;
 								sql = 'UPDATE game SET last_kill = ? WHERE game_code = ?';
 								db.run(sql, [id, gameCode], (err) => {
 									if (err) {
 										reject(err);
 										return; // Return to prevent further execution
 									}
-									sql = 'UPDATE player SET is_alive = \'n\' WHERE game_code = ? AND player_id = ?';
+									sql =
+										"UPDATE player SET is_alive = 'n' WHERE game_code = ? AND player_id = ?";
 									db.run(sql, [gameCode, id], (err) => {
 										if (err) {
 											reject(err);
 											return; // Return to prevent further execution
 										}
-										sql = 'UPDATE game SET game_state = 9 WHERE game_code = ?';
+										sql = 'UPDATE game SET game_state = 6 WHERE game_code = ?';
 										db.run(sql, [gameCode], (err) => {
-											if(err) {
-												results = {success: false, canContinue: false};
-											}
-											else {
-												results = {success: true, canContinue: true};
+											if (err) {
+												results = { success: false, canContinue: false };
+											} else {
+												results = { success: true, canContinue: true };
 											}
 											resolve(results);
-										})
+										});
 									});
 								});
+							} else {
+								results = { success: true, canContinue: false };
+								resolve(results); // No werewolf found, resolve with existing results
 							}
-							else {
-								sql = 'UPDATE game SET game_state = 9 WHERE game_code = ?';
-								db.run(sql, [gameCode], (err) => {
-									if(err) {
-										results = {success: false, canContinue: false};
-									}
-									else {
-										results = {success: true, canContinue: true};
-									}
-									resolve(results);
-								})
+						});
+					} else {
+						resolve(results); // Game cannot continue, resolve with existing results
+					}
+				} else {
+					reject(results.error); // Reject with error from canHostContinue
+				}
+			})
+			.catch((error) => {
+				reject(error); // Reject with error from any of the operations
+			});
+	});
+}
+
+async function endVoteDB(gameCode) {
+	return new Promise((resolve, reject) => {
+		canHostContinue(gameCode, 8)
+			.then((results) => {
+				if (results.success) {
+					if (results.canContinue) {
+						let sql =
+							'SELECT * FROM player WHERE game_code = ? AND player_id = (SELECT voted_player FROM player WHERE game_code = ? GROUP BY voted_player ORDER BY COUNT(voted_player) DESC LIMIT 1)';
+						db.get(sql, [gameCode, gameCode], (err, row) => {
+							if (err) {
+								reject(err);
+								return;
 							}
-						}
-					})
+
+							if (!row) {
+								// No player was killed
+								resolve({
+									success: true,
+									canContinue: true,
+									killedPlayer: null,
+								});
+								return;
+							}
+
+							const killedPlayer = {
+								playerId: row.player_id,
+								name: row.player_name,
+								role: row.role,
+								status: row.is_alive,
+							};
+
+							// Update game_state and is_alive for the killed player
+							sql =
+								'UPDATE game SET last_kill = ?, game_state = 9 WHERE game_code = ?';
+							db.run(sql, [killedPlayer.playerId, gameCode], (err) => {
+								if (err) {
+									reject(err);
+									return;
+								}
+								sql =
+									"UPDATE player SET is_alive = 'n' WHERE game_code = ? AND player_id = ?";
+								db.run(sql, [gameCode, killedPlayer.playerId], (err) => {
+									if (err) {
+										reject(err);
+										return;
+									}
+									resolve({
+										success: true,
+										canContinue: true,
+										victim: killedPlayer,
+									});
+								});
+							});
+						});
+					} else {
+						resolve(results);
+					}
+				} else {
+					reject(results.error);
 				}
-				else{
-					resolve(results);
-				}
-			}
-			else {
-				reject(results.error);
-			}
-		})
-		.catch(error => {
-			reject(error);
-		})
+			})
+			.catch((error) => {
+				reject(error);
+			});
 	});
 }
 
 async function playerSleepsDB(gameCode, playerID) {
-	return new Promise((resolve, reject) =>{
-		let sql = "SELECT game_state FROM game WHERE game_code = ?";
+	return new Promise((resolve, reject) => {
+		let sql = 'SELECT game_state FROM game WHERE game_code = ?';
 		db.get(sql, [gameCode], (err, row) => {
 			if (err) {
 				reject(err);
 			}
-			if (row.game_state !== 9) {
-				resolve({success: true, canContinue: false});
+			if (row.game_state === 9 || row.game_state === 2) {
+				sql =
+					'UPDATE player SET player_state = 3 WHERE game_code = ? AND player_id = ?';
+				db.run(sql, [gameCode, playerID], (err) => {
+					if (err) {
+						reject(err);
+					}
+					resolve({ success: true, canContinue: true });
+				});
+			} else {
+				console.log(row);
+				resolve({ success: true, canContinue: false });
 			}
-			sql = "UPDATE player SET player_state = 3 WHERE game_code = ? AND player_id = ?"
-			db.run(sql, [gameCode, playerID], (err) => {
-				if(err) {
-					reject(err);
-				}
-				resolve({success: true, canContinue: true});
-			})
-		})
+		});
 	});
 }
 
 async function playerWakesDB(gameCode, playerID) {
-	return new Promise((resolve, reject) =>{
-		let sql = "SELECT game_state FROM game WHERE game_code = ?";
+	return new Promise((resolve, reject) => {
+		let sql = 'SELECT game_state, last_kill FROM game WHERE game_code = ?';
 		db.get(sql, [gameCode], (err, row) => {
 			if (err) {
 				reject(err);
+				return;
 			}
-			if (row.game_state !== 4) {
-				resolve({success: true, canContinue: false});
+			if (row.game_state !== 6) {
+				resolve({ success: true, canContinue: false });
+				return;
 			}
-			sql = "UPDATE player SET player_state = 5 WHERE game_code = ? AND player_id = ?"
-			db.run(sql, [gameCode, playerID], (err) => {
-				if(err) {
+
+			const lastKillPlayerID = row.last_kill;
+			if (!lastKillPlayerID) {
+				// No last kill recorded, resolve with null
+				resolve({ success: true, canContinue: true, lastKillPlayer: null });
+				return;
+			}
+
+			// Fetch player row corresponding to last_kill player ID
+			sql = 'SELECT * FROM player WHERE game_code = ? AND player_id = ?';
+			db.get(sql, [gameCode, lastKillPlayerID], (err, playerRow) => {
+				if (err) {
 					reject(err);
+					return;
 				}
-				resolve({success: true, canContinue: true});
-			})
-		})
+
+				// Update player_state for the current player
+				sql =
+					'UPDATE player SET player_state = 5 WHERE game_code = ? AND player_id = ?';
+				db.run(sql, [gameCode, playerID], (err) => {
+					if (err) {
+						reject(err);
+						return;
+					}
+					// Resolve with success, canContinue, and the lastKillPlayer row
+					resolve({
+						success: true,
+						canContinue: true,
+						lastKillPlayer: {
+							name: playerRow.player_name,
+							playerId: playerRow.player_id,
+							role: playerRow.role,
+						},
+					});
+				});
+			});
+		});
 	});
 }
 
 async function werewolfKillsDB(gameCode, playerID, victimID) {
-	return new Promise((resolve, reject) =>{
-		let sql = "SELECT game_state FROM game WHERE game_code = ?";
+	return new Promise((resolve, reject) => {
+		let sql = 'SELECT game_state FROM game WHERE game_code = ?';
 		db.get(sql, [gameCode], (err, row) => {
 			if (err) {
 				reject(err);
+				return;
 			}
 			if (row.game_state !== 4) {
-				resolve({success: true, canContinue: false});
+				resolve({ success: true, canContinue: false });
+				return;
 			}
-			sql = "UPDATE player SET player_state = 5, voted_player = ? WHERE game_code = ? AND player_id = ?"
+
+			// Update player_state and voted_player for the current player
+			sql =
+				'UPDATE player SET player_state = 5, voted_player = ? WHERE game_code = ? AND player_id = ?';
 			db.run(sql, [victimID, gameCode, playerID], (err) => {
-				if(err) {
+				if (err) {
 					reject(err);
+					return;
 				}
-				resolve({success: true, canContinue: true});
-			})
-		})
+
+				// Mark the victim player as not alive
+				sql =
+					"UPDATE player SET is_alive = 'n' WHERE game_code = ? AND player_id = ?";
+				db.run(sql, [gameCode, victimID], (err) => {
+					if (err) {
+						reject(err);
+						return;
+					}
+
+					// Update last_kill on the game table to be the victimId
+					sql = 'UPDATE game SET last_kill = ? WHERE game_code = ?';
+					db.run(sql, [victimID, gameCode], (err) => {
+						if (err) {
+							reject(err);
+							return;
+						}
+						resolve({ success: true, canContinue: true });
+					});
+				});
+			});
+		});
 	});
 }
 
 async function playerReadyToVoteDB(gameCode, playerID) {
-	return new Promise((resolve, reject) =>{
-		let sql = "SELECT game_state FROM game WHERE game_code = ?";
+	return new Promise((resolve, reject) => {
+		let sql = 'SELECT game_state FROM game WHERE game_code = ?';
 		db.get(sql, [gameCode], (err, row) => {
 			if (err) {
 				reject(err);
 			}
 			if (row.game_state !== 6) {
-				resolve({success: true, canContinue: false});
+				resolve({ success: true, canContinue: false });
 			}
-			sql = "UPDATE player SET player_state = 7 WHERE game_code = ? AND player_id = ?"
+			sql =
+				'UPDATE player SET player_state = 7 WHERE game_code = ? AND player_id = ?';
 			db.run(sql, [gameCode, playerID], (err) => {
-				if(err) {
+				if (err) {
 					reject(err);
 				}
-				resolve({success: true, canContinue: true});
-			})
-		})
+				resolve({ success: true, canContinue: true });
+			});
+		});
 	});
 }
 
 async function playerVoteDB(gameCode, playerID, votedID) {
-	return new Promise((resolve, reject) =>{
+	return new Promise((resolve, reject) => {
 		// Get a count of all players not in state 7 or 8; if any such players exist, can't continue to state 8.
-		let sql = "SELECT COUNT(player_state) AS states FROM player WHERE game_code = ? AND NOT (player_state = 7 OR player_state = 8)";
-		db.get(sql, [gameCode, playerID], (err, row) => {
+		let sql =
+			'SELECT COUNT(player_state) AS states FROM player WHERE game_code = ? AND NOT (player_state = 7 OR player_state = 8)';
+		db.get(sql, [gameCode], (err, row) => {
 			if (err) {
 				reject(err);
+				return;
 			}
 			if (row.states !== 0) {
-				resolve({success: true, canContinue: false});
+				resolve({ success: true, canContinue: false });
+				return;
 			}
-			sql = "UPDATE player SET player_state = 8, voted_player = ? WHERE game_code = ? AND player_id = ?"
+			sql =
+				'UPDATE player SET player_state = 8, voted_player = ? WHERE game_code = ? AND player_id = ?';
 			db.run(sql, [votedID, gameCode, playerID], (err) => {
-				if(err) {
+				if (err) {
 					reject(err);
+					return;
 				}
-				resolve({success: true, canContinue: true});
-			})
-		})
+				resolve({ success: true, canContinue: true });
+			});
+		});
+	});
+}
+
+async function getPlayerByLastKill(gameCode) {
+	return new Promise((resolve, reject) => {
+		let sql =
+			'SELECT player_id, player_name, role FROM player WHERE game_code = ? AND player_id = (SELECT last_kill FROM game WHERE game_code = ?)';
+		db.get(sql, [gameCode, gameCode], (err, row) => {
+			if (err) {
+				reject(err);
+				return;
+			}
+			if (!row) {
+				resolve(null); // No player found
+			} else {
+				resolve({
+					success: true,
+					canContinue: true,
+					player: {
+						playerId: row.player_id,
+						playerName: row.player_name,
+						role: row.role,
+					},
+				});
+			}
+		});
 	});
 }
 
@@ -637,5 +696,6 @@ module.exports = {
 	playerWakesDB,
 	werewolfKillsDB,
 	playerReadyToVoteDB,
-	playerVoteDB
+	playerVoteDB,
+	getPlayerByLastKill,
 };

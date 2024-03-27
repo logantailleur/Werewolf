@@ -116,50 +116,9 @@ export function getAllPlayers(lobbyCode) {
 		});
 }
 
+//TODO: build this in:
 export function hostSleeps(lobbyCode) {
 	return fetch(`http://${address}:4000/api/game/host/sleep/${lobbyCode}`, {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json',
-		},
-	})
-		.then((response) => {
-			if (!response.ok) {
-				throw new Error('Network response was not ok');
-			}
-			return response.json();
-		})
-		.then((data) => {
-			return data;
-		})
-		.catch((error) => {
-			console.error(error);
-		});
-}
-
-export function hostWakes(lobbyCode) {
-	return fetch(`http://${address}:4000/api/game/host/wake/${lobbyCode}`, {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json',
-		},
-	})
-		.then((response) => {
-			if (!response.ok) {
-				throw new Error('Network response was not ok');
-			}
-			return response.json();
-		})
-		.then((data) => {
-			return data;
-		})
-		.catch((error) => {
-			console.error(error);
-		});
-}
-
-export function endVoting(lobbyCode) {
-	return fetch(`http://${address}:4000/api/game/host/end-vote/${lobbyCode}`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
@@ -182,30 +141,6 @@ export function endVoting(lobbyCode) {
 export function playerSleeps(lobbyCode, playerId) {
 	return fetch(
 		`http://${address}:4000/api/game/player/sleep/${lobbyCode}/${playerId}`,
-		{
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-		}
-	)
-		.then((response) => {
-			if (!response.ok) {
-				throw new Error('Network response was not ok');
-			}
-			return response.json();
-		})
-		.then((data) => {
-			return data;
-		})
-		.catch((error) => {
-			console.error(error);
-		});
-}
-
-export function playerWakes(lobbyCode, playerId) {
-    return fetch(
-		`http://${address}:4000/api/game/player/wake/${lobbyCode}/${playerId}`,
 		{
 			method: 'POST',
 			headers: {
@@ -251,6 +186,53 @@ export function werewolfKills(lobbyCode, playerId, victimId) {
 		});
 }
 
+//TODO: build this in:
+export function hostWakes(lobbyCode) {
+	return fetch(`http://${address}:4000/api/game/host/wake/${lobbyCode}`, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+		},
+	})
+		.then((response) => {
+			if (!response.ok) {
+				throw new Error('Network response was not ok');
+			}
+			return response.json();
+		})
+		.then((data) => {
+			return data;
+		})
+		.catch((error) => {
+			console.error(error);
+		});
+}
+
+export function playerWakes(lobbyCode, playerId) {
+    return fetch(
+		`http://${address}:4000/api/game/player/wake/${lobbyCode}/${playerId}`,
+		{
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+		}
+	)
+		.then((response) => {
+			if (!response.ok) {
+				throw new Error('Network response was not ok');
+			}
+			return response.json();
+		})
+		.then((data) => {
+			return data;
+		})
+		.catch((error) => {
+			console.error(error);
+		});
+}
+
+//TODO: build this in:
 export function playerReadyToVote(lobbyCode, playerId) {
     return fetch(
 		`http://${address}:4000/api/game/player/begin-voting/${lobbyCode}/${playerId}`,
@@ -285,6 +267,43 @@ export function playerVote(lobbyCode, playerId, voteId) {
 			},
 		}
 	)
+		.then((response) => {
+			if (!response.ok) {
+				throw new Error('Network response was not ok');
+			}
+			return response.json();
+		})
+		.then((data) => {
+			return data;
+		})
+		.catch((error) => {
+			console.error(error);
+		});
+}
+
+export function endVoting(lobbyCode) {
+	return fetch(`http://${address}:4000/api/game/host/end-vote/${lobbyCode}`, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+		},
+	})
+		.then((response) => {
+			if (!response.ok) {
+				throw new Error('Network response was not ok');
+			}
+			return response.json();
+		})
+		.then((data) => {
+			return data;
+		})
+		.catch((error) => {
+			console.error(error);
+		});
+}
+
+export function viewResult(lobbyCode) {
+	return fetch(`http://${address}:4000/api/game/player/vote/result/${lobbyCode}`)
 		.then((response) => {
 			if (!response.ok) {
 				throw new Error('Network response was not ok');

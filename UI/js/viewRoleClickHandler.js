@@ -16,15 +16,15 @@ export function handleViewRoleClick() {
         viewRoleTitle.textContent = 'Werewolf';
         viewRoleObjective.textContent = "Kill off the entire village and don't get caught";
         viewRoleAbilities.textContent = "You can kill one other player each night";
+    } else if (role == "villager") {
+        modalRoleImage.src = 'ImageAssets/villagericon.png';
+        viewRoleTitle.textContent = 'Villager';
+        viewRoleObjective.textContent = "Find the identity of the werewolves";
+        viewRoleAbilities.textContent = "You're a little weak, but there is strength in numbers";
     } else if (role == "host") {
         modalRoleImage.src = 'ImageAssets/villagericon.png';
         viewRoleTitle.textContent = 'Host';
         viewRoleObjective.textContent = "Narrate the game and watch the chaos unfold!";
         viewRoleAbilities.textContent = "You can see everyone's roles. Keep them a secret...";
-    } else {
-        modalRoleImage.src = 'ImageAssets/villagericon.png';
-        viewRoleTitle.textContent = 'Villager';
-        viewRoleObjective.textContent = "Find the identity of the werewolves";
-        viewRoleAbilities.textContent = "You're a little weak, but there is strength in numbers";
     }
 }
