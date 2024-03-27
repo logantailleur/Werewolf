@@ -313,20 +313,23 @@ async function getAllPlayerRoles(gameCode) {
 function canHostContinue(gameCode, neededPlayerState) {
 	//Given game code and what state we expect the players to be in, returns true if host can update, false otherwise.
 	//Only considers live players.
-	return true;
-	// return new Promise((resolve, reject) => {
-	// 	let sql =
-	// 		"SELECT * FROM player WHERE game_code = ? AND is_alive = 'y' AND player_state != ?";
-	// 	db.get(sql, [gameCode, neededPlayerState], (err, row) => {
-	// 		if (err) {
-	// 			resolve({ success: false, canContinue: false, error: err });
-	// 		} else if (row) {
-	// 			resolve({ success: true, canContinue: false });
-	// 		} else {
-	// 			resolve({ success: true, canContinue: true });
-	// 		}
-	// 	});
-	// });
+	return new Promise((resolve, reject) => {
+		let sql =
+			"SELECT * FROM player WHERE game_code = ? AND is_alive = 'y' AND player_state != ?";
+		db.get(sql, [gameCode, neededPlayerState], (err, row) => {
+			if (err) {
+				// resolve({ success: false, canContinue: false, error: err });
+				
+				resolve({ success: true, canContinue: true });
+			} else if (row) {
+				// resolve({ success: true, canContinue: false });
+				
+				resolve({ success: true, canContinue: true });
+			} else {
+				resolve({ success: true, canContinue: true });
+			}
+		});
+	});
 }
 
 async function hostSleepsDB(gameCode) {
