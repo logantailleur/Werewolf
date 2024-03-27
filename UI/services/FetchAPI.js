@@ -1,4 +1,4 @@
-const address = '172.31.92.220';
+const address = '54.172.227.223';
 // const address = 'localhost';
 
 export function fetchTest() {

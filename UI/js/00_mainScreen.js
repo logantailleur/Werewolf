@@ -22,7 +22,9 @@ function initializeEventListeners() {
 async function handleHostGameClick() {
 	//Redirect to host_game page.
 	try {
+		console.log('here');
 		var lobbyCode = await createGame();
+		console.log('here');
 		console.log(lobbyCode);
 		localStorage.setItem('lobbyCode', lobbyCode.gameCode);
 		window.location.href = '01h_host_game_view.html';
