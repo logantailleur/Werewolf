@@ -21,9 +21,14 @@ function initializeEventListeners() {
 
 async function handleHostGameClick() {
 	//Redirect to host_game page.
-	var lobbyCode = await createGame();
-	localStorage.setItem('lobbyCode', lobbyCode.gameCode);
-	window.location.href = '01h_host_game_view.html';
+	try {
+		var lobbyCode = await createGame();
+		console.log(lobbyCode);
+		localStorage.setItem('lobbyCode', lobbyCode.gameCode);
+		window.location.href = '01h_host_game_view.html';
+	} catch (err) {
+		console.log(err);
+	}
 }
 
 function handleJoinGameClick() {

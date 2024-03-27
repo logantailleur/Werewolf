@@ -17,6 +17,7 @@ const {
 	playerWakes,
 	viewVoteResult,
 } = require('./services/service');
+const { printDB } = require('./database');
 
 server.use(cors());
 
@@ -49,7 +50,9 @@ server.get('/api/test', (req, res) => {
 });
 
 server.post('/api/game/create', async (req, res) => {
+	await printDB();
 	const gameCode = await createGame();
+	await printDB();
 	res.json(gameCode);
 });
 
