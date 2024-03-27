@@ -22,6 +22,7 @@ async function createGame(db) {
 	try {
 		let response = await addGame(gameCode, datetimeCreated);
 		response.gameCode = gameCode;
+		response.canContinue = true;//
 		console.log('Create Game');
 		console.log(response);
 		return response;
@@ -34,6 +35,7 @@ async function beginGame(gameCode) {
 	try {
 		let response = await startGame(gameCode);
 		response.gameCode = gameCode;
+		response.canContinue = true;//
 		console.log('Begin Game');
 		console.log(response);
 		return response;
@@ -48,6 +50,7 @@ async function joinRunningGame(gameCode, playerName) {
 		let response = await joinGame(gameCode, playerId, playerName);
 		response.gameCode = gameCode;
 		response.playerId = playerId;
+		response.canContinue = true;//
 		console.log('Join Game');
 		console.log(response);
 		return response;
@@ -62,6 +65,7 @@ async function viewRole(gameCode, playerId) {
 		response.gameCode = gameCode;
 		response.playerId = playerId;
 		response.canContinue = true;
+		response.canContinue = true;//
 		console.log('View Role');
 		console.log(response);
 		return response;
@@ -77,6 +81,7 @@ async function getAllRoles(gameCode) {
 		response.success = true;
 		response.players = players;
 	}
+	response.canContinue = true;//
 	console.log('Get all roles');
 	console.log(response);
 	return response;
@@ -120,6 +125,7 @@ async function getAllRoles(gameCode) {
 async function hostSleeps(gameCode) {
 	//Change gameState to 4
 	const response = await hostSleepsDB(gameCode);
+	response.canContinue = true;//
 	console.log('Host Sleeps');
 	console.log(response);
 	return response;
@@ -132,6 +138,7 @@ async function hostSleeps(gameCode) {
 async function hostWakes(gameCode) {
 	//Change gameState to 6
 	const response = await hostWakesDB(gameCode);
+	response.canContinue = true;//
 	console.log('Host Wakes');
 	console.log(response);
 	return response;
@@ -144,6 +151,7 @@ async function hostWakes(gameCode) {
 async function endVoting(gameCode) {
 	//Change gameState to 9
 	const response = await endVoteDB(gameCode);
+	response.canContinue = true;//
 	console.log('End Voting');
 	console.log(response);
 	return response;
@@ -166,6 +174,7 @@ async function playerSleeps(gameCode, playerId) {
 	const response = await playerSleepsDB(gameCode, playerId);
 	const players = await getAllPlayerRoles(gameCode);
 	response.players = players;
+	response.canContinue = true;//
 	console.log('Player Sleeps');
 	console.log(response);
 	return response;
@@ -216,6 +225,7 @@ async function playerSleeps(gameCode, playerId) {
 async function playerWakes(gameCode, playerId) {
 	//Sets player sleeping to false. If all players are awake, Change gameState to 5
 	const response = await playerWakesDB(gameCode, playerId);
+	response.canContinue = true;//
 	console.log('Player Wakes');
 	console.log(response);
 	return response;
@@ -233,6 +243,7 @@ async function playerWakes(gameCode, playerId) {
 async function werewolfKills(gameCode, playerId, victimPlayerId) {
 	//Sets player sleeping to false, sets victimPlayerId to dead. If all players are awake, Change gameState to 5
 	const response = await werewolfKillsDB(gameCode, playerId, victimPlayerId);
+	response.canContinue = true;//
 	console.log('Werewolf Kills');
 	console.log(response);
 	return response;
@@ -247,6 +258,7 @@ async function playerReadyToVote(gameCode, playerId) {
 	const response = await playerReadyToVoteDB(gameCode, playerId);
 	const players = await getAllPlayerRoles(gameCode);
 	response.players = players;
+	response.canContinue = true;//
 	console.log('Player Ready to Vote');
 	console.log(response);
 	return response;
@@ -298,6 +310,7 @@ async function playerReadyToVote(gameCode, playerId) {
 async function playerVote(gameCode, playerId, voteId) {
 	//Sets player readyToVote to false. If all players are !readyToVote, count votes and change gameState to 10
 	const response = await playerVoteDB(gameCode, playerId, voteId);
+	response.canContinue = true;//
 	console.log('Player vote');
 	console.log(response);
 	return response;
@@ -305,6 +318,7 @@ async function playerVote(gameCode, playerId, voteId) {
 
 async function viewVoteResult(gameCode) {
 	const response = await getPlayerByLastKill(gameCode);
+	response.canContinue = true;//
 	console.log('View Vote Result');
 	console.log(response);
 	return response;
