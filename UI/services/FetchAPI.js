@@ -1,5 +1,5 @@
-const address = '54.172.227.223';
-// const address = 'localhost';
+// const address = '54.172.227.223';
+const address = 'localhost';
 
 export function fetchTest() {
 	return fetch(`http://${address}:4000/api/test`)
@@ -163,7 +163,7 @@ export function playerSleeps(lobbyCode, playerId) {
 }
 
 export function werewolfKills(lobbyCode, playerId, victimId) {
-    return fetch(
+	return fetch(
 		`http://${address}:4000/api/game/player/kill/${lobbyCode}/${playerId}/${victimId}`,
 		{
 			method: 'POST',
@@ -209,7 +209,7 @@ export function hostWakes(lobbyCode) {
 }
 
 export function playerWakes(lobbyCode, playerId) {
-    return fetch(
+	return fetch(
 		`http://${address}:4000/api/game/player/wake/${lobbyCode}/${playerId}`,
 		{
 			method: 'POST',
@@ -234,7 +234,7 @@ export function playerWakes(lobbyCode, playerId) {
 
 //TODO: build this in:
 export function playerReadyToVote(lobbyCode, playerId) {
-    return fetch(
+	return fetch(
 		`http://${address}:4000/api/game/player/begin-voting/${lobbyCode}/${playerId}`,
 		{
 			method: 'POST',
@@ -258,7 +258,7 @@ export function playerReadyToVote(lobbyCode, playerId) {
 }
 
 export function playerVote(lobbyCode, playerId, voteId) {
-    return fetch(
+	return fetch(
 		`http://${address}:4000/api/game/player/vote/${lobbyCode}/${playerId}/${voteId}`,
 		{
 			method: 'POST',
@@ -303,7 +303,27 @@ export function endVoting(lobbyCode) {
 }
 
 export function viewResult(lobbyCode) {
-	return fetch(`http://${address}:4000/api/game/player/vote/result/${lobbyCode}`)
+	return fetch(
+		`http://${address}:4000/api/game/host/vote/result/${lobbyCode}`
+	)
+		.then((response) => {
+			if (!response.ok) {
+				throw new Error('Network response was not ok');
+			}
+			return response.json();
+		})
+		.then((data) => {
+			return data;
+		})
+		.catch((error) => {
+			console.error(error);
+		});
+}
+
+export function viewResultPlayer(lobbyCode, playerId) {
+	return fetch(
+		`http://${address}:4000/api/game/player/vote/result/${lobbyCode}/${playerId}`
+	)
 		.then((response) => {
 			if (!response.ok) {
 				throw new Error('Network response was not ok');

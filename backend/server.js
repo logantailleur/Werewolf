@@ -16,6 +16,7 @@ const {
 	playerReadyToVote,
 	playerWakes,
 	viewVoteResult,
+	viewVoteResultPlayer,
 } = require('./services/service');
 const { printDB } = require('./database');
 
@@ -50,7 +51,6 @@ server.get('/api/test', (req, res) => {
 });
 
 server.post('/api/game/create', async (req, res) => {
-	await printDB();
 	const gameCode = await createGame();
 	await printDB();
 	res.json(gameCode);
@@ -106,11 +106,6 @@ server.post('/api/game/host/sleep/:gameCode', async (req, res) => {
 	if (!response.success) {
 		return res.status(400).send('No gameCode found in database\n');
 	}
-	// if (!response.canContinue) {
-	// 	return res
-	// 		.status(409)
-	// 		.send('Cannot continue yet, all players must go to sleep first');
-	// }
 	res.json(response);
 });
 
@@ -123,11 +118,6 @@ server.post('/api/game/host/wake/:gameCode', async (req, res) => {
 	if (!response.success) {
 		return res.status(400).send('No gameCode found in database\n');
 	}
-	// if (!response.canContinue) {
-	// 	return res
-	// 		.status(409)
-	// 		.send('Cannot continue yet, all players must wake first');
-	// }
 	res.json(response);
 });
 
@@ -142,11 +132,6 @@ server.post('/api/game/host/end-vote/:gameCode', async (req, res) => {
 	if (!response.success) {
 		return res.status(400).send('No gameCode found in database\n');
 	}
-	// if (!response.canContinue) {
-	// 	return res
-	// 		.status(409)
-	// 		.send('Cannot continue yet, all players must vote first');
-	// }
 	res.json(response);
 });
 
@@ -170,14 +155,14 @@ server.post('/api/game/player/wake/:gameCode/:playerId', async (req, res) => {
 		return res.status(400).send('Missing gameCode or playerId for waking up');
 	}
 	const response = await playerWakes(gameCode, playerId);
-	if (!response.canContinue) {
-		return res
-			.status(400)
-			.send('Cannot continue until host has read night view script');
-	}
-	if (!response.success) {
-		return res.status(400).send('No gameCode or playerId found in database\n');
-	}
+	// if (!response.canContinue) {
+	// 	return res
+	// 		.status(400)
+	// 		.send('Cannot continue until host has read night view script');
+	// }
+	// if (!response.success) {
+	// 	return res.status(400).send('No gameCode or playerId found in database\n');
+	// }
 	res.json(response);
 });
 
@@ -191,16 +176,16 @@ server.post(
 				.send('Missing gameCode, playerId, or victimPlayerId for waking up');
 		}
 		const response = await werewolfKills(gameCode, playerId, victimPlayerId);
-		if (!response.canContinue) {
-			return res
-				.status(400)
-				.send('Cannot continue until host has read night view script');
-		}
-		if (!response.success) {
-			return res
-				.status(400)
-				.send('No gameCode or playerIds found in database\n');
-		}
+		// if (!response.canContinue) {
+		// 	return res
+		// 		.status(400)
+		// 		.send('Cannot continue until host has read night view script');
+		// }
+		// if (!response.success) {
+		// 	return res
+		// 		.status(400)
+		// 		.send('No gameCode or playerIds found in database\n');
+		// }
 		res.json(response);
 	}
 );
@@ -215,9 +200,6 @@ server.post(
 				.send('Missing gameCode or playerId to begin voting');
 		}
 		const response = await playerReadyToVote(gameCode, playerId);
-		// if (!response.canContinue) {
-		// 	return res.status(400).send('Cannot continue until host has woken up');
-		// }
 		if (!response.success) {
 			return res
 				.status(400)
@@ -246,7 +228,7 @@ server.post(
 	}
 );
 
-server.get('/api/game/player/vote/result/:gameCode', async (req, res) => {
+server.get('/api/game/host/vote/result/:gameCode', async (req, res) => {
 	const { gameCode } = req.params;
 	if (!gameCode) {
 		return res.status(400).send('Missing gameCode for viewing vote results\n');
@@ -257,3 +239,13 @@ server.get('/api/game/player/vote/result/:gameCode', async (req, res) => {
 	}
 	res.json(response);
 });
+
+server.get('/api/game/player/vote/result/:lobbyCode/:playerId', async (req, res) => {
+	const {lobbyCode, playerId} = req.params;
+	if (!lobbyCode || !playerId) {
+		return res.status(400).send('Missing gameCode for viewing vote results\n');
+	}
+	const response = await viewVoteResultPlayer(lobbyCode, playerId);
+
+	res.json(response);
+})
