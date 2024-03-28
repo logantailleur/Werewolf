@@ -449,7 +449,7 @@ async function hostWakesDB(gameCode) {
 					if (results.canContinue) {
 						let id = null;
 						let sql =
-							"SELECT player_id FROM player WHERE role = 'werewolf' AND game_code = ?";
+							"SELECT voted_player FROM player WHERE role = 'werewolf' AND game_code = ?";
 						db.get(sql, [gameCode], (err, row) => {
 							if (err) {
 								reject(err);
