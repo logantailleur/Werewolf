@@ -1,7 +1,4 @@
-import {
-	getAllPlayers,
-	startGame,
-} from '../services/FetchAPI.js';
+import { getAllPlayers, startGame } from '../services/FetchAPI.js';
 
 //Initialize app when DOM content is loaded.
 document.addEventListener('DOMContentLoaded', function () {
@@ -39,9 +36,7 @@ async function handleStartGameClick() {
 		console.log(allPlayers);
 		if (allPlayers.success) {
 			localStorage.setItem('players', JSON.stringify(allPlayers.players));
-			if (allPlayers.canContinue) {
-				window.location.href = '05h_player_grid_view.html';
-			}
+			window.location.href = '05h_player_grid_view.html';
 		}
 	} else {
 		var errorMessage = document.getElementById('startGameError');
