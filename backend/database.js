@@ -90,7 +90,7 @@ async function startGame(gameCode) {
 							players = await getAllPlayers(gameCode);
 
 							// Game started successfully
-							resolve({ success: true, message: 'Successfully started game.' });
+							resolve({ success: true, message: 'Successfully started game.', canContinue: true });
 						} catch (error) {
 							reject({
 								success: false,
