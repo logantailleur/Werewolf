@@ -34,8 +34,6 @@ async function handleContinueClick() {
 			window.location.href = '16p_vote_results_view.html';
 		}
 	} else {
-		var errorMessage = document.getElementById('endVotingError');
-		errorMessage.innerHTML = `Sorry, voting for game <strong>${lobbyCode}</strong> has not ended. Please try again.`;
 		return;
 	}
 }

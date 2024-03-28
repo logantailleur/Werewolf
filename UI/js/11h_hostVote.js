@@ -93,7 +93,7 @@ function initializeEventListeners() {
 		if (response.canContinue) {
 			localStorage.setItem('players', JSON.stringify(players.players));
 			localStorage.setItem('deadPlayer', JSON.stringify(response.player));
-			window.location.href = "02h_player_grid_view.html";
+			window.location.href = '05h_player_grid_view.html';
 		}
 	});
 }
