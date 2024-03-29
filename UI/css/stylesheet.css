@@ -52,3 +52,29 @@ body, html {
 .disabled {
     pointer-events: none;
 }
+
+body {
+    position: relative; /* Ensure proper stacking order */
+}
+
+body::before {
+    content: "";
+    background-image: url('../ImageAssets/background.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-color: rgba(0, 0, 0, 0.2); /* Semi-transparent black overlay */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1; /* Ensure the pseudo-element is behind other content */
+}
+
+.navbar {
+    background-color: black;
+}
+
+.navbar-brand {
+    color: white;
+}
