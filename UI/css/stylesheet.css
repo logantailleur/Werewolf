@@ -10,6 +10,7 @@ body, html {
 
 .text-very-large {
     font-size: 36px; 
+    color: white;
 }
 
 #joinGameButton.disabled-button {
@@ -77,4 +78,10 @@ body::before {
 
 .navbar-brand {
     color: white;
+}
+
+.txt {
+    color: white;
+    text-shadow: 0px 0px 20px rgba(0, 0, 0, 1.0); /* Add dark shadow */
+    font-size: 32px; 
 }
