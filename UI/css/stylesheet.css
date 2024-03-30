@@ -13,6 +13,41 @@ body, html {
     color: white;
 }
 
+.text-center {
+    font-size: 16px; 
+    color: white;
+}
+
+.modal-title {
+    font-size: 20px; 
+    color: white;
+}
+
+.role-description {
+    font-size: 16px; 
+    color: white;
+}
+
+.btn-lg.btn-primary {
+    background-color: #850000;
+    border-color: #850000;
+}
+
+.btn-lg.btn-primary:hover {
+    background-color: #850000;
+    border-color: #850000;
+}
+
+.btn.btn-primary {
+    background-color: #850000;
+    border-color: #850000;
+}
+
+.btn.btn-primary:hover {
+    background-color: #850000;
+    border-color: #850000;
+}
+
 #joinGameButton.disabled-button {
     background-color: #6c757d; /* Gray color */
     border-color: #6c757d; /* Gray color */
@@ -39,6 +74,21 @@ body, html {
 .role-img {
     width: 100px; /* Adjust the width as needed */
     height: auto; /* Maintain aspect ratio */
+}
+
+.modal-header {
+    background-color: black;
+    border: black;
+}
+
+.modal-body {
+    background-color: black;
+    border: black;
+}
+
+.card-body {
+    background-color: black;
+    border: black;
 }
 
 .role-card.selected .card-body{
