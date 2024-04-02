@@ -85,3 +85,13 @@ body::before {
     text-shadow: 0px 0px 20px rgba(0, 0, 0, 1.0); /* Add dark shadow */
     font-size: 32px; 
 }
+
+.btn-primary {
+    background-color: red !important;
+    border-color: black !important;
+    font-size: 32px !important;
+}
+
+.btn-secondary {
+    font-size: 32px !important;
+}
