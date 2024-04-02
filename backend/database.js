@@ -602,7 +602,7 @@ async function playerSleepsDB(gameCode, playerID) {
 
 async function playerWakesDB(gameCode, playerID) {
 	return new Promise((resolve, reject) => {
-		canPlayerContinue(gameCode, 7).then((results) => {
+		canPlayerContinue(gameCode, 8).then((results) => {
 			if (results.success) {
 				if (results.canContinue) {
 					let sql =
@@ -694,7 +694,7 @@ async function werewolfKillsDB(gameCode, playerID, victimID) {
 								}
 
 								// Update last_kill on the game table to be the victimId
-								sql = 'UPDATE game SET last_kill = ? WHERE game_code = ?';
+								sql = 'UPDATE game SET last_kill = ?, game_state = 8 WHERE game_code = ?';
 								db.run(sql, [victimID, gameCode], (err) => {
 									if (err) {
 										reject(err);
