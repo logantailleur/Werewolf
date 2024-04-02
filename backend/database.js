@@ -415,11 +415,11 @@ async function updatePlayerState(gameCode, playerId, gameState) {
 async function hostSleepsDB(gameCode) {
 	//All live players must be in state 3 to continue
 	return new Promise((resolve, reject) => {
-		canHostContinue(gameCode, 7)
+		canHostContinue(gameCode, 6)
 			.then((results) => {
 				if (results.success) {
 					if (results.canContinue) {
-						sql = 'UPDATE game SET game_state = 8 WHERE game_code = ?';
+						sql = 'UPDATE game SET game_state = 7 WHERE game_code = ?';
 						db.run(sql, [gameCode], (err) => {
 							if (err) {
 								results = { success: false, canContinue: false };
@@ -578,7 +578,7 @@ async function playerSleepsDB(gameCode, playerID) {
 						}
 						if (row.game_state === 5) {
 							sql =
-								'UPDATE player SET player_state = 7 WHERE game_code = ? AND player_id = ?';
+								'UPDATE player SET player_state = 6 WHERE game_code = ? AND player_id = ?';
 							db.run(sql, [gameCode, playerID], (err) => {
 								if (err) {
 									reject(err);
@@ -602,7 +602,7 @@ async function playerSleepsDB(gameCode, playerID) {
 
 async function playerWakesDB(gameCode, playerID) {
 	return new Promise((resolve, reject) => {
-		canPlayerContinue(gameCode, 8).then((results) => {
+		canPlayerContinue(gameCode, 7).then((results) => {
 			if (results.success) {
 				if (results.canContinue) {
 					let sql =
@@ -665,7 +665,7 @@ async function playerWakesDB(gameCode, playerID) {
 
 async function werewolfKillsDB(gameCode, playerID, victimID) {
 	return new Promise((resolve, reject) => {
-		canPlayerContinue(gameCode, 8).then((results) => {
+		canPlayerContinue(gameCode, 7).then((results) => {
 			if (results.success) {
 				if (results.canContinue) {
 					let sql = 'SELECT game_state FROM game WHERE game_code = ?';
