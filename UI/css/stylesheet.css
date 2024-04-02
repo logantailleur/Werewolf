@@ -1,5 +1,7 @@
 
-body, html {
+/*main*/
+
+html {
     height: 100%;
     margin: 0;
 }
@@ -8,54 +10,14 @@ body, html {
     height: 100%;
 }
 
-.text-very-large {
-    font-size: 36px; 
-    color: white;
-}
 
-#joinGameButton.disabled-button {
-    background-color: #6c757d; /* Gray color */
-    border-color: #6c757d; /* Gray color */
-    cursor: not-allowed;
-}
 
-#startGameButton.disabled-button {
-    background-color: #6c757d; /* Gray color */
-    border-color: #6c757d; /* Gray color */
-    cursor: not-allowed;
-}
-
-.mt-3 {
-    margin-top: 1.5rem; /* Adjust this value as needed */
-}
-
-.role-assign-image {
-    width: 200px; /* Adjust width as needed */
-    height: 200px; /* Adjust height as needed */
-    margin: 0 auto;
-    /* margin-top: 20px; Adjust margin as needed */
-}
-
-.role-img {
-    width: 100px; /* Adjust the width as needed */
-    height: auto; /* Maintain aspect ratio */
-}
-
-.role-card.selected .card-body{
-    background-color: red;
-}
-
-.dead {
-    opacity: 0.5; /* Reduce opacity for an undetectable effect */
-    /* Add other styling for making the card visually distinct when the player is dead */
-}
-
-.disabled {
-    pointer-events: none;
-}
+/*body*/
 
 body {
     position: relative; /* Ensure proper stacking order */
+    height: 100%;
+    margin: 0;
 }
 
 body::before {
@@ -72,6 +34,10 @@ body::before {
     z-index: -1; /* Ensure the pseudo-element is behind other content */
 }
 
+
+
+/*navbar*/
+
 .navbar {
     background-color: black;
 }
@@ -80,18 +46,166 @@ body::before {
     color: white;
 }
 
+
+
+/*role card*/
+
+.modal-header {
+    background-color: black;
+    border: black;
+}
+
+.modal-body {
+    background-color: black;
+    border: black;
+}
+
+.card-body {
+    background-color: black;
+    border: black;
+}
+
+.role-card.selected .card-body{
+    background-color: red;
+}
+
+.dead {
+    opacity: 0.5; /* Reduce opacity for an undetectable effect */
+    /* Add other styling for making the card visually distinct when the player is dead */
+}
+
+.disabled {
+    pointer-events: none;
+}
+
+
+
+/*spacings*/
+
+.mt-3 {
+    margin-top: 1.5rem; /* Adjust this value as needed */
+}
+
+
+
+/*texts*/
+
 .txt {
     color: white;
     text-shadow: 0px 0px 20px rgba(0, 0, 0, 1.0); /* Add dark shadow */
-    font-size: 32px; 
+    font-size: 32px !important; 
 }
 
-.btn-primary {
-    background-color: red !important;
-    border-color: black !important;
+.text-very-large {
+    font-size: 36px; 
+    color: white;
+}
+
+.text-center {
+    font-size: 16px; 
+    color: white;
+}
+
+.modal-title {
+    font-size: 20px; 
+    color: white;
+}
+
+.role-description {
+    font-size: 16px; 
+    color: white;
+}
+
+
+
+/*buttons*/
+
+.btn-lg {
+    background-color: #850000;
+    border-color: #850000;
+    color: white;
     font-size: 32px !important;
 }
 
-.btn-secondary {
-    font-size: 32px !important;
+.btn-lg:hover {
+    background-color: #700000;
+    border-color: #700000;
+}
+
+.btn-lg:disabled {
+    background-color: #6c757d; /* Gray color */
+    border-color: #6c757d; /* Gray color */
+    cursor: not-allowed;
+}
+
+
+/*images*/
+
+.role-assign-image {
+    width: 200px; /* Adjust width as needed */
+    height: 200px; /* Adjust height as needed */
+    margin: 0 auto;
+    /* margin-top: 20px; Adjust margin as needed */
+}
+
+.role-img {
+    width: 100px; /* Adjust the width as needed */
+    height: auto; /* Maintain aspect ratio */
+}
+
+.text-very-large {
+    font-size: 36px; 
+    color: white;
+}
+
+.text-center {
+    font-size: 16px; 
+    color: white;
+}
+
+.modal-title {
+    font-size: 20px; 
+    color: white;
+}
+
+.role-description {
+    font-size: 16px; 
+    color: white;
+}
+
+
+
+/*buttons*/
+
+.btn-lg {
+    background-color: #850000;
+    border-color: #850000;
+    color: white;
+}
+
+.btn-lg:hover {
+    background-color: #700000;
+    border-color: #700000;
+}
+
+.btn-lg:disabled {
+    background-color: #6c757d; /* Gray color */
+    border-color: #6c757d; /* Gray color */
+    cursor: not-allowed;
+}
+
+
+
+/*images*/
+
+.role-assign-image {
+    width: 200px; /* Adjust width as needed */
+    height: 200px; /* Adjust height as needed */
+    margin: 0 auto;
+    /* margin-top: 20px; Adjust margin as needed */
+}
+
+.role-img {
+    width: 100px; /* Adjust the width as needed */
+    height: auto; /* Maintain aspect ratio */
 }
