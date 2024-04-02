@@ -11,7 +11,7 @@
 
 <body>
     <!-- Navigation Bar -->
-    <nav class="navbar navbar-light bg-light">
+    <nav class="navbar navbar-dark bg-dark">
         <a class="navbar-brand" href="01_main_screen_view.html">
             <img src="ImageAssets/wolficon.png" width="30" height="30" class="d-inline-block align-top" alt="">
             Werewolf
@@ -23,22 +23,20 @@
         <!-- Top Row Buttons -->
         <div class="row justify-content-between mt-3">
             <div class="col-auto">
-                <!-- Button: Leave Game -->
-                <button id="leaveGameBtn" class="btn btn-danger">Leave Game</button>
             </div>
 
             <div class="col-auto">
                 <!-- Button: View Role -->
-                <button id="viewRoleBtn" class="btn btn-primary" data-toggle="modal" data-target="#roleModal">View My Role</button>
+                <button id="viewRoleBtn" class="btn-lg" data-toggle="modal" data-target="#roleModal">View My Role</button>
             </div>
         </div>
 
         <!-- Result Announcement -->
-        <div id="resultAnnouncement" class="row justify-content-center mb-5">
+        <div id="resultAnnouncement" class="row justify-content-center mb-5 txt">
         </div>
 
         <!-- Result Summary -->
-        <div id="resultSummary" class="row justify-content-center mb-5">
+        <div id="resultSummary" class="row justify-content-center mb-5 txt">
         </div>
 
         <!-- Filler Box for Image -->
@@ -48,7 +46,7 @@
 
         <!-- Vote Button -->
         <div class="text-center">
-            <button id="voteBtn" class="btn-lg btn-primary mb-2">Ready to Vote</button>
+            <button id="voteBtn" class="btn-lg mb-2">Ready to Vote</button>
         </div>
 
         <!-- View Role Modal -->
