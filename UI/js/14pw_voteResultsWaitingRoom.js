@@ -29,7 +29,7 @@ async function handleContinueClick() {
 		localStorage.setItem('victim', JSON.stringify(response.player));
 
 		if (response.player.role === 'werewolf') {
-			window.location.href = '18p_villager_win_view.html';
+			window.location.href = '18_villager_win_view.html';
 		} else {
 			window.location.href = '16p_vote_results_view.html';
 		}
