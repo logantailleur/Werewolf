@@ -139,6 +139,7 @@ body::before {
 }
 
 
+
 /*images*/
 
 .role-assign-image {
@@ -171,41 +172,4 @@ body::before {
 .role-description {
     font-size: 16px; 
     color: white;
-}
-
-
-
-/*buttons*/
-
-.btn-lg {
-    background-color: #850000;
-    border-color: #850000;
-    color: white;
-}
-
-.btn-lg:hover {
-    background-color: #700000;
-    border-color: #700000;
-}
-
-.btn-lg:disabled {
-    background-color: #6c757d; /* Gray color */
-    border-color: #6c757d; /* Gray color */
-    cursor: not-allowed;
-}
-
-
-
-/*images*/
-
-.role-assign-image {
-    width: 200px; /* Adjust width as needed */
-    height: 200px; /* Adjust height as needed */
-    margin: 0 auto;
-    /* margin-top: 20px; Adjust margin as needed */
-}
-
-.role-img {
-    width: 100px; /* Adjust the width as needed */
-    height: auto; /* Maintain aspect ratio */
 }
