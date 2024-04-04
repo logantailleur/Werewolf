@@ -1,5 +1,6 @@
 const sqlite3 = require('sqlite3').verbose();
 const PLAYER_LIMIT = 6;
+const NUM_WEREWOLVES = 1;
 
 function initializeDatabaseTables(db) {
 	db.serialize(() => {
@@ -25,7 +26,8 @@ function initializeDatabaseTables(db) {
 				'voted_player char(5) DEFAULT NULL,' +
 				"is_alive CHAR(1) DEFAULT 'y' NOT NULL," +
 				'PRIMARY KEY (game_code, player_id),' +
-				'FOREIGN KEY (game_code) REFERENCES game(game_code)' +
+				'FOREIGN KEY (game_code) REFERENCES game(game_code),' +
+				'CONSTRAINT Unique_Name UNIQUE (game_code, player_name)' + 
 				');'
 		);
 	});
@@ -838,6 +840,60 @@ async function viewVoteResultPlayerDB(gameCode, playerId) {
 	});
 }
 
+async function checkWinner(gameCode) {
+	return new Promise((resolve, rejct) => {
+		//Check if werewolf is dead
+		let sql = 'SELECT * FROM player WHERE game_code = ? AND is_alive = \'n\' AND role = \'werewolf\'';
+		db.get(sql, [gameCode], (err, row) => {
+			if (err) {
+				reject(err);
+				return;
+			}
+			//If row exists, werewolf is dead and villagers have won.
+			if(row) {
+				resolve({
+					success: true,
+					gameWon: true,
+					winner: "villager"
+				});
+			}
+			else {
+				sql = 'SELECT COUNT(*) AS villagerSum FROM player WHERE game_code = ? AND is_alive = \'y\' AND role = \'villager\'';
+				db.get(sql, [gameCode], (err, row) => {
+					if(err) {
+						reject(err);
+						return;
+					}
+					//This should never occur: there shouldn't be a path where all villagers die.
+					if(!row) {
+						resolve({
+							success: false,
+							gameWon: false,
+							winner: null
+						});
+					}
+					else {
+						if (row.villagerSum > NUM_WEREWOLVES) {
+							resolve( {
+								success: true,
+								gameWon: false,
+								winner: null
+							});
+						}
+						else {
+							resolve({
+								success: true,
+								gameWon: true,
+								winner: "werewolf"
+							});
+						}
+					}
+				})
+			}
+		})
+	})
+}
+
 // Export the database object
 module.exports = {
 	viewVoteResultPlayerDB,
@@ -861,4 +917,5 @@ module.exports = {
 	updateGameState,
 	updatePlayerState,
 	getPlayersDB,
+	checkWinner,
 };
