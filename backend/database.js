@@ -27,7 +27,7 @@ function initializeDatabaseTables(db) {
 				"is_alive CHAR(1) DEFAULT 'y' NOT NULL," +
 				'PRIMARY KEY (game_code, player_id),' +
 				'FOREIGN KEY (game_code) REFERENCES game(game_code),' +
-				'CONSTRAINT Unique_Name UNIQUE (game_code, player_name)' + 
+				'CONSTRAINT Unique_Name UNIQUE (game_code, player_name)' +
 				');'
 		);
 	});
@@ -92,7 +92,11 @@ async function startGame(gameCode) {
 							players = await getAllPlayers(gameCode);
 
 							// Game started successfully
-							resolve({ success: true, message: 'Successfully started game.', canContinue: true });
+							resolve({
+								success: true,
+								message: 'Successfully started game.',
+								canContinue: true,
+							});
 						} catch (error) {
 							reject({
 								success: false,
@@ -696,7 +700,8 @@ async function werewolfKillsDB(gameCode, playerID, victimID) {
 								}
 
 								// Update last_kill on the game table to be the victimId
-								sql = 'UPDATE game SET last_kill = ?, game_state = 8 WHERE game_code = ?';
+								sql =
+									'UPDATE game SET last_kill = ?, game_state = 8 WHERE game_code = ?';
 								db.run(sql, [victimID, gameCode], (err) => {
 									if (err) {
 										reject(err);
@@ -780,7 +785,7 @@ async function getPlayerByLastKill(gameCode) {
 				return;
 			}
 			if (!row) {
-				resolve(null); // No player found
+				resolve({ success: false, canContinue: false }); // No player found
 			} else {
 				resolve({
 					success: true,
@@ -811,7 +816,8 @@ async function viewVoteResultPlayerDB(gameCode, playerId) {
 						if (!row) {
 							resolve(null); // No player found
 						} else {
-							let sql = 'UPDATE player SET player_state = ? WHERE game_code = ? AND player_id = ?';
+							let sql =
+								'UPDATE player SET player_state = ? WHERE game_code = ? AND player_id = ?';
 							db.run(sql, [4, gameCode, playerId], (err) => {
 								if (err) {
 									reject(err);
@@ -827,7 +833,7 @@ async function viewVoteResultPlayerDB(gameCode, playerId) {
 										},
 									});
 								}
-							})
+							});
 						}
 					});
 				} else {
@@ -843,55 +849,54 @@ async function viewVoteResultPlayerDB(gameCode, playerId) {
 async function checkWinner(gameCode) {
 	return new Promise((resolve, rejct) => {
 		//Check if werewolf is dead
-		let sql = 'SELECT * FROM player WHERE game_code = ? AND is_alive = \'n\' AND role = \'werewolf\'';
+		let sql =
+			"SELECT * FROM player WHERE game_code = ? AND is_alive = 'n' AND role = 'werewolf'";
 		db.get(sql, [gameCode], (err, row) => {
 			if (err) {
 				reject(err);
 				return;
 			}
 			//If row exists, werewolf is dead and villagers have won.
-			if(row) {
+			if (row) {
 				resolve({
 					success: true,
 					gameWon: true,
-					winner: "villager"
+					winner: 'villager',
 				});
-			}
-			else {
-				sql = 'SELECT COUNT(*) AS villagerSum FROM player WHERE game_code = ? AND is_alive = \'y\' AND role = \'villager\'';
+			} else {
+				sql =
+					"SELECT COUNT(*) AS villagerSum FROM player WHERE game_code = ? AND is_alive = 'y' AND role = 'villager'";
 				db.get(sql, [gameCode], (err, row) => {
-					if(err) {
+					if (err) {
 						reject(err);
 						return;
 					}
 					//This should never occur: there shouldn't be a path where all villagers die.
-					if(!row) {
+					if (!row) {
 						resolve({
 							success: false,
 							gameWon: false,
-							winner: null
+							winner: null,
 						});
-					}
-					else {
+					} else {
 						if (row.villagerSum > NUM_WEREWOLVES) {
-							resolve( {
+							resolve({
 								success: true,
 								gameWon: false,
-								winner: null
+								winner: null,
 							});
-						}
-						else {
+						} else {
 							resolve({
 								success: true,
 								gameWon: true,
-								winner: "werewolf"
+								winner: 'werewolf',
 							});
 						}
 					}
-				})
+				});
 			}
-		})
-	})
+		});
+	});
 }
 
 // Export the database object
