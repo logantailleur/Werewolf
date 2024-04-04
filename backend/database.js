@@ -512,7 +512,7 @@ async function endVoteDB(gameCode) {
 				if (results.success) {
 					if (results.canContinue) {
 						let sql =
-							'SELECT * FROM player WHERE game_code = ? AND player_id = (SELECT voted_player FROM player WHERE game_code = ? GROUP BY voted_player ORDER BY COUNT(voted_player) DESC LIMIT 1)';
+							'SELECT * FROM player WHERE game_code = ? AND player_id = (SELECT voted_player FROM player WHERE game_code = ? and is_alive = \'y\' GROUP BY voted_player ORDER BY COUNT(voted_player) DESC LIMIT 1)';
 						db.get(sql, [gameCode, gameCode], (err, row) => {
 							if (err) {
 								reject(err);
