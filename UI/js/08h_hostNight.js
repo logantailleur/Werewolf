@@ -80,9 +80,18 @@ function initializeEventListeners() {
 			turn = WEREWOLF_TURN;
 		} else if (turn == WEREWOLF_TURN && roleDone(WEREWOLF_TURN)) {
 			// Redirect to morning view
-			var response = await hostWakes(localStorage.getItem('lobbyCode'));
-			if (response.canContinue) {
-				window.location.href = '11h_host_vote_view.html';
+			var lobbyCode = localStorage.getItem('lobbyCode');
+			var winResponse = await checkWinner(lobbyCode);
+			var wakeResponse = await hostWakes(lobbyCode);
+
+			if (wakeResponse.canContinue) {
+				if (winResponse.winner === 'villager') {
+					window.location.href = '18_villager_win_view.html';
+				} else if (winResponse.winner === 'werewolf') {
+					window.location.href = '18_werewolf_win_view.html';
+				} else {
+					window.location.href = '11h_host_vote_view.html';
+				}
 			}
 			return; // Exit function early
 		}
