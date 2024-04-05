@@ -116,6 +116,11 @@ body::before {
     color: white;
 }
 
+.btn-description {
+    font-size: 20px !important;
+    color: rgb(205, 205, 205) !important;
+}
+
 
 
 /*buttons*/
