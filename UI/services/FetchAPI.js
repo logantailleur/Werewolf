@@ -1,5 +1,5 @@
-const address = '44.202.29.77';
-// const address = 'localhost';
+// const address = '44.202.29.77';
+const address = 'localhost';
 
 export function fetchTest() {
 	return fetch(`http://${address}:4000/api/test`)
@@ -303,9 +303,7 @@ export function endVoting(lobbyCode) {
 }
 
 export function viewResult(lobbyCode) {
-	return fetch(
-		`http://${address}:4000/api/game/host/vote/result/${lobbyCode}`
-	)
+	return fetch(`http://${address}:4000/api/game/host/vote/result/${lobbyCode}`)
 		.then((response) => {
 			if (!response.ok) {
 				throw new Error('Network response was not ok');
@@ -324,6 +322,22 @@ export function viewResultPlayer(lobbyCode, playerId) {
 	return fetch(
 		`http://${address}:4000/api/game/player/vote/result/${lobbyCode}/${playerId}`
 	)
+		.then((response) => {
+			if (!response.ok) {
+				throw new Error('Network response was not ok');
+			}
+			return response.json();
+		})
+		.then((data) => {
+			return data;
+		})
+		.catch((error) => {
+			console.error(error);
+		});
+}
+
+export function checkWinner(lobbyCode) {
+	return fetch(`http://${address}:4000/api/game/winner/${lobbyCode}`)
 		.then((response) => {
 			if (!response.ok) {
 				throw new Error('Network response was not ok');

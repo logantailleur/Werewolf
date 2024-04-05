@@ -17,6 +17,7 @@ const {
 	playerWakes,
 	viewVoteResult,
 	viewVoteResultPlayer,
+	checkGameWinner,
 } = require('./services/service');
 const { printDB } = require('./database');
 
@@ -240,12 +241,26 @@ server.get('/api/game/host/vote/result/:gameCode', async (req, res) => {
 	res.json(response);
 });
 
-server.get('/api/game/player/vote/result/:lobbyCode/:playerId', async (req, res) => {
-	const {lobbyCode, playerId} = req.params;
-	if (!lobbyCode || !playerId) {
-		return res.status(400).send('Missing gameCode for viewing vote results\n');
-	}
-	const response = await viewVoteResultPlayer(lobbyCode, playerId);
+server.get(
+	'/api/game/player/vote/result/:lobbyCode/:playerId',
+	async (req, res) => {
+		const { lobbyCode, playerId } = req.params;
+		if (!lobbyCode || !playerId) {
+			return res
+				.status(400)
+				.send('Missing gameCode for viewing vote results\n');
+		}
+		const response = await viewVoteResultPlayer(lobbyCode, playerId);
 
+		res.json(response);
+	}
+);
+
+server.get('/api/game/winner/:gameCode', async (req, res) => {
+	const {gameCode} = req.params;
+	if (!gameCode) {
+		return res.status(400).send('Missing gameCode for viewing game winner\n');
+	}
+	const response = await checkGameWinner(gameCode);
 	res.json(response);
 })
