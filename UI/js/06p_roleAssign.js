@@ -54,12 +54,17 @@ function initializeEventListeners() {
 }
 
 async function handleNightClick() {
-	const lobbyCode = localStorage.getItem('lobbyCode')
-	const playerId = localStorage.getItem('playerId')
+	const lobbyCode = localStorage.getItem('lobbyCode');
+	const playerId = localStorage.getItem('playerId');
 	var response = await playerSleeps(lobbyCode, playerId);
 	console.log(response);
 	if (response.success && response.canContinue) {
+		var role = localStorage.getItem('role');
 		localStorage.setItem('players', JSON.stringify(response.players));
-		window.location.href = '07pw_night_waiting_room_view.html';
+		if (role == 'werewolf') {
+			window.location.href = '09p_werewolf_night_view.html';
+		} else if (role == 'villager') {
+			window.location.href = '09p_villager_night_view.html';
+		}
 	}
 }
