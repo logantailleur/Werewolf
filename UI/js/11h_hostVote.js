@@ -87,6 +87,7 @@ function initializeEventListeners() {
 		}
 
 		var lobbyCode = localStorage.getItem('lobbyCode');
+		
 		var winResponse = await checkWinner(lobbyCode);
 		const deathResponse = await viewResult(lobbyCode);
 		const players = await getAllPlayers(lobbyCode);

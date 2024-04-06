@@ -876,14 +876,14 @@ async function checkWinner(gameCode) {
 						resolve({
 							success: false,
 							gameWon: false,
-							winner: null,
+							winner: 'none',
 						});
 					} else {
 						if (row.villagerSum > NUM_WEREWOLVES) {
 							resolve({
 								success: true,
 								gameWon: false,
-								winner: null,
+								winner: 'none',
 							});
 						} else {
 							resolve({

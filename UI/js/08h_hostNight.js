@@ -81,8 +81,11 @@ function initializeEventListeners() {
 		} else if (turn == WEREWOLF_TURN && roleDone(WEREWOLF_TURN)) {
 			// Redirect to morning view
 			var lobbyCode = localStorage.getItem('lobbyCode');
+
 			var winResponse = await checkWinner(lobbyCode);
 			var wakeResponse = await hostWakes(lobbyCode);
+			console.log(winResponse);
+			console.log(wakeResponse);
 
 			if (wakeResponse.canContinue) {
 				if (winResponse.winner === 'villager') {
