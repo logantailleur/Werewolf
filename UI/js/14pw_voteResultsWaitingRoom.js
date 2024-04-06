@@ -23,17 +23,17 @@ async function handleContinueClick() {
 	console.log(deathResponse);
 
 	if (deathResponse.success && deathResponse.canContinue) {
+		localStorage.setItem('victim', JSON.stringify(deathResponse.player));
+		
 		if (winResponse.winner === 'villager') {
 			window.location.href = '18_villager_win_view.html';
 		} else if (winResponse.winner === 'werewolf') {
 			window.location.href = '18_werewolf_win_view.html';
-		} else if (deathResponse.player.playerId === localStorage.getItem('playerId')) {
+		} else if (deathResponse.player.playerId === playerId) {
 			window.location.href = '16p_hung_villager_view.html';
 		} else {
 			window.location.href = '16p_vote_results_view.html';
 		}
-		console.log(deathResponse);
-		localStorage.setItem('victim', JSON.stringify(deathResponse.player));
 	} else {
 		return;
 	}

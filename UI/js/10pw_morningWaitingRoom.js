@@ -23,6 +23,8 @@ async function handleContinueClick() {
 	console.log(wakeResponse);
 
 	if (wakeResponse.canContinue) {
+		localStorage.setItem('victim', JSON.stringify(wakeResponse.lastKillPlayer));
+		
 		if (winResponse.winner === 'villager') {
 			window.location.href = '18_villager_win_view.html';
 		} else if (winResponse.winner === 'werewolf') {
@@ -32,8 +34,6 @@ async function handleContinueClick() {
 		} else {
 			window.location.href = '12p_morning_results_view.html';
 		}
-		console.log(wakeResponse);
-		localStorage.setItem('victim', JSON.stringify(wakeResponse.lastKillPlayer));
 	} else {
 		return;
 	}
