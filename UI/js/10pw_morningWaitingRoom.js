@@ -1,4 +1,4 @@
-import { playerWakes, checkWinner } from '../services/FetchAPI.js';
+import { checkWinner, playerWakes } from '../services/FetchAPI.js';
 
 document.addEventListener('DOMContentLoaded', function () {
 	initializeApp();

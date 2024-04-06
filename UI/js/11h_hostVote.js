@@ -1,6 +1,6 @@
 import { handleViewRoleClick } from './viewRoleClickHandler.js';
 import { roleModalHTML } from './roleModal.js';
-import { endVoting, getAllPlayers, viewResult } from '../services/FetchAPI.js';
+import { endVoting, checkWinner, viewResult, getAllPlayers } from '../services/FetchAPI.js';
 
 const hostVotingInProgress = [
 	'Now is the time for the villagers to deliberate and cast their votes.',

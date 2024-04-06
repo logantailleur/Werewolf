@@ -1,4 +1,4 @@
-import { viewResult, viewResultPlayer } from '../services/FetchAPI.js';
+import { checkWinner, viewResultPlayer } from '../services/FetchAPI.js';
 
 document.addEventListener('DOMContentLoaded', function () {
 	initializeApp();

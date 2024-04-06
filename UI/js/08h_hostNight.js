@@ -1,6 +1,6 @@
 import { handleViewRoleClick } from './viewRoleClickHandler.js';
 import { roleModalHTML } from './roleModal.js';
-import { hostWakes } from '../services/FetchAPI.js';
+import { checkWinner, hostWakes } from '../services/FetchAPI.js';
 
 const hostWelcomeScript = [
 	'Welcome to Werewolf!',
