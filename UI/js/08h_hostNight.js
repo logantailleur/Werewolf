@@ -75,42 +75,27 @@ function initializeEventListeners() {
 
 	var nightBtn = document.getElementById('nightBtn');
 	nightBtn.addEventListener('click', async function () {
-		// Update turn
-		if (turn == WELCOME_MESSAGE && roleDone(WELCOME_MESSAGE)) {
+		if (turn === WELCOME_MESSAGE) {
 			turn = WEREWOLF_TURN;
-		} else if (turn == WEREWOLF_TURN && roleDone(WEREWOLF_TURN)) {
-			// Redirect to morning view
-			var lobbyCode = localStorage.getItem('lobbyCode');
-
-			var winResponse = await checkWinner(lobbyCode);
-			var wakeResponse = await hostWakes(lobbyCode);
-			console.log(winResponse);
-			console.log(wakeResponse);
-
-			if (wakeResponse.canContinue) {
-				if (winResponse.winner === 'villager') {
-					window.location.href = '18_villager_win_view.html';
-				} else if (winResponse.winner === 'werewolf') {
-					window.location.href = '18_werewolf_win_view.html';
-				} else {
-					window.location.href = '11h_host_vote_view.html';
-				}
-			}
-			return; // Exit function early
+			updateHostScript();
+			return;
 		}
+		
+		var lobbyCode = localStorage.getItem('lobbyCode');
 
-		// Update host script and button text
-		updateHostScript();
+		var winResponse = await checkWinner(lobbyCode);
+		var wakeResponse = await hostWakes(lobbyCode);
+		console.log(winResponse);
+		console.log(wakeResponse);
+
+		if (wakeResponse.canContinue) {
+			if (winResponse.winner === 'villager') {
+				window.location.href = '18_villager_win_view.html';
+			} else if (winResponse.winner === 'werewolf') {
+				window.location.href = '18_werewolf_win_view.html';
+			} else {
+				window.location.href = '11h_host_vote_view.html';
+			}
+		}
 	});
-}
-
-function roleDone(role) {
-	// TODO: Check to see if the role is finished completing their actions.
-	var isDone = true;
-
-	if (!isDone) {
-		var nightBtn = document.getElementById('nightBtn');
-		nightBtn.disabled = true;
-	}
-	return isDone;
 }

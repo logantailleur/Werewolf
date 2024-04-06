@@ -34,7 +34,5 @@ async function handleContinueClick() {
 		} else {
 			window.location.href = '16p_vote_results_view.html';
 		}
-	} else {
-		return;
 	}
 }

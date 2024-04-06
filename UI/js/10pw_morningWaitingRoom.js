@@ -34,7 +34,5 @@ async function handleContinueClick() {
 		} else {
 			window.location.href = '12p_morning_results_view.html';
 		}
-	} else {
-		return;
 	}
 }
