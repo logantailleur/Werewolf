@@ -1,6 +1,6 @@
 import { handleViewRoleClick } from './viewRoleClickHandler.js';
 import { roleModalHTML } from './roleModal.js';
-import { endVoting, getAllPlayers, viewResult } from '../services/FetchAPI.js';
+import { endVoting, checkWinner, viewResult, getAllPlayers } from '../services/FetchAPI.js';
 
 const hostVotingInProgress = [
 	'Now is the time for the villagers to deliberate and cast their votes.',
@@ -85,15 +85,27 @@ function initializeEventListeners() {
 			updateHostScript();
 			return;
 		}
-		const response = await viewResult(localStorage.getItem('lobbyCode'));
-		const players = await getAllPlayers(localStorage.getItem('lobbyCode'));
 
-		console.log(response);
+		var lobbyCode = localStorage.getItem('lobbyCode');
+		
+		var winResponse = await checkWinner(lobbyCode);
+		const deathResponse = await viewResult(lobbyCode);
+		const players = await getAllPlayers(lobbyCode);
+		console.log(winResponse);
+		console.log(deathResponse);
 		console.log(players);
-		if (response.canContinue) {
+
+		if (deathResponse.canContinue) {
 			localStorage.setItem('players', JSON.stringify(players.players));
-			localStorage.setItem('deadPlayer', JSON.stringify(response.player));
-			window.location.href = '05h_player_grid_view.html';
+			localStorage.setItem('deadPlayer', JSON.stringify(deathResponse.player));
+
+			if (winResponse.winner === 'villager') {
+				window.location.href = '18_villager_win_view.html';
+			} else if (winResponse.winner === 'werewolf') {
+				window.location.href = '18_werewolf_win_view.html';
+			} else {
+				window.location.href = '05h_player_grid_view.html';
+			}
 		}
 	});
 }

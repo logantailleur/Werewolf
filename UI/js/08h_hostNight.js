@@ -1,6 +1,6 @@
 import { handleViewRoleClick } from './viewRoleClickHandler.js';
 import { roleModalHTML } from './roleModal.js';
-import { hostWakes } from '../services/FetchAPI.js';
+import { checkWinner, hostWakes } from '../services/FetchAPI.js';
 
 const hostWelcomeScript = [
 	'Welcome to Werewolf!',
@@ -75,30 +75,27 @@ function initializeEventListeners() {
 
 	var nightBtn = document.getElementById('nightBtn');
 	nightBtn.addEventListener('click', async function () {
-		// Update turn
-		if (turn == WELCOME_MESSAGE && roleDone(WELCOME_MESSAGE)) {
+		if (turn === WELCOME_MESSAGE) {
 			turn = WEREWOLF_TURN;
-		} else if (turn == WEREWOLF_TURN && roleDone(WEREWOLF_TURN)) {
-			// Redirect to morning view
-			var response = await hostWakes(localStorage.getItem('lobbyCode'));
-			if (response.canContinue) {
+			updateHostScript();
+			return;
+		}
+		
+		var lobbyCode = localStorage.getItem('lobbyCode');
+
+		var winResponse = await checkWinner(lobbyCode);
+		var wakeResponse = await hostWakes(lobbyCode);
+		console.log(winResponse);
+		console.log(wakeResponse);
+
+		if (wakeResponse.canContinue) {
+			if (winResponse.winner === 'villager') {
+				window.location.href = '18_villager_win_view.html';
+			} else if (winResponse.winner === 'werewolf') {
+				window.location.href = '18_werewolf_win_view.html';
+			} else {
 				window.location.href = '11h_host_vote_view.html';
 			}
-			return; // Exit function early
 		}
-
-		// Update host script and button text
-		updateHostScript();
 	});
-}
-
-function roleDone(role) {
-	// TODO: Check to see if the role is finished completing their actions.
-	var isDone = true;
-
-	if (!isDone) {
-		var nightBtn = document.getElementById('nightBtn');
-		nightBtn.disabled = true;
-	}
-	return isDone;
 }
