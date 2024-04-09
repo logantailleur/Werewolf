@@ -159,6 +159,11 @@ body::before {
     height: auto; /* Maintain aspect ratio */
 }
 
+.dead-img {
+    width: 500px;
+    height: auto;
+}
+
 .text-very-large {
     font-size: 36px; 
     color: white;
