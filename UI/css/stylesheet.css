@@ -163,23 +163,3 @@ body::before {
     width: 500px;
     height: auto;
 }
-
-.text-very-large {
-    font-size: 36px; 
-    color: white;
-}
-
-.text-center {
-    font-size: 16px; 
-    color: white;
-}
-
-.modal-title {
-    font-size: 20px; 
-    color: white;
-}
-
-.role-description {
-    font-size: 16px; 
-    color: white;
-}
