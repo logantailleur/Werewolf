@@ -11,7 +11,7 @@ const hostVotingInProgress = [
 
 const hostVotingResult = [
 	'The votes have been tallied, and the decision has been made.',
-	'With a majority vote, {VILLAGER_NAME} has been chosen to face judgment.',
+	'With a majority vote, <b>{VILLAGER_NAME}</b> has been chosen to face judgment.',
 	'Prepare yourselves as the village gathers to reveal the truth.',
 ];
 
