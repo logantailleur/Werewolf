@@ -21,10 +21,10 @@ async function initializeRoleAssignPage() {
 	var resultSummary = document.getElementById('resultSummary');
 	var roleImage = document.querySelector('.role-assign-image img');
 
-	var werewolfImage = 'ImageAssets/wolficon.png';
+	var skullImage = 'ImageAssets/skullicon.png';
 
 	resultAnnouncement.textContent = 'The werewolves killed you!';
-	roleImage.src = werewolfImage;
+	roleImage.src = skullImage;
 	resultSummary.textContent = "There's no more hope for you :(";
 }
 
