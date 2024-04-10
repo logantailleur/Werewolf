@@ -21,7 +21,7 @@ async function initializeRoleAssignPage() {
 	var resultSummary = document.getElementById('resultSummary');
 	var roleImage = document.querySelector('.role-assign-image img');
 
-	var werewolfImage = 'ImageAssets/wolficon.png';
+	var werewolfImage = 'ImageAssets/werewolfwin.png';
 
 	resultAnnouncement.textContent = 'The werewolves won!';
 	roleImage.src = werewolfImage;

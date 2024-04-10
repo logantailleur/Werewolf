@@ -21,7 +21,7 @@ async function initializeRoleAssignPage() {
 	var resultSummary = document.getElementById('resultSummary');
 	var roleImage = document.querySelector('.role-assign-image img');
 
-	var villagerImage = 'ImageAssets/villagericon.png';
+	var villagerImage = 'ImageAssets/villagerwinicon.png';
 
 	resultAnnouncement.textContent = 'The villagers won!';
 	roleImage.src = villagerImage;
