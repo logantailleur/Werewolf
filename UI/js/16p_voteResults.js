@@ -24,7 +24,7 @@ async function initializeRoleAssignPage() {
 	var victim = JSON.parse(localStorage.getItem('victim'));
 	var victimName = victim.playerName;
 	var victimRole = victim.role;
-	var victimImage = 'ImageAssets/villagericon.png';
+	var victimImage = 'ImageAssets/skullicon.png';
 
 	resultAnnouncement.textContent =
 		victimName + ' was executed! They were a ' + victimRole + '!';

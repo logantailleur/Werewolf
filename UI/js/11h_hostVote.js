@@ -60,7 +60,7 @@ async function updateHostScript() {
 	if (response.canContinue) {
 		villagerName = response.victim.name;
 		script = hostVotingResult.map((line) =>
-			line.replace('{VILLAGER_NAME}', villagerName)
+			line.replace('{VILLAGER_NAME}', '<b>' + villagerName + '</b>')
 		);
 	} else {
 		script = hostVotingInProgress;

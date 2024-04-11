@@ -24,7 +24,7 @@ async function initializeResultPage() {
 	var victim = JSON.parse(localStorage.getItem('victim'));
 	var victimName = victim.name;
 	var victimRole = victim.role;
-	var victimImage = 'ImageAssets/villagericon.png';
+	var victimImage = 'ImageAssets/skullicon.png';
 
 	resultAnnouncement.textContent =
 		victimName + ' was killed! They were a ' + victimRole + '!';
