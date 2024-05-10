@@ -1,5 +1,7 @@
 
-body, html {
+/*main*/
+
+html {
     height: 100%;
     margin: 0;
 }
@@ -8,25 +10,142 @@ body, html {
     height: 100%;
 }
 
-.text-very-large {
-    font-size: 36px; 
+
+
+/*body*/
+
+body {
+    position: relative; /* Ensure proper stacking order */
+    height: 100%;
+    margin: 0;
 }
 
-#joinGameButton.disabled-button {
-    background-color: #6c757d; /* Gray color */
-    border-color: #6c757d; /* Gray color */
-    cursor: not-allowed;
+body::before {
+    content: "";
+    background-image: url('../ImageAssets/background.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-color: rgba(0, 0, 0, 0.2); /* Semi-transparent black overlay */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1; /* Ensure the pseudo-element is behind other content */
 }
 
-#startGameButton.disabled-button {
-    background-color: #6c757d; /* Gray color */
-    border-color: #6c757d; /* Gray color */
-    cursor: not-allowed;
+
+
+/*navbar*/
+
+.navbar {
+    background-color: black;
 }
+
+.navbar-brand {
+    color: white;
+}
+
+
+
+/*role card*/
+
+.modal-header {
+    background-color: black;
+    border: black;
+}
+
+.modal-body {
+    background-color: black;
+    border: black;
+}
+
+.card-body {
+    background-color: black;
+    border: black;
+}
+
+.role-card.selected .card-body{
+    background-color: red;
+}
+
+.dead {
+    opacity: 0.5; /* Reduce opacity for an undetectable effect */
+    /* Add other styling for making the card visually distinct when the player is dead */
+}
+
+.disabled {
+    pointer-events: none;
+}
+
+
+
+/*spacings*/
 
 .mt-3 {
     margin-top: 1.5rem; /* Adjust this value as needed */
 }
+
+
+
+/*texts*/
+
+.txt {
+    color: white;
+    text-shadow: 0px 0px 20px rgba(0, 0, 0, 1.0); /* Add dark shadow */
+    font-size: 32px !important; 
+}
+
+.text-very-large {
+    font-size: 36px; 
+    color: white;
+}
+
+.text-center {
+    font-size: 16px; 
+    color: white;
+}
+
+.modal-title {
+    font-size: 20px; 
+    color: white;
+}
+
+.role-description {
+    font-size: 16px; 
+    color: white;
+}
+
+.btn-description {
+    font-size: 20px !important;
+    color: rgb(205, 205, 205) !important;
+}
+
+
+
+/*buttons*/
+
+.btn-lg {
+    background-color: #850000;
+    border-color: #850000;
+    color: white;
+    font-size: 32px !important;
+}
+
+.btn-lg:hover {
+    background-color: #700000;
+    border-color: #700000;
+}
+
+.btn-lg:disabled {
+    background-color: #6c757d; /* Gray color */
+    border-color: #6c757d; /* Gray color */
+    cursor: not-allowed;
+}
+
+
+
+/*images*/
 
 .role-assign-image {
     width: 200px; /* Adjust width as needed */
@@ -35,11 +154,18 @@ body, html {
     /* margin-top: 20px; Adjust margin as needed */
 }
 
+.result-image {
+    width: 200px; /* Adjust width as needed */
+    height: 200px; /* Adjust height as needed */
+    margin: 0 auto;
+}
+
 .role-img {
     width: 100px; /* Adjust the width as needed */
     height: auto; /* Maintain aspect ratio */
 }
 
-.role-card.selected .card-body{
-    background-color: red;
+.dead-img {
+    width: 500px;
+    height: auto;
 }
